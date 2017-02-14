@@ -1,0 +1,56 @@
+
+<link rel="stylesheet" href="{$ptype_url}/css/zyUpload.css" type="text/css">
+
+<include file="./application/Web/View/header_munity.html"/>
+
+
+    <div class="user_mian">
+    <div class="center">
+      <div class="pet_muntity_left">
+        <volist name="product_info" id="vo">
+          <li>
+            <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+              <img src="{$vo.image}" />
+            </a>
+            <h1>{$vo.pro_name}</h1>
+            <p>￥{$vo.option_price}</p>
+          </li>
+        </volist>
+      </div>
+
+      <div class="pet_muntity_right">
+        <div class="back_muntity"><h1><a href="{:U('Web/Community/index')}"> 社区首页</a>><a href="{:U('Web/Community/pet_munity')}"> 我的帖子</a>><span>发帖</span></h1></div>
+        <div class="pet_intertion">
+          <form action="{:U('Web/Community/card')}" method="post" enctype="multipart/form-data">
+            <li><b>帖子标题：</b><input type="text" name="art_title" /></li>
+            <li><b>帖子内容：</b><textarea class="textarea_card" placeholder="请输入帖子内容" name="art_content"></textarea></li>
+            <li><b>帖子图片：</b><div id="demo" class="demo"></div></li>
+            <li><b></b> <input type="submit" class="submit_sd" value="发 布"></li>
+          </form>
+        </div>
+
+
+      </div>
+  
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<!-- 引用核心层插件 -->
+<script src="{$ptype_url}/js/zyFile.js"></script>
+<!-- 引用控制层插件 -->
+<script src="{$ptype_url}/js/zyUpload.js"></script>
+<!-- 引用初始化JS -->
+<script src="{$ptype_url}/js/jq22.js"></script>
+
+ <script>
+   $(document).ready(function(){
+      $('#set_mess').html('最多上传6张宠物图片（图片最大3M / 不能上传相同图片）');
+   });
+ </script>

@@ -1,0 +1,310 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css">
+
+
+<include file="./application/Web/View/header_list.html"/>
+
+
+	<div class="user_mian">
+		<div class="center">
+			<div class="postion_menu">
+				<h1><a href="{:U('Index/index')}">首页</a>><span>搜索</span></h1>
+			</div>
+
+
+
+			<div class="shoping_list_filter">
+				<h1>
+
+					<span>共计<b id="count">{$count}</b>件商品</span>
+				</h1>
+			</div>
+
+			<div class="shoping_list_li">
+
+				<div class="shoping_list_li_left">
+					<foreach name="sale_hot" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img  src="{$vo.picture}" /></a>
+							<h1>{$vo.pro_name}</h1>
+							<p>￥{$vo.price}</p>
+						</li>
+					</foreach>
+
+				</div>
+
+				<div class="shoping_list_li_right" id="shoping_list_li_right">
+
+					{$product}
+
+				</div>
+				<div class="list_page" id="list_page">
+					{$Page}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+<script type="text/javascript" src="{$ptype_url}/js/footer.js"></script>
+
+
+
+<!--[if lte IE 8]>
+
+<script src="{$ptype_url}/js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="{$ptype_url}/js/cityData.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/cityPicker.js"></script>
+<script>
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block';
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none';
+		}
+</script>
+
+<script>
+    $(document).ready(function(){
+
+	$("#select1 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+			var	id = $(this).attr('name');
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectA").remove();
+			$('#zzz_category').val(id);
+		} else {
+			var copyThisA = $(this).clone();
+			if ($("#selectA").length > 0) {
+				$("#selectA a").html($(this).text());
+				$('#zzz_category').val(id);
+
+			} else {
+				$(".select-result dl").append(copyThisA.attr("id", "selectA"));
+				$('#zzz_category').val(id);
+
+			}
+		}
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id  = $('#zzz_pet_age_id').val();
+		var zzzz_price       = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+				$('#shoping_list_li_right').html(data.str);
+				$('#count').html(data.count);
+				$('#list_page').html(data.Page);
+		})
+
+	});
+
+	$("#select2 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectB").remove();
+			$('#zzz_pet_body_id').val(id);
+		} else {
+			var copyThisB = $(this).clone();
+			if ($("#selectB").length > 0) {
+				$("#selectB a").html($(this).text());
+				$('#zzz_pet_body_id').val(id);
+			} else {
+				$(".select-result dl").append(copyThisB.attr("id", "selectB"));
+				$('#zzz_pet_body_id').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+
+	});
+
+	$("#select3 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectC").remove();
+			$('#zzz_pet_age_id').val(id);
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectC").length > 0) {
+				$("#selectC a").html($(this).text());
+				$('#zzz_pet_age_id').val(id);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectC"));
+				$('#zzz_pet_age_id').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+	});
+
+	$("#select4 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectD").remove();
+			$('#zzz_price').val(id);
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectD").length > 0) {
+				$("#selectD a").html($(this).text());
+				$('#zzz_price').val(id);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectD"));
+				$('#zzz_price').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+	});
+
+	$("#selectA").live("click", function () {
+		$(this).remove();
+		$("#select1 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectB").live("click", function () {
+		$(this).remove();
+		$("#select2 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectC").live("click", function () {
+		$(this).remove();
+		$("#select3 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectD").live("click", function () {
+		$(this).remove();
+		$("#select4 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$(".select dd").live("click", function () {
+		if ($(".select-result dd").length > 1) {
+			$(".select-no").hide();
+		} else {
+			$(".select-no").show();
+		}
+	});
+
+
+});
+
+
+	function page(o){
+		var zpage  = $(o).attr('name');
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{page:zpage,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+	}
+
+	$('#sales_number_zzzz').click(function(){
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{sales_number:1,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+	})
+
+	$('#price_zzzzzzz').click(function(){
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{price_zzzzzzz:1,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+	})
+
+
+
+</script>
+
+

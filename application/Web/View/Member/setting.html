@@ -1,0 +1,107 @@
+
+
+<!-- 进度条 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/progress.css" />
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter">
+				<div class="user_info_top">
+
+					<div class="user_info_top_left">
+						<img src="{$ptype_url}/images/user_head_cation.png" />
+					</div>
+
+					<div class="user_info_top_cent">
+						<li><b class="name333">用户昵称</b> <span class="red1"></span></li>
+						<li><b>账号安全</b>
+							<!-- date-value = 50 修改数字 显示进度 -->
+							<div class="ui progress" data-value="{$member.percent}" data-total="100" id="example6">
+								<div class="bar">
+								    <div class="progress"></div>
+								</div>
+							</div>
+						</li>
+						
+						<li>
+							<b>手机验证</b> <strong id="phone">{$member.username}</strong>
+							
+						</li>
+						<!--<li>-->
+							<!--<b>最近一次登录：</b> <strong >2106.11.15 13:33:33</strong> -->
+						<!--</li>-->
+					</div>
+				</div>
+
+				<div class="user_setting">
+					<form id="form_a" method="post" action="{:U('Member/setting_d')}">
+						<li>
+							<div class="setting_left"><h1>登录密码</h1><p>密码强度：{$member.level}</p></div>
+							<div class="setting_right"><p>越复杂的密码越安全，建议您定期更改您的密码</p> <a href="javascript:void(0);" onclick="btn_a()">立即修改</a></div>
+							<input type="hidden" name="type" value="1">
+						</li>
+					</form>
+
+					<form id="form_b" method="post" action="{:U('Member/setting_a')}">
+						<li>
+							<div class="setting_left"><h1>支付密码</h1><p>设置支付密码</p></div>
+							<div class="setting_right"><p>设置支付密码保障您的账号余额安全，在使用余额支付、账号提现时是需输入支付密码</p> <a href="javascript:void(0);" onclick="btn_b()" id="setting">{$member.type_pass}</a></div>
+							<input type="hidden" name="type" value="2">
+						</li>
+					</form>
+				</div>
+
+				
+
+			
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<include file="./application/Web/View/footer_other.html"/>
+
+<!-- 进度条 -->
+<script type="text/javascript" src="{$ptype_url}/js/semantic.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/progress.min.js"></script>
+
+<script>
+	function btn_a(){
+		$('#form_a').submit();
+	}
+
+	function btn_b() {
+		$('#form_b').submit();
+	}
+
+</script>
+
+<script type="text/javascript">
+	$('#example6')
+	    .progress({
+	        label: 'ratio',
+	        text: {
+	            ratio: '{value} %'
+	        }
+	    })
+	;
+	$(function() {
+	    var phone = $('#phone').text();
+
+	    var mphone = phone.substr(0,3) + '*****' + phone.substr(8);
+	    $('#phone').text(mphone)
+	});
+
+</script>
+
+

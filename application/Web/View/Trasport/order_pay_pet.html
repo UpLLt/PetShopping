@@ -1,0 +1,64 @@
+<include file="./application/Web/View/header_munity.html"/>
+
+
+
+
+	<div class="user_mian">
+		<div class="center">
+
+
+			<div class="user_order_info">
+				<h1>订单信息</h1>
+
+				<div class="user_order_info_menu_pet">
+					<li>商品信息</li>
+					<li>积分抵扣</li>
+					<li>优惠券抵扣</li>
+					
+				</div>
+
+				<div class="user_order_info_list_pet">
+					<li>
+						<span>
+							<img src="{$ptype_url}/images/img_4.jpg" />
+							<p>2岁多的英国纯种金毛2岁多的英国纯种金毛2岁多的英国纯种金毛2岁多的英国纯种金毛</p>
+						</span>
+
+						<span>
+							<label><input type="checkbox" class="checkbox mag" />25</label>
+						</span>
+							
+						<span>
+							<label><input type="radio" name="ss" class="checkbox mag" />￥100.00</label>
+							<label><input type="radio" name="ss" class="checkbox mag" />￥200.00</label>
+							<label><input type="radio" name="ss" class="checkbox mag" />￥300.00</label>
+						</span>
+
+					</li>
+
+				
+				</div>
+				
+				<div class="user_pay_order_list">
+					<div class="address_order">
+						<h1>实付款：<span>￥2000.00</span></h1>
+
+					</div>
+
+					<div class="pay_now_order">
+						<a href="order_pay_1.html" id="pay_submit">马上付款</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+
+
+<include file="./application/Web/View/footer.html"/>
+<script>
+	$(document).ready(function(){
+		$('#change_ccc').attr('class','action')
+	});
+</script>

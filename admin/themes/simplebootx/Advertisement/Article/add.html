@@ -1,0 +1,67 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Article/artList')}" target="_self">文章列表</a></li>
+        <li class="active"><a href="javascript:;">文章编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Article/add_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">文章标题</label>
+                    <div class="controls">
+                        <input type="text" name="post_title" value="{$rst.kno_title}">
+                        <span class="form-required">*30个字以内</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">文章内容</label>
+                    <div class="controls">
+                        <textarea class="form-control" style="width:600px; height: 500px;" id="content" name="post_content" >{$rst.kno_content}</textarea>
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <a class="btn" href="{:U('Article/artList')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+    var ue = UE.getEditor('content');
+</script>
+<script>
+    $(".hidden").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

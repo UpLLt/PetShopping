@@ -1,0 +1,114 @@
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/progress.css" />
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter">
+				<div class="user_info_top">
+
+					<div class="user_info_top_left">
+						<img src="{$ptype_url}/images/user_head_cation.png" />
+					</div>
+
+					<div class="user_info_top_cent">
+						<li><b class="name333">用户昵称</b> <span class="red1"></span></li>
+						<li><b>资料完善度</b>
+							<!-- date-value = 50 修改数字 显示进度 -->
+							<div class="ui progress" data-value="{$member.percent}" data-total="100" id="example6">
+								<div class="bar">
+								    <div class="progress"></div>
+								</div>
+							</div>
+							<a href="userinfo.html">完善资料</a>
+						</li>
+						
+						<li>
+							<b>手机验证</b> <strong id="phone">{$member.username}</strong>
+							<!-- 如果支付密码设置了 支付密码未设置不显示 -->
+							<a href="setting.html"> 支付密码设置</a>
+						</li>
+					</div>
+
+					<div class="user_info_top_right">
+						<li><a href="{:U('Web/Asset/wallet')}"><img src="{$ptype_url}/images/icon_wallet.png" /><span>我的钱包</span></a></li>
+						<!--<li><a href="{:U('Web/Asset/wallet')}"><img src="{$ptype_url}/images/icon_integral.png" /><span>我的积分</span></a></li>-->
+						<li><a href="{:U('Web/Asset/coupon')}"><img src="{$ptype_url}/images/icon_coupon.png" /><span>我的优惠券</span></a></li>
+					</div>
+				</div>
+
+				<div class="user_info_cent_order">
+					<h1>未完成订单 <a href="{:U('Web/Order/order')}">查看全部订单>></a></h1>
+					<div class="user_info_order_menu">
+						<span>商品图片</span>
+						<!--<span>收货人</span>-->
+						<span>订单金额</span>
+						<span>订单状态</span>
+						<span>操作</span>
+					</div>
+
+					<div class="user_info_order_no_pay">
+						<foreach name="order_list" item="vo">
+							<li>
+								<span>
+									<foreach name="vo.list" item="vvv">
+										<a href="javascript:;"><img src="{$vvv.cover}" /></a>
+									</foreach>
+								</span>
+								<!--<span>{$vo.address}</span>-->
+								<span>￥{$vo.order_price}</span>
+								<span>待付款</span>
+								<span class="paying"><a href="{:U('Web/Pay/pay',array('order_sn'=>$vo['order_sn']))}">马上付款</a></span>
+							</li>
+						</foreach>
+
+					</div>
+				</div>
+
+				<div class="user_info_down_isnice">
+					<!-- 换一批 用ajax -->
+					<h1>猜你喜欢 </h1>
+					<div class="shoping_isnice">
+						<foreach name="sale_hot" item="vo">
+							<li><a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}">
+								<img src="{$vo.picture}" />
+								<h4 id="title">{$vo.pro_name}</h4>
+								<p>￥{$vo.price}</p>
+							</a></li>
+						</foreach>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+<include file="./application/Web/View/footer.html"/>
+
+<!-- 进度条 -->
+<script type="text/javascript" src="{$ptype_url}/js/semantic.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/progress.min.js"></script>
+
+
+<script type="text/javascript">
+	$('#example6')
+	    .progress({
+	        label: 'ratio',
+	        text: {
+	            ratio: '{value} %'
+	        }
+	    })
+	;
+	$(function() {
+	    var phone = $('#phone').text();
+
+	    var mphone = phone.substr(0,3) + '*****' + phone.substr(8);
+	    $('#phone').text(mphone)
+	});
+
+</script>
+
+
+
+

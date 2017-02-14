@@ -1,0 +1,66 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">城市列表</a></li>
+        <li ><a href="{:U('Rule/add')}">新增区域</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Rule/index')}">
+        区域筛选：
+        <select class="select_2" id="province" onchange="prov()" name="bu_province">
+            {$province}
+        </select>
+        <select class="select_2" id="city" onchange="city_c()" name="bu_city">
+            {$city}
+        </select>
+        <select class="select_2" id="country" name="bu_country">
+            {$country}
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;" class="table table-hover table-bordered table-list" id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>省份</th>
+            <th>城市</th>
+            <th>区域</th>
+            <th>价格</th>
+
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$lists}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script>
+    function prov(){
+        var province = $('#province').val();
+        $.post("{:U('Rule/getCity')}",{province:province},function(data){
+
+            $('#city').html(data.city);
+            $('#country').html(data.country);
+
+        })
+    }
+
+    function city_c(){
+
+        var city = $('#city').val();
+        $.post("{:U('Rule/getcountry')}",{city:city},function(data){
+            $('#country').html(data);
+
+        })
+    }
+
+</script>
+
+</body>
+</html>

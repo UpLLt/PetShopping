@@ -1,0 +1,7 @@
+<?php
+return array (
+  'COMMODITY_GOODS_LISTS' => '商品列表',
+  'COMMODITY_INDEX_DEFAULT' => '商品管理',
+  'COMMODITY_ORDERPRODUCT_LISTS' => '商品订单',
+  'COMMODITY_ORDERPRODUCT_REFUNDLISTS' => '退货列表',
+);

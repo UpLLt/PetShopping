@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="{$ptype_url}/images/favicon.png" type="image/png" />
+<title>咪咻</title>
+
+<!-- 首页带 user 商品列表 搜索  -->
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/index.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/main.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/cityPicker.css">
+
+<!-- 字体图标 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/icon.min.css" />
+
+
+</head>
+<body>
+	<div class="header">
+		<div class="center">
+			<div class="top">
+				<div class="domain">
+					<b>欢迎来到咪咻！</b>
+					<b style="padding-left: 20px"><a href="{:U('Web/Index/index')}">返回首页</a> </b>
+					<!--<div class="form">-->
+						<!--<label><input type="text" id="cityChoice" value="成都" />-->
+						<!--<i class="fa fa-angle-down" aria-hidden="true"></i></label>-->
+						<!--<input type="hidden" id="province" value="" />-->
+						<!--<input type="hidden" id="city" value="" />-->
+					<!--</div>-->
+				</div>
+
+				<div class="user_menu user_more_menu">
+					<!--<li><a href="user.html" onmouseover="show()" onmouseout="hold()"><b>用户昵称</b> <i class="fa fa-sort-desc" aria-hidden="true"></i></a>-->
+						<!--<div id="userinfo" class="userinfo">-->
+							<!--<img src="{$ptype_url}/images/user_head_cation.png" />-->
+							<!--<p>账号余额：￥233434.00</p>-->
+							<!--<p>账号积分：3434</p>-->
+						<!--</div>-->
+					<!--</li>|-->
+					<!--<li><a href="javascript:;">【退出】</a></li>|-->
+					<!--<li><a href="{:U('Web/Member/tidings')}"><img src="{$ptype_url}/images/tidings.png" />我的消息</a></li>|-->
+					<!--<li><a href="{:U('Web/Order/cart')}"><img src="{$ptype_url}/images/shop_cart.png" />我的购物车</a></li>|-->
+					<!--<li><a href="{:U('Web/App/index')}">手机版</a></li>|-->
+					<!--<li><a href="{:U('Web/Complaint/index')}">投诉及建议</a></li>-->
+					{$login}
+				</div>
+			</div>
+
+			<div class="losearch">
+				<div class="logo"><a href="{:U('Index/index')}"><img src="{$ptype_url}/images/logo.png" /></a></div>
+				<div class="search">
+					<form method="post" action="{:U('Web/Search/search')}">
+						<input type="text" placeholder="请输入搜索内容" value="{$formget.keyword}" name="keyword" class="search_text" />
+						<input type="submit" value="" class="search_bnt" />
+						<select class="select_ed" name="type">
+							<option  value="2"   <if condition="($formget.type eq '2')">selected</if> >宠物</option>
+							<option  value="1"   <if condition="($formget.type eq '1')">selected</if>>商品</option>
+						</select>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	
+	</div>
+

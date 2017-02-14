@@ -1,0 +1,196 @@
+<include file="./application/Web/View/header_order.html"/>
+
+	<div class="user_mian">
+		<div class="center">
+			<div class="userinfo_address">
+				<h1>收货人信息</h1>
+				<div class="user_address_info">
+					<h2>
+						{$lists.addtr}
+						<a href="javascript:;" id="address_more">更多地址 <i class="fa fa-angle-double-down"></i></a>
+					</h2>
+				</div>
+
+				<div class="add_userinfo_address">
+					<a href="javascript:;" id="add_address">新增地址</a>
+
+				</div>
+			</div>
+
+			<div class="user_order_info">
+				<h1>订单信息</h1>
+
+				<div class="user_order_info_menu">
+					<li>商品信息</li>
+					<li>单价</li>
+					<li>数量</li>
+					<li>运费</li>
+
+					<li>小计</li>
+				</div>
+			<form method="post" action="{:U('Web/Order/buyItNow')}" id="form_a">
+				<div class="user_order_info_list">
+
+
+						<li>
+							<span>
+								<img src="{$lists.Product.cover}" />
+								<p>{$lists.Product.pro_name}</p>
+								<p>商品属性：{$lists.Product.option_name}</p>
+							</span>
+							<span>
+								<b>￥{$lists.Product.price}</b>
+							</span>
+
+							<span>
+								<div>
+									{$lists.quantity}
+								</div>
+
+							</span>
+
+							<span>
+								<b>￥{$lists.LogisticsCost}</b>
+							</span>
+
+							<span>
+								<b>￥{$lists.total}</b>
+							</span>
+
+						</li>
+
+
+
+					<input type="hidden" name="quantity" value="{$lists.quantity}">
+					<input type="hidden" name="product_option_id" value="{$lists.Product.product_option_id}">
+					<input type="hidden" name="product_id" value="{$lists.Product.id}">
+
+				</div>
+
+
+				<div class="user_pay_discount">
+					<div class="user_pay_coupon">
+						<b>优惠券折扣：</b>
+
+							<select name="coupon_id" id="coupon">
+								<option class="checkbox mag" value="0">不使用</option>
+								<foreach name="coupon" item="vo">
+									<option class="checkbox mag" name="{$vo.price}" value="{$vo.coupon_id}">可抵用{$vo.price}元</option>
+								</foreach>
+							</select>
+
+
+					</div>
+					<div class="user_pay_integral">
+						<b>积分抵扣：</b><label><input  name="score" type="checkbox" value="2" id="scoreeeee" class="checkbox mag" />(可抵{$lists.score_price}元)</label>
+											<input type="hidden" value="{$lists.score_price}" id="score">
+											<input type="hidden" value="{$lists.total}" id="all_total">
+
+
+					</div>
+
+					<div class="textear">
+						<b>备注：</b>
+						<textarea name="remarks"></textarea>
+					</div>
+				</div>
+
+				<div class="user_pay_order_list">
+					<div class="address_order">
+						<h1>实付款：<span>￥<span id="total_price">{$lists.total}</span></span></h1>
+						{$lists.addlr}
+					</div>
+
+					<div class="pay_now_order">
+						<a href="javascript:;" id="pay_submit">马上付款</a>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<include file="./application/Web/View/footer.html"/>
+
+<script>
+$('#add_address').on('click', function(){
+  	layer.open({
+	    type: 2,
+	    title: '',
+	    closeBtn: 0,
+	    shadeClose: true,
+	    shade: 0.8,
+	    area: ['500px', '470px'],
+	    content: "{:U('Web/Member/add_address')}", //iframe的url
+		end:function () {
+			location.reload();
+		}
+	}); 
+});
+
+$('#coupon').change(function () {
+	var zcouponid = $(this).val();
+	var scoreeeee = $('#scoreeeee').val();
+
+	if($("input[type='checkbox']").is(':checked')){
+		var score     = $('#score').val();
+	}else{
+		var score = 0;
+	}
+
+	var all_total = $('#all_total').val();
+	$.post("{:U('Web/Order/get_coupon_price')}",{couponid:zcouponid}, function (data) {
+		var total_price = (Number(all_total - score - data)).toFixed(2)
+		$('#total_price').html(total_price);
+	})
+
+})
+
+$('#scoreeeee').change(function () {
+	var zcouponid = $('#coupon').val();
+	var scoreeeee = $('#scoreeeee').val();
+
+	if($("input[type='checkbox']").is(':checked')){
+		var score     = $('#score').val();
+	}else{
+		var score = 0;
+	}
+
+	var all_total = $('#all_total').val();
+	$.post("{:U('Web/Order/get_coupon_price')}",{couponid:zcouponid}, function (data) {
+
+		var total_price = (Number(all_total - score - data)).toFixed(2)
+		$('#total_price').html(total_price);
+	})
+
+})
+$('#pay_submit').click(function(){
+	var addresssid =  $('#verifyaddressid').val();
+	if( addresssid.length<= 0 ){
+		layer.msg('请添加收货地址');
+		return false;
+	}
+	$('#form_a').submit();
+})
+
+
+
+$('#address_more').on('click', function(){
+	layer.open({
+	  	type: 2,
+	  	title: '更多收货地址',
+	  	shadeClose: true,
+	  	closeBtn: 0, //不显示关闭按钮
+	  	shade: 0.8,
+	  	skin: 'layui-layer-rim', //加上边框
+	  	area: ['600px', '50%'],
+	  	content: 'https://www.mixiupet.com/Web/Order/address_more',
+		end:function () {
+			location.reload();
+		}
+	});
+});
+</script>

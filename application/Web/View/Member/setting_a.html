@@ -1,0 +1,94 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter  box-sizing">
+				<div class="user_setting_top">
+					<h1 class="setting_process set_pro_1"></h1>
+				</div>
+
+                <form id="form_a" method="post" action="{:U('Web/Member/setting_b')}">
+                    <div class="user_setting_down">
+                        <li><b>已绑定手机号：</b> <strong id="phone">{$member.username}</strong></li>
+                        <li><b>短信验证码：</b> <input type="text" id="code" name="code" placeholder="请输入验证码"  /><span class="setting_code"><a href="javascript:;"  id="setting_code">获取验证码</a><strong>&nbsp;</strong></span></li>
+
+                        <li class="setting_2"><b></b><a href="javascript:void(0);" onclick="btn()">下一步</a></li>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<include file="./application/Web/View/footer_other.html"/>
+
+<script type="text/javascript">
+
+	var wait=60;
+    function time(o) {
+            if (wait == 0) {      
+                  $(".setting_code a").css("display","block");
+                  $(".setting_code strong").css("display","none");
+                wait = 10;
+            } else {
+               $(".setting_code a").css("display","none");
+                $(".setting_code strong").css("display","block");
+               $(".setting_code strong").html("重新发送 (" + wait + ")");
+                wait--;
+                setTimeout(function() {
+                    time(o)
+                },
+                1000);
+            }
+        }
+
+
+
+
+
+    document.getElementById("setting_code").onclick=function(){
+        var z_phone = $('#phone').html();
+        var action  = "{:U('Web/Member/forgetsendsms')}";
+        $.post(action,{phone:z_phone},function(data){
+             var json = eval("("+data+")");
+             if(json.code == 300 ){
+                layer.alert("手机号码不能为空", {icon: 2});
+             }else if(json.code == 200){
+
+                  layer.tips('短信发送成功。', '#setting_code', {
+                        tips: [1, '#FFFFFF'],
+                        time: 2000,
+                   });
+                    time(this);
+                  }else{
+                    layer.alert(json.mark, {icon: 2});
+                  }
+        })
+
+    }
+
+   function btn(){
+       var code = $('#code').val();
+       if( code.length<= 0){
+           layer.tips('请填写短信验证码。', '#code', {
+               tips: [1, '#FFFFFF'],
+               time: 2000
+           });
+           return false;
+       }
+
+       $('#form_a').submit();
+   }
+</script>
+
+

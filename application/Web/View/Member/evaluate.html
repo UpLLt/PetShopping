@@ -1,0 +1,53 @@
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/rating.css" />
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/other.css" />
+
+<div class="order_evaluate_show">
+	<form action="#">
+		<li><b>评分等级：</b><div class="ui rating" data-rating="0" data-max-rating="5"></div></li>
+
+		<li><b>评价内容：</b>
+			<div class="evaluate_main">
+				<textarea class="textarea_main" maxlength="30" placeholder="请输入评论的内容"></textarea>
+				<span class="un"><font id="max_number">30</font>/30</span></div></li>
+
+		<li class="submit_up"><b></b><input type="submit" value="提交评论"  /></li>
+	</form>
+</div>
+
+
+
+
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+<script  type="text/javascript" src="{$ptype_url}/js/semantic.min.js"></script>
+<script  type="text/javascript" src="{$ptype_url}/js/rating.min.js"></script>
+
+<script type="text/javascript">
+	$('.ui.rating')
+	  .rating()
+	;
+</script>
+
+<script type="text/javascript">  
+	$('textarea').each(function() {  
+	var ta = $(this), p = ta.parent(), ml = parseInt(ta.attr('maxlength')),  
+	v = ta.val(), h = ta.attr('placeholder');  
+	if (v == h) v = '';  
+	if (h && ml) {  
+	//var sp = '<span style="bottom: 10px;position: absolute;right: -10px;">'+v.length+'/'+ml+'</span>';  
+	p.css({'position': 'relative'});  
+	//ta.before(sp);  
+	ta.bind('click keyup', function() {  
+	var m = $(this), v1 = m.val();  
+	if (v1.length > ml) {  
+	m.val(v1.substring(0, ml))  
+	}  
+	//m.prev().text(m.val().length + '/' + ml);  
+	$("#max_number").text(ml-m.val().length);  
+	});  
+	}  
+	});  
+</script>

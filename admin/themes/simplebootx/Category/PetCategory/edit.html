@@ -1,0 +1,58 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('PetCategory/lists')}" target="_self">宠物类型</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('PetCategory/edit_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">类型</label>
+                    <div class="controls">
+                        <select name="pet_type">
+                            <if condition="($data.pet_type eq 1)">
+                                <option selected="selected" value="1">猫</option>
+                                <option value="2">狗</option>
+                                <else/>
+                                <option value="1">猫</option>
+                                <option selected="selected" value="2">狗</option>
+                            </if>
+                        </select>
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">品种</label>
+                    <div class="controls">
+                        <input type="text" name="pet_variety" value="{$data.pet_variety}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">姓名首字母</label>
+                    <div class="controls">
+                        <input type="text" name="pet_letter" value="{$data.pet_letter}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="hidden">
+                    <input type="hidden" name="pet_variety_id" value="{$data.pet_variety_id}">
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+            <a class="btn" href="{:U('PetCategory/lists')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_order_menu">
+					{$order_list}
+				</div>
+				
+				<div class="order_menu_nav">
+					<li>订单详情</li>
+					<!--<li>收货人</li>-->
+					<li>金额</li>
+					<li>订单状态</li>
+					<li>操作</li>
+				</div>
+
+
+
+
+				<!-- 待付款 -->
+				<div class="user_order_list" id="con_order_1">
+
+					<foreach name="lists" item="vo">
+						<div class="order_list_li" id="order_number_1">
+							<div class="order_list_li_number">
+								<span>订单编号：{$vo.order_sn}</span>
+								<span>下单日期：{$vo.create_time}</span>
+							</div>
+								<foreach name="vo.list" item="vvv">
+									<div class="order_list_li_show" >
+										<li>
+											<div class="order_list_shop">
+												<div class="order_show_left">
+													<img src="{$vvv.cover}"/>
+													<h1>{$vvv.name}</h1>
+												</div>
+
+											</div>
+										</li>
+
+										<li><span class="order_pice">￥{$vvv.price}</span></li>
+										<li><span class="order_status">{$vo.return_str}</span></li>
+										<li class="order_operate">
+											{$vo.category_str}
+										</li>
+									</div>
+								</foreach>
+						</div>
+					</foreach>
+					<div class="list_page">{$Page}</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="{$ptype_url}/js/ieBetter.js"></script>
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script
+
+<![endif]-->
+
+<include file="./application/Web/View/footer_other.html"/>
+
+
+<script type="text/javascript">
+
+	  // 收货人
+  	$('#order_name_1').mouseover(function(){
+	    layer.tips('<p>张三</p>'
+	          	+'<p><span id="phone">18600256742</span></p>'
+	          	+'<p>四川省高新区环球中心N5 1203</p>', '#order_name_1', {
+			      	tips: [1, '#fff'],
+			      	time: 50000
+			    });
+			});
+	  	$('#order_name_1').mouseout(function(){
+	    $('.layui-layer-tips').css("display","none");
+	});
+
+    // 收货人
+	$('#order_name_2').mouseover(function(){
+	    layer.tips('<p>张三</p>'
+	          	+'<p><span id="phone">18600256742</span></p>'
+	          	+'<p>四川省高新区环球中心N5 1203</p>', '#order_name_2', {
+		      	tips: [1, '#fff'],
+		      	time: 50000
+		    });
+		});
+	  	$('#order_name_2').mouseout(function(){
+	    $('.layui-layer-tips').css("display","none");
+	});
+
+
+	// 查看物流
+	$('.logistics_asaassa').click(function(){
+		var zorder_id =  $(this).attr('name');
+		var id        =  $(this).attr('id');
+
+		$.post("{:U('Web/Order/logisticsQuery')}",{order_id:zorder_id},function(data){
+
+//			layer.tips(data , '#'+id, {
+//				tips: [1, '#fff'],
+//				skin: 'layui-layer-logistics',
+//				time: 2000
+//			});
+			layer.open({
+				type: 1,
+				title: '物流信息',
+				closeBtn: 0, //不显示关闭按钮
+				shadeClose: true, //开启遮罩关闭
+				skin: 'layui-layer-caonim', //加上边框
+				area: ['600px', '500px'], //宽高
+				content: ''+data+''
+			});
+//			$( '#'+id).mouseout(function(){
+//				$('.layui-layer-tips').css("display","none");
+//			});
+		})
+		});
+
+
+
+
+	// 取消订单
+	$('.delete_order').click(function (
+	) {
+		var zorder_id =  $(this).attr('name');
+
+		layer.confirm('确定要取消此订单吗?', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			$.post("{:U('Web/Order/cancel')}",{order_id:zorder_id},function(data){
+				var json = eval("("+data+")");
+				if(json.code = 200){
+					layer.msg('取消成功！', {icon: 1});location.reload();
+
+				}else if(json.code == 210){
+					layer.alert(json.mark, {icon: 2});
+				}
+			})
+
+		}, function(){
+
+		});
+	})
+
+
+
+	// 确认收货
+	$('.pay_now').on('click',function(){
+
+		var zorder_id =  $(this).attr('name');
+		layer.confirm('您已经收到商品?', {
+		  	btn: ['确定','取消'] //按钮
+		}, function(){
+			$.post("{:U('Web/Order/confirmReceipt')}",{order_id:zorder_id},function(data){
+				var json = eval("("+data+")");
+				if(json.code = 200){
+					layer.msg('收货成功！', {icon: 1});location.reload();
+				}else if(json.code == 210){
+					layer.alert(json.mark, {icon: 2});
+				}
+			})
+
+		}, function(){
+		 	
+		});
+	});
+
+//	// 马上评价
+//	$('.pay_now_noew').on('click',function(){
+//
+//		var zorder_id =  $(this).attr('name');
+//		alert(zorder_id);
+//		layer.open({
+//		  	type: 2,
+//		  	title: '',
+//		  	shadeClose: true,
+//		  	 closeBtn: 0, //不显示关闭按钮
+//		  	shade: 0.8,
+//		  	area: ['410px', '440px'],
+//		  	content: "{:U('Web/Order/evaluate')}"
+//		});
+//	});
+
+		// 申请退货
+	$('.refund').on('click',function(){
+
+		var zorder_id =  $(this).attr('name');
+
+		layer.open({
+		  	type: 2,
+		  	title: '',
+		  	shadeClose: true,
+		  	 closeBtn: 0, //不显示关闭按钮
+		  	shade: 0.8,
+		  	area: ['460px', '600px'],
+		  	content: "https://www.mixiupet.com/Web/Order/refund/order_id/"+zorder_id
+
+		});
+
+	});
+
+		// 删除订单
+	$('.pay_now1').on('click',function(){
+
+		var zorder_id =  $(this).attr('name');
+
+		layer.confirm('确定要删除此订单吗?', {
+		  	btn: ['确定','取消'] //按钮
+		}, function(){
+			$.post("{:U('Web/Order/hide')}",{order_id:zorder_id},function(data){
+				var json = eval("("+data+")");
+				if( json.code = 220){
+					layer.msg('未登陆！',{icon: 1});window.location.href = "{:U('Web/Member/login')}";
+				}
+				if(json.code = 200){
+					layer.msg('删除成功！', {icon: 1});location.reload();
+				}else if(json.code == 210){
+					layer.alert(json.mark, {icon: 2});
+				}
+			})
+
+
+
+		}, function(){
+
+		});
+	});
+
+//	// 查看评价
+//	$('#complete_1').mouseover(function(){
+//	 	layer.tips('<div class="complete_com">'
+//	 				+'<li><b>评论等级：</b><span class="rank" style="width:85px;"></span></li>'
+//	 				+'<li><b>评价内容：</b><p>东西很好！老板很不错，下次还来!!</p></li>'
+//	 				+'<li><b>评价回复：</b><p>谢谢惠顾，欢迎下次再来！</p></li>'
+//	 				+'</div>', '#complete_1', {
+//		  tips: [1, '#fff'],
+//		  time: 8000
+//		});
+//	});
+//	$('#complete_1').mouseout(function(){
+//	 	$('.layui-layer-tips').css("display","none");
+//	});
+
+
+	   // 退货地址
+  $('#returned_3').mouseover(function(){
+    layer.tips('<p>张三</p>'
+          +'<p><span id="phone">18600256742</span></p>'
+          +'<p>四川省高新区环球中心N5 1203</p>', '#returned_3', {
+      tips: [1, '#fff'],
+      time: 50000
+    });
+  });
+  $('#returned_3').mouseout(function(){
+    $('.layui-layer-tips').css("display","none");
+  });
+
+  // 马上发货
+	$('.pay_now2').on('click',function(){
+		var zorder_id =  $(this).attr('name');
+		layer.open({
+		  	type: 2,
+		  	title: '',
+		  	shadeClose: true,
+		  	 closeBtn: 0, //不显示关闭按钮
+		  	shade: 0.8,
+		  	area: ['410px', '240px'],
+		  	content: "https://www.mixiupet.com/Web/Order/returned/order_id/"+zorder_id, //iframe的url
+			end:function () {
+				location.reload();
+			}
+		});
+
+
+	});
+	
+</script>
+
+<style>
+	.layui-layer-caonim{
+		width: 100%;
+		float: left;
+	}
+	.layui-layer-caonim .layui-layer-content{
+		width: 100%;
+		padding:20px;
+		box-sizing:border-box;
+	}
+	.layui-layer-caonim .layui-layer-content p{
+		line-height: 25px;
+		margin: 0px 0px 10px 0px;
+	}
+
+</style>
+
+
+
+

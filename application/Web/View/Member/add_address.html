@@ -1,0 +1,97 @@
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/address.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/other.css" />
+
+<div class="add_address_show">
+	<form action="{:U('Web/Member/addressAdd')}" method="post" id="form_a">
+		<li><b>收货人：</b><input type="text" name="fullname" id="fullname" placeholder="请输入收货人姓名" /></li>
+		<li><b>电话：</b><input type="text" name="phone" id="phone" placeholder="请输入收货人电话" maxlength="11"/></li>
+		<li><b>所在区域：</b>
+			<select name="province" id="province">
+				{$area.provinc}
+			</select>
+			<select name="city" id="city">
+				{$area.city}
+			</select>
+			<select name="country" id="country">
+				{$area.country}
+			</select>
+
+		</li>
+
+		<li><b>详细地址：</b><input id="address" name="address" type="text" placeholder="请输入详细地址" /></li>
+		<li class="add_default"><b></b><label><input type="checkbox" name="status" value="1" class="checkbox" /><span>设为默认地址</span></label></li>
+		<li><b></b><a href="javascript:;"  id="add_address">新增收货地址</a></li>
+
+	</form>
+</div>
+
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<script type="text/javascript">
+	$(function(){
+//	$("#sjld").sjld("#shenfen","#chengshi","#quyu");
+});
+	$('#province').change(
+		function (){
+			var zprovince = $('#province').val();
+
+			$.post("{:U('Web/Member/getcity')}",{province:zprovince},function(data){
+				$('#city').html(data.city);
+				$('#country').html(data.country);
+			})
+		}
+	)
+
+	$('#city').change(
+			function (){
+				var zcity = $('#city').val();
+
+				$.post("{:U('Web/Member/getcountry')}",{city:zcity},function(data){
+					$('#country').html(data);
+				})
+			}
+	)
+
+	$('#add_address').click(
+			function (){
+				var fullname = $('#fullname').val();
+				if( fullname.length<= 0){
+					layer.tips('收货人姓名不能为空。', '#fullname', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+				var phone = $('#phone').val();
+				if( phone.length != 11){
+					layer.tips('收货人电话格式不正确。', '#phone', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+				var address = $('#address').val();
+				if( address.length<= 0){
+					layer.tips('详细地址不能为空。', '#address', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+				$.post("{:U('Web/Member/addressAdd')}",$("#form_a").serialize(),function(data){
+					if(data == 1){
+						layer.msg('添加成功');
+						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+						parent.layer.close(index); //再执行关闭
+					}else{
+						layer.msg('添加失败');
+					}
+				})
+			}
+	)
+
+</script>

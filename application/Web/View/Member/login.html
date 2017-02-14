@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="{$ptype_url}/images/favicon.png" type="image/png" />
+<title>咪咻</title>
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/user.css" />
+
+</head>
+<body>
+	<div class="top">
+		<div class="center">
+			<div class="logo">
+				<a href="{:U('Index/index')}"><img src="{$ptype_url}/images/logo.png"></a><p>· 欢迎登录</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="user_center">
+		<div class="center">
+			<div class="advert">
+				<img src="{$ptype_url}/images/user_advert.png" />
+			</div>
+			<div class="login">
+				<h1><b>登录咪咻宠物商城</b> <a href="{:U('Web/Member/register')}">快速注册>></a></h1>
+
+				<form >
+					<li><b></b> <input type="text" id="phone" placeholder="请输入用户名" /></li>
+					<li><b></b> <input type="password" id="password" placeholder="请输入密码" /></li>
+					<!--<input type="hidden" name="key" value="{$key}" id="key"/>-->
+					<a href="{:U('Web/Member/getpass')}">忘记密码？</a>
+					<input type="button" value="登 录" onclick="but()"  class="submit" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- jquery -->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+ <script type="text/javascript">
+
+	 function but(){
+		 var action = "{:U('Web/Member/userlogin')}";
+		 var z_username   = $('#phone').val();
+		 var z_password = $('#password').val();
+
+		 $.post(action,{userAccount:z_username,userPassword:z_password},function(data){
+			 var json = eval("("+data+")");
+			 if(json.code == 300 ){
+				 layer.alert("密码和账号不能为空", {icon: 2});
+			 }else if( json.code == 200 ){
+				 layer.msg('登陆成功');window.location.href = "{:U('Web/Index/index')}";
+			 }else if( json.code == 210 ){
+				 layer.alert("密码和账号不能为空", {icon: 2});
+			 }
+		 })
+	 }
+</script>

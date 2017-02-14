@@ -1,0 +1,310 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/base.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css" />
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/cityPicker.css">
+
+<style>
+
+	#con_shop_1 img{
+		margin-top: 0px;
+	}
+
+</style>
+<include file="./application/Web/View/header_menu.html"/>
+
+	<div class="main">
+		<div class="center">
+			<div class="shoping_show">
+				<div class="preview">
+					<div id="vertical" class="bigImg">
+						<img src="{$pdetail.picture.0}" alt="" id="midimg" />
+						<div style="display:none;" id="winSelector"></div>
+					</div><!--bigImg end-->	
+					<div class="smallImg">
+						
+						<div id="imageMenu">
+							<ul>
+								<foreach name="pdetail.picture" item="vvv">
+								<li><img src="{$vvv}" /></li>
+								</foreach>
+							</ul>
+						</div>
+						
+					</div><!--smallImg end-->	
+					<div id="bigView" style="display:none;"><img width="800" height="800" alt="" src="" /></div>
+				</div>
+
+				<div class="shoping_news">
+					<div class="shop_li"><h1>{$pdetail.name}</h1></div>
+				
+					<div class="shop_sh_li">
+						<form method="post" action="{:U('Web/Order/SettlementLogisticsCost')}" id="form_a">
+							<div class="shop_moeny"><b>售价：</b> <span >￥<span id="price_eee">{$pdetail.price}<span></span> </div>
+							<div class="shop_freight"><b>运费：</b> <span class="fb8">快递 {$pdetail.logistics}</span></div>
+							<div class="shop_weight"><b>规格：</b>
+								<div id="spec_right_li" class="spec_right_li">
+									<foreach name="pdetail.option" item="vo">
+									<li class="{$vo.option_key_id}"><span >{$vo.option_name}</span></li>
+									</foreach>
+
+								</div>
+							</div>
+
+							<div class="shop_number"><b>数量：</b> 
+								<div class="spec_right_num">
+									<input type="button" value="-" onclick="disNum(this)"/> 
+									<span id="num">1</span>
+									<input type="button" value="+" onclick="incNum(this)"/>
+								</div>
+							</div>
+
+							<div class="shop_cart">
+								<li><a href="javascript:;" id="shop_cart">加人购物车</a></li>
+								<li><a href="javascript:;" id="shop_nowing">立即购买</a></li>
+							</div>
+							<input type="hidden" id="productid" name="product_id" value="{$pdetail.product_id}">
+							<input type="hidden" id="option" name="product_option_id" >
+							<input type="hidden" id="number"  name="quantity" >
+						</form>
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="shoping_detail">
+				<div class="detail_show">
+					<h1><span>同类推荐</span></h1>
+				</div>
+
+				<div class="detail_list">
+
+					<foreach name="similar" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img style="width:183px;height:190px" src="{$vo.picture}" /></a>
+							<h1><a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}">{$vo.pro_name}</a></h1>
+							<p>￥{$vo.price}</p>
+						</li>
+					</foreach>
+
+
+				</div>
+			</div>
+		
+			<div class="shoping_partic">
+				<div class="part_look">
+					<h1>热卖排行榜</h1>
+
+					<foreach name="sale_hot" item="vo">
+
+						<li>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img style="width:216px;height:180px"  src="{$vo.picture}" /></a>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><h4>{$vo.pro_name}</h4></a>
+							<p>￥{$vo.price}</p>
+							<h6></h6>
+						</li>
+
+					</foreach>
+				</div>
+				<div class="part_detail">
+					<div class="detail_show">
+						<li id="shop1" class="cation" onmousedown="setTwo('shop',1,5)"><a href="javascript:;">商品详情</a></li>
+						<li id="shop2" onmousedown="setTwo('shop',2,5)"><a href="javascript:;">商品评价</a></li>
+					</div>
+
+					<div class="detaid_show_pic" id="con_shop_1" >
+						{$pdetail.content}
+					</div>
+
+					<div class="detaid_show_evaluate" id="con_shop_2" style="display:none;">
+
+						<foreach name="comment" item="vo">
+						<li>
+							<div class="show_sour">
+								<div class="head_pic"><img src="{$vo.heading}" /></div>
+								<div class="user_more">
+									<h1><b>{$vo.nickname}</b><red class="red{$vo.level}"></red> <span>{$vo.create_time}</span></h1>
+									<h2><span class="rank" style="width:{$vo.star};"></span></h2>
+								</div>
+							</div>
+							<div class="show_west">
+								<p>{$vo.content}</p>
+
+								{$vo.replay}
+							</div>
+						</li>
+
+
+						</foreach>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+ 
+<include file="./application/Web/View/footer.html"/>
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/footer.js"></script>
+
+<script type="text/javascript" src="{$ptype_url}/js/shop_show.js"></script>
+
+<script type="text/javascript">
+	function disNum(dom){
+		var num = $('#num').html();
+		if(num >1 ){
+			dom.nextSibling.nextSibling.innerHTML--;
+			var a = dom.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
+			a--;
+			dom.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = a.toFixed(2);
+			sum();
+		}
+
+	}
+
+
+	function incNum(dom){
+		dom.previousSibling.previousSibling.innerHTML ++;
+		var a = dom.nextSibling.nextSibling.innerHTML;
+		a++;
+		dom.nextSibling.nextSibling.innerHTML = a.toFixed(2);
+		sum();
+	}
+
+	function sum(){
+		var yuans = document.getElementsByName("yuan");
+		var sum = document.getElementById("sum");
+		var s =0;
+		for(var i = 0; i<3;i++){
+		s += Number(yuans[i].innerHTML)
+		}
+		sum.innerHTML = s.toFixed(2);
+	}
+</script>
+
+
+
+
+<script type="text/javascript">
+	$(".spec_right_li li").on("click", function () {
+	    if ($(this).hasClass("disabled")) {
+	        return false;
+	    }
+	    $(".spec_right_li li").removeClass("seleed");
+	    var $source = $(this);
+
+		$.post("{:U('Web/Product/getOptionPrice')}",{option_key_id:$source.attr('class')},function(data){
+				$('#price_eee').html(data);
+		})
+		$('#option').val($source.attr('class'));
+
+	    $source.toggleClass("seleed");
+	});
+
+	$('#shop_cart').click(function () {
+		var zoption = $('#option').val();
+		var num    = $('#num').html();
+		var productid = $('#productid').val();
+
+		if( zoption.length<=0 ){
+			layer.tips('请选择商品属性。', '#spec_right_li', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		$.post("{:U('Web/Order/addCart')}",{product_id:productid,quantity:num,option:zoption},function(data){
+			var json = eval("("+data+")");
+			if(json.code == 220 ){
+				layer.alert("未登陆", {icon: 2});window.location.href = "{:U('Web/Member/login')}";
+			}else if(json.code == 200){
+				layer.tips('添加购物车成功。', '#shop_cart', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+
+			}else if(json.code == 210){
+				layer.tips('json.mark。', '#shop_cart', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+			}
+		})
+	})
+
+	$('#shop_nowing').click(function(){
+		var zoption = $('#option').val();
+		var num    = $('#num').html();
+		$('#number').val(num);
+		var productid = $('#productid').val();
+
+		if( zoption.length<=0 ){
+			layer.tips('请选择商品属性。', '#spec_right_li', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+		$('#form_a').submit();
+
+	})
+
+</script>
+
+
+<script type="text/javascript">
+	$('.all-sort-list > .item').hover(function(){
+		var eq = $('.all-sort-list > .item').index(this),				//获取当前滑过是第几个元素
+			h = $('.all-sort-list').offset().top,						//获取当前下拉菜单距离窗口多少像素
+			s = $(window).scrollTop(),									//获取游览器滚动了多少高度
+			i = $(this).offset().top,									//当前元素滑过距离窗口多少像素
+			item = $(this).children('.item-list').height(),				//下拉菜单子类内容容器的高度
+			sort = $('.all-sort-list').height();						//父类分类列表容器的高度
+		
+		if ( item < sort ){												//如果子类的高度小于父类的高度
+			if ( eq == 0 ){
+				$(this).children('.item-list').css('top', (i-h));
+			} else {
+				$(this).children('.item-list').css('top', (i-h)+1);
+			}
+		} else {
+			if ( s > h ) {												//判断子类的显示位置，如果滚动的高度大于所有分类列表容器的高度
+				if ( i-s > 0 ){											//则 继续判断当前滑过容器的位置 是否有一半超出窗口一半在窗口内显示的Bug,
+					$(this).children('.item-list').css('top', (s-h)+2 );
+				} else {
+					$(this).children('.item-list').css('top', (s-h)-(-(i-s))+2 );
+				}
+			} else {
+				$(this).children('.item-list').css('top', 3 );
+			}
+		}	
+
+		$(this).addClass('hover');
+		$(this).children('.item-list').css('display','block');
+	},function(){
+		$(this).removeClass('hover');
+		$(this).children('.item-list').css('display','none');
+	});
+
+	$('.item > .item-list > .close').click(function(){
+		$(this).parent().parent().removeClass('hover');
+		$(this).parent().hide();
+	});
+</script>
+
+

@@ -1,0 +1,61 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Ticketadmin/lists')}" target="_self">优惠卷配置</a></li>
+        <li class="active"><a href="javascript:;">新增</a></li>
+    </ul>
+    <form action="{:U('Ticketadmin/add_post')}" method="post" class="form-horizontal js-ajax-forms"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>价格：</th>
+                        <td><input type="number" name="price" value="" style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>使用限制：</th>
+                        <td><input type="number" name="full_use" value="" style="width: 400px">
+                            <span class="form-required">满多少使用*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>描述：</th>
+                        <td><input type="text" name="describe" value="" style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>有效期：</th>
+                        <td><input type="number" name="validity" value="" style="width: 400px">
+                            <span class="form-required">天*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>类型：</th>
+                        <td>
+                            <select name="ttype">
+                                <option value="2">全场通用</option>
+                                <option value="1">注册即送</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="{:U('Ticketadmin/lists')}">返回</a>
+    </form>
+</div>
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+</html>

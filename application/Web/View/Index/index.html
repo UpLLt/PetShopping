@@ -1,0 +1,283 @@
+
+<!-- 首页 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/base.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css" />
+
+<include file="./application/Web/View/header.html"/>
+
+
+	<div class="banner">
+		<div class="slide-main" id="touchMain">
+			<div class="slide-box" id="slideContent">
+				<div class="slide"  style="display:block;">
+					<a href="{$banner.0.url}"><img src="{$banner.0.image}" /></a>
+				</div>
+				<div class="slide" >
+					<a  href="{$banner.1.url}"><img src="{$banner.1.image}"  /></a>
+				</div>
+				<div class="slide" >
+					<a  href="{$banner.2.url}"> <img src="{$banner.2.image}" /></a>
+				</div>
+				<div class="slide" >
+					<a  href="{$banner.3.url}"><img src="{$banner.3.image}" /></a>
+				</div>
+				<div class="slide" >
+					<a  href="{$banner.4.url}"><img src="{$banner.4.image}" /></a>
+				</div>
+
+			</div>
+
+			<div class="banner_item">
+				<a class="cur" href="#"></a><a href="#"  ></a><a href="#" ></a><a href="#" ><a href="#" ></a>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+	<div class="mian_cent"  id="bbc_1" >
+		<div class="center">
+			<div class="bbc">
+				<h1>
+					<b><strong><img src="{$ptype_url}/images/bbc_1.png"/>1F</strong></b>
+					<li id="two1" class="cation" onmousedown="setTwo('two',1,10)"><a href="{:U('Search/index',array('type'=>'1'))}">热卖宠物</a></li>
+					<foreach name="category_pet" item="vo">
+						<li ><a href="{:U('Search/index',array('type'=>'1','pet_variety_id'=>$vo['pet_variety_id']))}">{$vo.pet_variety}</a></li>
+					</foreach>
+				</h1>
+				<span><a href="{:U('Search/index',array('type'=>1))}">更多>></a></span>
+			</div>
+
+			<div class="floor">
+				<div class="left_dbm">
+					<img src="{$ptt_banner}" />
+					<img id="dbm_1" src="{$ptype_url}/images/dbm_1_more.png" />
+					<a href="{:U('Search/index',array('type'=>'1'))}"></a>
+				</div>
+
+				<div class="floor_right_one" id="con_two_1" >
+
+					<foreach  name="pet_lists" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('ptype'=>1,'pid'=>$vo['id']))}">
+								<img src="{$vo.picture}" />
+								<h1>{$vo.pet_name}</h1>
+							</a>
+							<h2>￥<span>{$vo.pet_price}</span> </h2>
+						</li>
+					</foreach>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<foreach name="product_lists" item="vvv">
+
+		<div class="mian_cent"  id="bbc_2" >
+			<div class="center">
+				<div class="bbc">
+					<h1>
+						<b><strong><img src="{$ptype_url}/images/bbc_3.png"/>{$vvv.number}F</strong></b>
+						<li id="three1"  class="cation" onmousedown="setTwo('three',1,10)"><a href="{:U('Web/Search/index',array('type'=>2,'id'=>$vvv['id']))}">{$vvv.name}</a></li>
+						<foreach name="vvv.category_list" item="ca_vv">
+							<li><a href="{:U('Web/Search/index',array('type'=>'2','id'=>$ca_vv['id']))}">{$ca_vv.name}</a></li>
+						</foreach>
+					</h1>
+					<span><a href="{:U('Web/Search/index',array('type'=>2,'id'=>$vvv['id']))}">更多>></a></span>
+				</div>
+
+				<div class="floor">
+					<div class="left_dbm">
+						<img src="{$vvv.banner}" />
+						<img id="dbm_1" src="{$ptype_url}/images/dbm_{$vvv.number}_more.png" />
+						<a href="{:U('Web/Search/index',array('type'=>2,'id'=>$vvv['id']))}"></a>
+					</div>
+
+					<div class="floor_right_one" id="con_three_1" >
+
+						<foreach name="vvv.product" item="vo">
+							<li>
+								<a href="{:U('Product/index',array('ptype'=>2,'pid'=>$vo['id']))}">
+									<img src="{$vo.smeta}" />
+									<h1>{$vo.pro_name}</h1>
+								</a>
+								<h2>￥<span>{$vo.price}</span> <strong>销量：{$vo.sales_volume}</strong></h2>
+							</li>
+						</foreach>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</foreach>
+	<!--<div class="mian_cent"  id="bbc_3" >-->
+		<!--<div class="center">-->
+			<!--<div class="bbc">-->
+				<!--<h1>-->
+					<!--<b><strong><img src="{$ptype_url}/images/bbc_3.png"/>3F</strong></b>-->
+					<!--<li id="flur1" class="cation" onmousedown="setTwo('flur',1,10)"><a href="javascript:;">宠物用品和玩具</a></li>-->
+
+				<!--</h1>-->
+				<!--<span><a href="{:U('Search/index')}">更多>></a></span>-->
+			<!--</div>-->
+
+			<!--<div class="floor">-->
+				<!--<div class="left_dbm">-->
+					<!--<img src="{$ptype_url}/images/dbm_3.png" />-->
+					<!--<img id="dbm_1" src="{$ptype_url}/images/dbm_3_more.png" />-->
+					<!--<a href="#"></a>-->
+				<!--</div>-->
+
+				<!--<div class="floor_right_one" id="con_flur_1" >-->
+					<!--<foreach  name="pet_lists" item="vo">-->
+						<!--<li>-->
+							<!--<a href="{:U('Product/index')}">-->
+								<!--<img src="{$vo.picture}" />-->
+								<!--<h1>{$vo.pet_name}</h1>-->
+							<!--</a>-->
+							<!--<h2>￥<span>{$vo.pet_price}</span> </h2>-->
+						<!--</li>-->
+					<!--</foreach>-->
+				<!--</div>-->
+
+
+			<!--</div>-->
+
+		<!--</div>-->
+	<!--</div>-->
+
+	<!--<div class="mian_cent"  id="bbc_4" >-->
+		<!--<div class="center">-->
+			<!--<div class="bbc">-->
+				<!--<h1>-->
+					<!--<b><strong><img src="{$ptype_url}/images/bbc_4.png"/>4F</strong></b>-->
+					<!--<li id="five1" class="cation" onmousedown="setTwo('five',1,10)"><a href="javascript:;">宠物药品</a></li>-->
+
+				<!--</h1>-->
+				<!--<span><a href="{:U('Search/index')}">更多>></a></span>-->
+			<!--</div>-->
+
+			<!--<div class="floor">-->
+				<!--<div class="left_dbm">-->
+					<!--<img src="{$ptype_url}/images/dbm_4.png" />-->
+					<!--<img id="dbm_1" src="{$ptype_url}/images/dbm_4_more.png" />-->
+					<!--<a href="#"></a>-->
+				<!--</div>-->
+
+				<!--<div class="floor_right_one" id="con_five_1" >-->
+					<!--<li>-->
+						<!--<a href="{:U('Product/index')}">-->
+							<!--<img src="{$ptype_url}/images/img_4.jpg" />-->
+							<!--<h1>2月大的纯血正统哈士奇</h1>-->
+						<!--</a>-->
+						<!--<h2>￥<span>2342.00</span> <strong>销量：2323</strong></h2>-->
+					<!--<li>-->
+						<!--<a href="{:U('Product/index')}">-->
+							<!--<img src="{$ptype_url}/images/img_4.jpg" />-->
+							<!--<h1>2月大的纯血正统哈士奇</h1>-->
+						<!--</a>-->
+						<!--<h2>￥<span>2342.00</span> <strong>销量：2323</strong></h2>-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<a href="{:U('Product/index')}">-->
+							<!--<img src="{$ptype_url}/images/img_4.jpg" />-->
+							<!--<h1>2月大的纯血正统哈士奇</h1>-->
+						<!--</a>-->
+						<!--<h2>￥<span>2342.00</span> <strong>销量：2323</strong></h2>-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<a href="{:U('Product/index')}">-->
+							<!--<img src="{$ptype_url}/images/img_4.jpg" />-->
+							<!--<h1>2月大的纯血正统哈士奇</h1>-->
+						<!--</a>-->
+						<!--<h2>￥<span>2342.00</span> <strong>销量：2323</strong></h2>-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<a href="{:U('Product/index')}">-->
+							<!--<img src="{$ptype_url}/images/img_4.jpg" />-->
+							<!--<h1>2月大的纯血正统哈士奇</h1>-->
+						<!--</a>-->
+						<!--<h2>￥<span>2342.00</span> <strong>销量：2323</strong></h2>-->
+					<!--</li>-->
+				<!--</div>-->
+
+				<!---->
+			<!--</div>-->
+
+		<!--</div>-->
+	<!--</div>-->
+
+
+
+
+<include file="./application/Web/View/footer.html"/>
+
+<script src="{$ptype_url}/js/ieBetter.js"></script>
+
+
+
+
+
+<script src="{$ptype_url}/js/banner.js"></script>
+
+<script type="text/javascript" src="{$ptype_url}/js/lazyload-min.js"></script>
+
+
+
+<!--  -->
+<script src="{$ptype_url}/js/footer.js"></script>
+
+<script type="text/javascript">
+	function hold1(){
+		document.getElementById('con_one_1').style.display='none';
+	}
+	function hold2(){
+		document.getElementById('con_one_2').style.display='none';
+	}
+</script>
+
+
+<script type="text/javascript">
+	$('.all-sort-list > .item').hover(function(){
+		var eq = $('.all-sort-list > .item').index(this),				//获取当前滑过是第几个元素
+			h = $('.all-sort-list').offset().top,						//获取当前下拉菜单距离窗口多少像素
+			s = $(window).scrollTop(),									//获取游览器滚动了多少高度
+			i = $(this).offset().top,									//当前元素滑过距离窗口多少像素
+			item = $(this).children('.item-list').height(),				//下拉菜单子类内容容器的高度
+			sort = $('.all-sort-list').height();						//父类分类列表容器的高度
+
+		if ( item < sort ){												//如果子类的高度小于父类的高度
+			if ( eq == 0 ){
+				$(this).children('.item-list').css('top', (i-h));
+			} else {
+				$(this).children('.item-list').css('top', (i-h)+1);
+			}
+		} else {
+			if ( s > h ) {												//判断子类的显示位置，如果滚动的高度大于所有分类列表容器的高度
+				if ( i-s > 0 ){											//则 继续判断当前滑过容器的位置 是否有一半超出窗口一半在窗口内显示的Bug,
+					$(this).children('.item-list').css('top', (s-h)+2 );
+				} else {
+					$(this).children('.item-list').css('top', (s-h)-(-(i-s))+2 );
+				}
+			} else {
+				$(this).children('.item-list').css('top', 3 );
+			}
+		}
+
+		$(this).addClass('hover');
+		$(this).children('.item-list').css('display','block');
+	},function(){
+		$(this).removeClass('hover');
+		$(this).children('.item-list').css('display','none');
+	});
+
+	$('.item > .item-list > .close').click(function(){
+		$(this).parent().parent().removeClass('hover');
+		$(this).parent().hide();
+	});
+</script>
+

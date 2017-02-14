@@ -1,0 +1,96 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Requestrecord/lists')}">请求记录</a></li>
+        <li><a href="{:U('Requestrecord/chartspage')}">请求统计 Charts</a></li>
+        <li><a href="{:U('Requestrecord/equipment')}">设备统计 Charts</a></li>
+        <li class="active"><a href="javascript:">时间统计 Charts</a></li>
+    </ul>
+    <div>
+        <div id="main" style="width: 100%;height:500px;"></div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/echarts.min.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var obj_name = eval('{$dataName}');
+//    var obj_group = eval('{$dataList}');
+    var obj_Android = eval('{$dataListAndroid}');
+    var obj_Ios = eval('{$dataListIos}');
+    var obj_Other = eval('{$dataListOther}');
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '时间统计'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: obj_name
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Android',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: obj_Android
+            },
+            {
+                name: 'Ios',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: obj_Ios
+            },
+            {
+                name: 'Other',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data: obj_Other
+            }
+        ]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>

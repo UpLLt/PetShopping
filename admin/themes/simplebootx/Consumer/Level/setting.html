@@ -1,0 +1,90 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Level/setting')}" target="_self">规则配置</a></li>
+        <!--<li class="active"><a href="javascript:;">{$title}</a></li>-->
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Level/setting')}" method="post"
+          enctype="multipart/form-data">
+        <div class="control-group">
+            <p class="control-label">会员等级规则：</p>
+        </div>
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">会员等级1：</label>
+                    <div class="controls">
+                        <input type="text" name="post[one_start]" value="{$info[0]['lev_start']}">&nbsp至
+                        <input type="text" name="post[one_end]" value="{$info[0]['lev_end']}">&nbsp积分
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">会员等级2：</label>
+                    <div class="controls">
+                        <input type="text" name="post[two_start]" value="{$info[1]['lev_start']}">&nbsp至
+                        <input type="text" name="post[two_end]" value="{$info[1]['lev_end']}">&nbsp积分
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">会员等级3：</label>
+                    <div class="controls">
+                        <input type="text" name="post[thr_start]" value="{$info[2]['lev_start']}">&nbsp至
+                        <input type="text" name="post[thr_end]" value="{$info[2]['lev_end']}">&nbsp积分
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">会员等级4：</label>
+                    <div class="controls">
+                        <input type="text" name="post[fou_start]" value="{$info[3]['lev_start']}">&nbsp至
+                        <input type="text" name="post[fou_end]" value="{$info[3]['lev_end']}">&nbsp积分
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">会员等级5：</label>
+                    <div class="controls">
+                        <input type="text" name="post[fiv_start]" href="javescript: checknum()" value="{$info[4]['lev_start']}">&nbsp至
+                        <input type="text" name="post[fiv_end]" value="{$info[4]['lev_end']}">&nbsp积分
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <!--<a class="btn" href="{:U('Index/ruleSet')}">{:L('BACK')}</a>-->
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(".hidden").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+
+</script>
+</body>
+</html>

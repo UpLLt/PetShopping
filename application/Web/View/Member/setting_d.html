@@ -1,0 +1,81 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter  box-sizing">
+				<div class="user_setting_top">
+					<h1 class="setting_process set_pro_2"></h1>
+				</div>
+
+                <form id="form_a" method="post" action="{:U('Web/Member/modifypasswd')}">
+                    <div class="user_setting_down">
+                        <li><b>原密码：</b>  <input type="password" name="oldpwd" id="oldpwd" placeholder="请输入原密码"  /></li>
+                        <li><b>新密码：</b>  <input type="password" name="newpwd" id="newpwd" placeholder="请输入新密码"  /></li>
+                        <li><b>确认新密码：</b>  <input type="password" name="repassword" id="repassword" placeholder="请重复输入新密码"  /></li>
+                        <li class="setting_2"><b></b><a href="javascript:void(0);" onclick="btn()">下一步</a></li>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<include file="./application/Web/View/footer_other.html"/>
+
+<script type="text/javascript">
+
+
+
+   function btn(){
+       var oldpwd = $('#oldpwd').val();
+       if( oldpwd.length<= 0){
+           layer.tips('请填写旧密码。', '#oldpwd', {
+               tips: [1, '#FFFFFF'],
+               time: 2000
+           });
+           return false;
+       }
+
+       var newpwd = $('#newpwd').val();
+       if( newpwd.length<= 5){
+           layer.tips('密码位数不能低于6位。', '#newpwd', {
+               tips: [1, '#FFFFFF'],
+               time: 2000
+           });
+           return false;
+       }
+
+
+       var repassword = $('#repassword').val();
+       if( repassword.length<= 0){
+           layer.tips('密码位数不能低于6位。', '#repassword', {
+               tips: [1, '#FFFFFF'],
+               time: 2000
+           });
+           return false;
+       }
+
+
+
+       if( repassword.length != newpwd.length ){
+           layer.tips('两次输入的密码不一致。', '#repassword', {
+               tips: [1, '#FFFFFF'],
+               time: 2000
+           });
+           return false;
+       }
+       $('#form_a').submit();
+   }
+</script>
+
+

@@ -1,0 +1,246 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+<div class="main">
+    <div class="center">
+        <div class="shoping_show">
+            <div class="preview">
+                <div id="vertical" class="bigImg">
+                    <img src="{$pdetail.pet_picture.0.url}" width="400" height="363" alt="" id="midimg"/>
+                    <div style="display:none;" id="winSelector"></div>
+                </div><!--bigImg end-->
+                <div class="smallImg">
+
+                    <div id="imageMenu">
+                        <ul>
+                            <foreach name="pdetail.pet_picture" item="vo">
+                                <li><img src="{$vo.url}"/></li>
+                            </foreach>
+                        </ul>
+                    </div>
+
+                </div><!--smallImg end-->
+                <div id="bigView" style="display:none;"><img width="800" height="800" alt="" src=""/></div>
+            </div>
+
+            <div class="shoping_news">
+                <div class="shop_li">
+                    <h1>{$pdetail.pet_name}</h1>
+                    <h4>售价：<span>￥{$pdetail.pet_price}</span></h4>
+                </div>
+
+                <div class="shop_sh_li_pet">
+                    <h1>萌宠信息</h1>
+                    <li><b>宠物年龄</b>{$pdetail.pet_age}</li>
+                    <li><b>宠物性别</b>{$pdetail.pet_sex}</li>
+                    <li><b>宠物毛色</b>{$pdetail.pet_colour}</li>
+                    <li><b>疫苗情况</b>{$pdetail.pet_vaccine_z}针{$pdetail.pet_vaccine_m}联</li>
+                    <li><b>宠物类型</b>{$pdetail.pet_variety}</li>
+                </div>
+
+                <div class="shop_cart pet_show_l">
+                    <form id="form_a" method="post" action="{:U('Web/Order/buyItNowBefour')}">
+                        <input type="hidden" name="pet_id" value="{$pdetail.id}">
+                        <li>
+
+                            <input type="button" class="shop_nowing" id="shop_nowing" value="立即付款">
+
+                        </li>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="shoping_detail">-->
+        <!--<div class="detail_show">-->
+        <!--<h1><span>同类推荐</span></h1>-->
+        <!--</div>-->
+
+        <!--<div class="detail_list">-->
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿袜春夏宝宝蕾丝袜袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿袜春夏宝宝蕾丝空短袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿袜春夏宝宝蕾丝袜袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿袜春夏镂空短袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿袜春夏宝宝短袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--<li>-->
+        <!--<a href="#"><img src="{$ptype_url}/images/da1.png" /></a>-->
+        <!--<h1><a href="#">6.3折/Angell 婴儿丝袜提花镂空短袜2双 粉</a></h1>-->
+        <!--<p>￥232.00</p>-->
+        <!--</li>-->
+
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="shoping_partic">
+            <div class="part_look">
+                <h1>热卖排行榜</h1>
+
+                <foreach name="sale_hot" item="vo">
+                    <li>
+                        <a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img
+                                src="{$vo.picture}"/></a>
+                        <a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><h4>{$vo.pro_name}</h4></a>
+                        <p>￥{$vo.price}</p>
+                        <h6></h6>
+                    </li>
+                </foreach>
+
+            </div>
+            <div class="part_detail">
+                <div class="detail_show">
+                    <li id="shop1" class="cation" onmousedown="setTwo('shop',1,5)"><a href="javascript:;">商品详情</a></li>
+                </div>
+
+                <div class="detaid_show_pic" id="con_shop_1">
+                    <!--<embed src="{$pdetail.pet_url}" allowFullScreen="true" quality="high" width="888" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>-->
+                    <video src="{$pdetail.pet_url}" width="888" align="middle" height="400" controls></video>
+                    {$pdetail.pet_content}
+
+                    <!--<img src="{$ptype_url}/images/shop_pic.jpg" />-->
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<input type="hidden" id="hidden_agree" value="{$service_agree}">
+
+
+<include file="./application/Web/View/footer.html"/>
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/footer.js"></script>
+
+<script type="text/javascript" src="{$ptype_url}/js/shop_show.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/shop_show.js"></script>
+
+<script>
+
+    $('#shop_nowing').click(function () {
+
+        var service_agree = $('#hidden_agree').val();
+        layer.confirm(service_agree, {
+            closeBtn: 0,
+            title: "服务协议",
+            area: ['1000px', '50%'], //宽高
+            shadeClose: true,
+            btn: ['同意', '拒绝'] //按钮
+        }, function () {
+            $("#shop_nowing").attr("disabled", "disabled");
+            $('#form_a').submit();
+        }, function () {
+
+        });
+
+
+    })
+</script>
+
+<style>
+    /*卖宠物 详情*/
+    .shop_li {
+        width: 100%;
+        float: left;
+        margin: 0px 0px 10px 0px;
+    }
+
+    .shop_li h1 {
+        font-size: 18px;
+        line-height: 30px;
+        color: #333;
+    }
+
+    .shop_li h4 {
+        font-size: 14px;
+        color: #666;
+        font-weight: 300;
+        margin: 20px 0px 0px;
+        line-height: 30px;
+    }
+
+    .shop_li h4 span {
+        font-size: 24px;
+        color: #fb821a;
+    }
+
+    .shop_nowing {
+        width: 180px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        background: fb821a;
+        margin: 33px 0px 0px;
+    }
+
+    .shop_sh_li_pet {
+        width: 100%;
+        float: left;
+        margin: 10px 0px 10px;
+    }
+
+    .shop_sh_li_pet h1 {
+        float: left;
+        width: 100%;
+        font-size: 18px;
+        color: #333;
+        font-weight: 400;
+    }
+
+    .shop_sh_li_pet li {
+        width: 100%;
+        float: left;
+        margin: 10px 0px 0px 0px;
+        line-height: 20px;
+        padding: 0px 0px 0px 30px;
+        box-sizing: border-box;
+        color: #333;
+    }
+
+    .shop_sh_li_pet li b {
+        font-weight: 300;
+        width: 150px;
+        float: left;
+        color: #666;
+    }
+
+    .pet_show_l {
+        margin: 0px !important;
+
+</style>

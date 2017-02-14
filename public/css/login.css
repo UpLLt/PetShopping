@@ -1,0 +1,88 @@
+﻿
+body{ 
+	font-family:'Microsoft Yahei'; 
+	margin:0px; 
+	padding:0px;
+}
+h1,h4,p,i,input{ 
+	margin:0px;
+	padding:0px;
+	
+}
+ input:focus{
+ 	outline: none;
+ }
+li{ 
+	list-style:none;
+}
+.admin_bg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 0;
+	overflow: hidden;
+	background: #92cef3 ;
+}
+.admin_login{ 
+	position:absolute; 
+	top: 200px;
+	left: 17%;
+	z-index: 33;
+	width:860px;
+	height:430px;
+	background: url(../images/admin_login_bg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.admin_login form{
+	width: 315px;
+	height: 200px;
+	margin: 150px 307px;
+	position: relative;
+}
+.admin_login form li{
+	width:70%;
+	border:1px solid #92cef3;
+	line-height: 30px;
+	height: 30px;
+	float: left;
+	margin: 20px 0px 0px;
+	background: #fff;
+	border-radius: 15px;
+
+}
+.admin_login form li b{
+	width: 40px;
+	float: left;
+	background: #92cef3;
+	display: block;
+	overflow: hidden;
+	border-radius: 13px 0px 0px 13px;
+}
+.admin_login form li b img{
+	width: 30px;
+	margin: 0px 5px;
+}
+
+.admin_login form li input{
+	width: 160px;
+	float: left;
+	border :none ;
+	background: none;
+	height: 30px;
+	line-height: 30px;
+	padding: 0px 5px;
+	box-sizing:border-box;
+	color: #333;
+}
+.user_submit{
+	width: 100px;
+	height: 100px;
+	border:none;
+	margin: 12px 0px 0px;
+	font-family:'Microsoft Yahei'; 
+	position: absolute;
+	right: -10px;
+	top: 0px;
+	background: url(../images/admin_submit.png);
+	cursor: pointer;
+}

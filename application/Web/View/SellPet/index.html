@@ -1,0 +1,23 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+<div class="mian_cent" >
+	<div class="center">
+		<div class="protocol layui-layer-rim">
+			<h1>服务协议 <span><a href="{:U('index/index')}"><img src="{$ptype_url}/images/close.png" /></a></span></h1>
+			<div class="protocol_content ">
+				<p>{$content.se_service}</p>
+
+			</div>
+			<h2><a href="{:U('SellPet/selling_pets')}">我已阅读并同意服务协议</a></h2>
+		</div>
+	</div>
+</div>
+
+<div class="bag_e1e1e1"></div>
+
+<script>
+	$(document).ready(function(){
+		$('#change_fff').attr('class','action')
+	});
+</script>
+<include file="./application/Web/View/footer.html"/>

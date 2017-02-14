@@ -1,0 +1,137 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+	<div class="main">
+		<div class="center">
+			<div class="menu_pet">
+				<span>门店信息</span>
+			</div>
+			<div class="slide-main pet_medical_show_pic" id="touchMain">
+				<div class="slide-box" id="slideContent">
+					<volist name="images" id="vo">
+						<div class="slide" style="display:block;">
+							<img src="{$vo}"  />
+						</div>
+					</volist>
+					<!--<div class="slide" style="display:block;">
+						<img src="{$ptype_url}/images/img_a1.png"  />
+					</div>
+					<div class="slide"  >
+						<img src="{$ptype_url}/images/img_a2.png"  />
+					</div>
+					<div class="slide" >
+						<img src="{$ptype_url}/images/img_a3.png"  />
+					</div>
+					<div class="slide">
+						<img src="{$ptype_url}/images/img_a4.png"  />
+					</div>
+					<div class="slide" >
+						<img src="{$ptype_url}/images/img_a5.png"  />
+					</div>
+					<div class="slide" >
+						<img src="{$ptype_url}/images/img_a6.png"  />
+					</div>-->
+				</div>
+			
+				<div class="banner_item pet_med_pic_list">
+					<volist name="images" id="vo">
+						<a class="" href="#"><img src="{$vo}"  /></a>
+					</volist>
+					<!--<a class="cur" href="#"><img src="{$detail[0]}"  /></a>
+					<a href="#"><img src="{$detail[1]}"  /></a>
+					<a href="#"><img src="{$detail[2]}"  /></a>
+					<a href="#"><img src="{$detail[3]}"  /></a>
+					<a href="#"><img src="{$detail[4]}"  /></a>
+					<a href="#"><img src="{$detail[5]}"  /></a>-->
+					<!--<a href="#"><img src="{$ptype_url}/images/img_a4.png"  /></a>
+					<a href="#"><img src="{$ptype_url}/images/img_a5.png"  /></a>
+					<a href="#"><img src="{$ptype_url}/images/img_a6.png"  /></a>-->
+				</div>
+			</div>
+
+			<div class="title_pet">
+				<h1>{$area}</h1>
+				<p>{$address}</p>
+			</div>
+			
+			<div class="menu_pet">
+				<span>用户评论</span><b>共{$count}条</b>
+			</div>
+
+			<div class="pet_medical_show_comt">
+				<volist name="comments" id="vo">
+					<li>
+						<div class="show_sour">
+							<div class="head_pic">
+								<if condition="($vo.headimg eq '')">
+									<img src="{$ptype_url}/images/user_head_cation.png" />
+									<else />
+									<img src="{$vo.headimg}" />
+								</if>
+								</div>
+							<div class="user_more">
+								<h1><b>{$vo.nickname}</b><red class="{$vo.sco_level}"></red> <span>{$vo.create_time}</span></h1>
+								<h2>
+									<if condition="($vo.star eq 1.00)">
+											<span class="rank" style="width: 16px;"></span>
+										<elseif condition="($vo.star eq 2.00)"/>
+											<span class="rank" style="width: 34px;"></span>
+										<elseif condition="($vo.star eq 3.00)"/>
+											<span class="rank" style="width: 52px;"></span>
+										<elseif condition="($vo.star eq 4.00)"/>
+											<span class="rank" style="width: 68px;"></span>
+										<else />
+											<span class="rank" style="width: 85px;"></span>
+									</if>
+									<span class="rank" style="..."></span>
+								</h2>
+							</div>
+						</div>
+
+						<div class="show_west">
+							<p>{$vo.content}</p>
+
+							<p><span>回复：</span>{$vo.replay}</p>
+						</div>
+					</li>
+				</volist>
+
+
+				<!--<li>
+					<div class="show_sour">
+						<div class="head_pic"><img src="{$ptype_url}/images/user_head_cation.png" /></div>
+						<div class="user_more">
+							<h1><b>用户名称</b><red class="red2"></red> <span>2016-11-23</span></h1>
+							<h2><span class="rank" style="width:68px;"></span></h2>
+						</div>
+					</div>
+
+					<div class="show_west">
+						<p>优势:100%正品爆款包邮!保证宝贝生产商的工商注册年份、员工人数、交易记录等企业详情。</p>
+					</div>
+				</li>-->
+
+			</div>
+			<div style="float:right" class="pagination">{$Page}</div>
+		</div>
+	</div>
+
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+
+<include file="./application/Web/View/footer.html"/>	
+
+<script src="{$ptype_url}/js/banner.js"></script>
+<script>
+	$(".pet_med_pic_list a:first").attr('class', 'cur');
+</script>
+<script>
+	$(document).ready(function(){
+		$('#change_aaa').attr('class','action');
+	});
+</script>

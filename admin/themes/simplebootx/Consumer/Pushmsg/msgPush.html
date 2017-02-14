@@ -1,0 +1,41 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">消息推送</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Pushmsg/msgPush')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label"></label>
+                    <div class="controls">
+                        <p style="color: red;">*本推送针对所有用户</p>
+                        <!--<span class="form-required">*</span>-->
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">推送内容：</label>
+                    <div class="controls">
+                        <textarea class="form-control" rows="7" name="content" >{$rst.kno_content}</textarea>
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">推送</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+
+</body>
+</html>

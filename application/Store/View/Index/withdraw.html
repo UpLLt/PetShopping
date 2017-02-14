@@ -1,0 +1,93 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;" target="_self">提现</a></li>
+        <!--<li class="active"><a href="javascript:;">{$title}</a></li>-->
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/withdraw')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <input class="hidden" type="text" name="id" value="{$info.id}" >
+                <div class="control-group">
+                    <label class="control-label">提现金额：</label>
+                    <div class="controls">
+                        <input  name="wi_money" value="" type="number" style="width: 200px; height: 32px;">
+                        <span class="form-required">&nbsp元  可提现 {$memberinfo.balance} 元</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">提现银行：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select class="select_2" name="wi_bank" style="width: 200px;">
+                        <option value="">请选择银行</option>
+                        {$options}
+                    </select>
+                    <span class="form-required">*</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">银行卡号：</label>
+                    <div class="controls">
+                        <input type="number"   name="wi_bank_card" value="{$info.wi_bank_card}" style="width: 200px; height: 32px;">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">开户人姓名：</label>
+                    <div class="controls">
+                        <input type="text" name="wi_bank_name" value="{$info.wi_bank_name}" style="width: 200px; height: 32px;">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">提现密码：</label>
+                    <div class="controls">
+                        <input type="password" name="taking_pass" value="{$info.wi_bank_name}" style="width: 200px; height: 32px;">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">注意事项：</label>
+                    </br>
+                    <ul style="margin-left: 180px;">
+                        <li>说明：平台支持用户通过微信、支付宝充值、用户账号余额可提现、提现时间为每个月1号，10号，20号，每次提现不超过5万，如用户输出银行卡号或开户人导致提现未到账，平台不承担任何责任</li>
+                        <li>2.每次提现金额不超过5万元</li>
+                        <li>3.用户输错银行卡或开户人姓名由用户自己承担</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <!--<a class="btn" href="{:U('Index/ruleSet')}">{:L('BACK')}</a>-->
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(".hidden").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+
+</script>
+</body>
+</html>

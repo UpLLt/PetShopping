@@ -1,0 +1,112 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;" target="_self">规则配置</a></li>
+        <!--<li class="active"><a href="javascript:;">{$title}</a></li>-->
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/ruleSet')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <!--<input class="hidden" type="text" name="post[kno_id]" value="{$rst.kno_id}">-->
+                <div class="control-group">
+                    <label class="control-label">签到获取积分：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[0]['rul_key']}]" value="{$info[0]['rul_value']}">
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">发帖获取积分：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[1]['rul_key']}]" value="{$info[1]['rul_value']}">
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">回复获取积分：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[2]['rul_key']}]" value="{$info[2]['rul_value']}">
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">消费获取积分比例：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[3]['rul_key']}]" value="{$info[3]['rul_value']}">
+                        <span class="form-required">%</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">积分抵扣比例：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[4]['rul_key']}]" value="{$info[4]['rul_value']}">
+                        <span class="form-required">分/元</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">抵扣消费总金额的：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[8]['rul_key']}]" value="{$info[8]['rul_value']}">
+                        <span class="form-required">%</span>
+                    </div>
+                </div>
+                <div class="control-group max-score">
+                    <label class="control-label">社区积分每日获取上限：</label>
+                    <div class="controls">
+                        <input type="text" name="post[{$info[7]['rul_key']}]" value="{$info[7]['rul_value']}">
+                        <span class="form-required"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">发帖关键字屏蔽：</label>
+                    <div class="controls">
+                        <textarea class="form-control" rows="7" name="post[{$info[5]['rul_key']}]">{$info[5]['rul_value']}</textarea>
+                        <span class="form-required">*关键字之间以逗号隔开</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">回复关键字屏蔽：</label>
+                    <div class="controls">
+                        <textarea class="form-control" rows="7" name="post[{$info[6]['rul_key']}]">{$info[6]['rul_value']}</textarea>
+                        <span class="form-required">*关键字之间以逗号隔开</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <!--<a class="btn" href="{:U('Index/ruleSet')}">{:L('BACK')}</a>-->
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(".hidden").hide();
+    $(".max-score").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                '<td><input required name="title[]" value=""></td>' +
+                '<td><input name="link[]" value=""></td>' +
+                '<td><input type="file" name="image[]"></td>' +
+                '<td><input name="sort_order[]" value=""></td>' +
+                '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

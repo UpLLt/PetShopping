@@ -1,0 +1,114 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css" />
+<include file="./application/Web/View/header_user.html"/>	
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_petinfo">
+					<h1>宠物信息
+						<p>请准确填写你的宠物信息 ，我们将在你的宠物疫苗时间/驱虫到期时间前15天提现你为你的宠物大疫苗/驱虫</p>
+					</h1>
+				</div>
+				<form method="post" id="form_a" action="{:U('Web/Member/add_pet_post')}" enctype="multipart/form-data" >
+					<div class="oetinfo_add_petinfo">
+						<li><b>宠物头像：</b>
+							<div class="add_head_pic">
+								<div id="preview">
+									<img id="imghead" width=100% height=auto border=0 src='{$ptype_url}/images/user_head_cation.png'>
+								</div>
+								<a href="javascript:;" class="a-upload">
+									<input type="file" name="pet" id="" onchange="previewImage(this)">上传图片
+								</a>
+							</div>
+						</li>
+
+						<li><b>宠物种类：</b>
+							<select name="ptype"  class="select_refund">
+									<option value="1">喵星人</option>
+									<option value="2">汪星人</option>
+							</select>
+						</li>
+						<li><b>宠物昵称：</b><input type="text" name="pname" id="pname" maxlength="10" /></li>
+						<li><b>宠物生日：</b><input type="text" name="pbirthday" id="birthday" /></li>
+						<li class="pet_sex"><b>宠物性别：</b>
+												<label><input   type="radio" checked="checked" value="1" name="psex" checked/>公</label>
+														<label><input name="psex" type="radio" value="2"  />母</label></li>
+						<li><b>疫苗时间：</b><input type="text" name="Insect_time" id="vaccine"/></li>
+						<li><b>驱虫时间：</b><input type="text" id="parasite" name="vaccine_time" /> <span class="latterly"></span></li>
+						<li><b></b><input type="button"  id="button" onclick="btn()" value="添加" class="pet_submit" /> </li>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<![endif]-->
+
+<include file="./application/Web/View/footer_other.html"/>
+
+
+<!-- 时间 -->
+<script type="text/javascript" src="{$ptype_url}/js/jedate.min.js"></script>
+
+<script type="text/javascript">
+
+	function btn(){
+
+		var pname = $('#pname').val();
+		if( pname.length<= 0){
+			layer.tips('请填写宠物昵称。', '#pname', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+		$("#button").attr("disabled","disabled");
+		$('#form_a').submit();
+	}
+
+
+    jeDate({
+		dateCell:"#birthday",
+		format:"YYYY-MM-DD",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"2006-06-16",
+		okfun:function(val){alert(val)}
+	})
+
+	 jeDate({
+		dateCell:"#vaccine",
+		format:"YYYY-MM-DD",
+		isinitVal:false,
+		isTime:false, //isClear:false,
+		minDate:"2006-06-16",
+		okfun:function(val){alert(val)}
+	})
+
+	  jeDate({
+		dateCell:"#parasite",
+		format:"YYYY-MM-DD",
+		isinitVal:false,
+		isTime:false, //isClear:false,
+		minDate:"2006-06-16",
+		okfun:function(val){alert(val)}
+	})
+
+    //alert("YYYY/MM".match(/\w+|d+/g).join("-"))
+</script>
+
+
+<script type="text/javascript" src="{$ptype_url}/js/uploadpic.js"></script>

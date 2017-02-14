@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/zyUpload.css" />
+
+<include file="./application/Web/View/header_page.html"/>
+
+
+<div class="user_usercenter box-sizing">
+	<div class="merchant_pet">
+		<h1 class="pet_h1">支付方式</h1>
+		{$lists.content}
+	</div>
+</div>
+</div>
+</div>
+
+
+<include file="./application/Web/View/footer.html"/>
+<!-- jquery -->
+
+<script type="text/javascript" src="{$ptype_url}/js/address.js"></script>
+
+
+<!-- 引用核心层插件 -->
+<script src="{$ptype_url}/js/zyFile.js"></script>
+<!-- 引用控制层插件 -->
+<script src="{$ptype_url}/js/zyUpload.js"></script>
+<!-- 引用初始化JS -->
+<script src="{$ptype_url}/js/jq22.js"></script>
+<!-- 区域选择 -->
+
+
+
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#sjld").sjld("#shenfen","#chengshi","#quyu");
+	});
+
+
+</script>
+
+<script src="{$ptype_url}/js/uploadpic.js"></script>
+

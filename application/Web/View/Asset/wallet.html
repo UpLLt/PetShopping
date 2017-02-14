@@ -1,0 +1,52 @@
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_top">
+					<h1>我的余额：<span>￥{$wallet.balance}</span> <h1>我的积分：<span>{$wallet.sco_now}</span> <a class="frt withdraw" href="{:U('Web/Asset/withdraw')}">提现</a><a class="frt recharge" href="{:U('Web/Asset/recharge')}">充值</a></h1>
+					<p>说明：平台支持用户通过微信、支付宝充值、用户账号余额可提现、提现时间为每个月1号，10号，20号，每次提现不超过5万，如用户输出银行卡号或开户人导致提现未到账，平台不承担任何责任</p>
+					
+				</div>
+
+				<div class="user_integral">
+					<h2><span>收支明细</span></h2>
+					<h1>
+						<span>日期</span>
+						<span>收入/支出</span>
+						<span>详细说明</span>
+						<span>金额</span>
+					</h1>
+
+					<foreach name="lists" item="vo">
+						<li>
+							<span>{$vo.create_time}</span>
+							<span>{$vo.bill_type}</span>
+							<span>{$vo.source}</span>
+							<span>￥{$vo.price}</span>
+						</li>
+					</foreach>
+
+				</div>
+
+				<div class="list_page">
+					{$Page}
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<include file="./application/Web/View/footer_other.html"/>	
+

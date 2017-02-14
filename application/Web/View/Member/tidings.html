@@ -1,0 +1,88 @@
+
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_petinfo">
+					<h1>我的消息</h1>
+
+					<h4 ><label onclick="selectAll()" ><input type="checkbox" class="checkbox mag"  /> 全选</label> <a href="javascript:;" id="readed">标记为已阅读</a><a href="javascript:;" id="delete_tid">删除</a> </h4>
+				</div>
+
+				<div class="user_tidings">
+					{$lists}
+				</div>
+
+			</div>
+		<div class="list_page">{$Page}</div>
+		</div>
+	</div>
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+	function selectAll(){
+		var a = document.getElementsByTagName("input");
+
+		if(a[3].checked){
+			for(var i = 0;i<a.length;i++){
+				if(a[i].type == "checkbox") a[i].checked = false;
+			}
+		}
+		else{
+			for(var i = 0;i<a.length;i++){
+				if(a[i].type == "checkbox") a[i].checked = true;
+			}
+		}
+	}
+
+	$('#readed').click(function(){
+		var obj = document.getElementsByName("pusmsg");
+		var check_val = [];
+		for( k in obj ){
+			if(obj[k].checked)
+				check_val.push(obj[k].value);
+		}
+
+		if( check_val.length<=0 ){
+			alert('请选择');
+			return false;
+		}
+		$.post("{:U('Web/Member/editStatus')}",{id:check_val}, function (data) {
+			if( data == 1 ){
+				alert('修改成功');location.reload()
+			}
+		})
+	})
+
+	$('#delete_tid').click(function(){
+		var obj = document.getElementsByName("pusmsg");
+		var check_val = [];
+		for( k in obj ){
+			if(obj[k].checked)
+				check_val.push(obj[k].value);
+		}
+
+		if( check_val.length<=0 ){
+			alert('请选择');
+			return false;
+		}
+		$.post("{:U('Web/Member/delMsg')}",{id:check_val}, function (data) {
+			if( data == 1 ){
+				alert('修改成功');location.reload();
+			}
+		})
+	})
+
+
+	function show(){
+		document.getElementById('userinfo').style.display='block';
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none';
+		}
+
+
+
+
+</script>

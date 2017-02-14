@@ -1,0 +1,57 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter  box-sizing">
+				<div class="user_setting_top">
+					<h1 class="setting_process set_pro_2"></h1>
+				</div>
+
+				<form id="form_a" method="post" action="{:U('Member/backpaypasswd')}">
+					<div class="user_setting_down">
+						<li><b>新密码：</b>  <input type="password" name="password" id="news_pwd" placeholder="请输入新密码"  /></li>
+						<li><b>确认新密码：</b> <input type="password" name="re_password" id="new_news_pwd" placeholder="请再次输入新密码"  /></li>
+						<input type="hidden" name="code" value="{$member.code}">
+
+						<li class="setting_2"><b></b><a href="javascript:void(0);" onclick="btn()">确定</a></li>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+	<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+ 	<script>
+		function btn(){
+			var news_pwd = $('#news_pwd').val();
+			var new_news_pwd = $('#new_news_pwd').val();
+			if( news_pwd.length<= 5){
+				layer.tips('密码位数不能低于6位。', '#news_pwd', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+				return false;
+			}
+			if( new_news_pwd.length<= 5){
+				layer.tips('密码位数不能低于6位。', '#new_news_pwd', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+				return false;
+			}
+
+			if( new_news_pwd.length != news_pwd.length){
+				layer.tips('两次输入的密码不一致。', '#new_news_pwd', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+				return false;
+			}
+
+
+			$('#form_a').submit();
+		}
+	</script>
+	<include file="./application/Web/View/footer_other.html"/>
+

@@ -1,0 +1,71 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Coupon/lists')}" target="_self">优惠卷管理</a></li>
+        <li class="active"><a href="javascript:;">批量派送优惠卷</a></li>
+    </ul>
+    <form action="{:U('Coupon/add_post')}" method="post" class="form-horizontal js-ajax-forms"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>派送等级：</th>
+                        <td>
+                            <select name="sco_level" >
+                                <option value="1">会员等级：VIP_1</option>
+                                <option value="2">会员等级：VIP_2</option>
+                                <option value="3">会员等级：VIP_3</option>
+                                <option value="4">会员等级：VIP_4</option>
+                                <option value="5">会员等级：VIP_5</option>
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>优惠劵：</th>
+                        <td>
+                            <select name="ticket_id" >
+                               {$category}
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+                    <!--<tr>-->
+                        <!--<th>等级：</th>-->
+                        <!--<td><input type="number" name="price" value="" style="width: 400px">-->
+                            <!--<span class="form-required">*</span>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <!--<tr>-->
+                        <!--<th>描述：</th>-->
+                        <!--<td><input type="text" name="describe" value="" style="width: 400px">-->
+                            <!--<span class="form-required">*</span>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <!--<tr>-->
+                        <!--<th>有效期：</th>-->
+                        <!--<td><input type="number" name="validity" value="" style="width: 400px">-->
+                            <!--<span class="form-required">天*</span>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+
+                </table>
+            </div>
+        </div>
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="{:U('Coupon/lists')}">返回</a>
+    </form>
+</div>
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+</html>

@@ -1,0 +1,201 @@
+<admintpl file="header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+             onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:$('#savedimage{id}').remove();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Index/lists')}">宠物列表</a></li>
+        <li class="active">
+            <a>编辑</a>
+        </li>
+    </ul>
+    <form action="{:U('Index/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span10">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">分类</th>
+                        <td>
+                            <select style="width: 50px" id="pet_type" name="post[pet_type]">
+                                <if condition="($data.pet_type eq 1)">
+                                    <option selected="selected" value="1">猫</option>
+                                    <option value="2">狗</option>
+                                    <else/>
+                                    <option value="1">猫</option>
+                                    <option selected="selected" value="2">狗</option>
+                                </if>
+
+                            </select>
+                            <select style="width: 100px" id="pet_variety" name="post[pet_variety_id]">
+                                {$options}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>姓名</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="post[pet_name]" id="title" required
+                                   value="{$data.pet_name}"
+                                   placeholder="请输入标题"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>颜色</th>
+                        <td>
+                            <select name="post[pet_colour]" id="">
+                                {$coloroptions}
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>年龄</th>
+                        <td>
+                            <select name="post[pet_age]">
+                                {$ageoptions}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>毛色</th>
+                        <td>
+                            <select name="post[pet_fur]">
+                                {$furoptions}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>
+                            <select name="post[pet_sex]">
+                                <if condition="($data.pet_sex eq 1)">
+                                    <option selected="selected" value="1">公</option>
+                                    <option value="2">母</option>
+                                    <else/>
+                                    <option value="1">公</option>
+                                    <option selected="selected" value="2">母</option>
+                                </if>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>疫苗情况</th>
+                        <td>
+                            <input required name="post[pet_vaccine_z]" style="width: 50px" type="number"
+                                   value="{$data.pet_vaccine_z}">针
+                            <input required name="post[pet_vaccine_m]" style="width: 50px" type="number"
+                                   value="{$data.pet_vaccine_m}">联
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>宠物价格</th>
+                        <td>
+                            <input required name="post[pet_price]" type="number" value="{$data.pet_price}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>联系方式</th>
+                        <td>
+                            <input required name="post[pet_phone]" type="text" value="{$data.pet_phone}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>视频链接</th>
+                        <td>
+                            <input required name="post[pet_url]" style="width: 400px" type="text"
+                                   value="{$data.pet_url}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>商品图片/相册图集</th>
+                        <td>
+                            <ul id="photos" class="pic-list unstyled">
+                                <notempty name="pet_picture">
+                                    <foreach name="pet_picture" item="vo">
+                                        <php>$img_url=sp_get_image_preview_url($vo['url']);</php>
+                                        <li id="savedimage{$key}">
+                                            <input id="photo-{$key}" type="hidden" name="photos_url[]"
+                                                   value="{$vo['url']}">
+                                            <input id="photo-{$key}-name" type="text" name="photos_alt[]"
+                                                   value="{$vo.alt}" style="width: 200px;" title="图片名称">
+                                            <img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}"
+                                                 style="height:36px;width: 36px;"
+                                                 onclick="parent.image_preview_dialog(this.src);">
+                                            <a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
+                                            <a href="javascript:$('#savedimage{$key}').remove();">移除</a>
+                                        </li>
+                                    </foreach>
+                                </notempty>
+                            </ul>
+                            <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');"
+                               class="btn btn-small">选择图片</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>内容</th>
+                        <td>
+                            <script type="text/plain" id="content" name="post[pet_content]">{$data.pet_content}</script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="post[id]" value="{$data.id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <a class="btn" href="{:U('AdminPost/index')}">返回</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#pet_type').change(function () {
+            $('#pet_type').val();
+            $.post("{:U('Index/getCategory')}", {id: $('#pet_type').val()}, function (e) {
+                if (e.state == 'success') {
+                    $('#pet_variety').html(e.msg);
+                } else {
+                    console.log(e);
+                }
+            });
+        });
+        var editorURL = GV.WEB_ROOT;
+        //编辑器
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+    });
+
+</script>
+</body>
+</html>

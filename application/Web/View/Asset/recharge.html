@@ -1,0 +1,115 @@
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_rech ddd">
+					<form method="post" id="form_a" action="{:U('Web/Asset/doalipay')}">
+						<li><b>充值金额：</b><input onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" type="text" id="money" name="price" placeholder="请输入充值金额" /> 元</li>
+						<li><b>充值方式：</b>
+							<span id="pay1" class="cation" onmousedown="setTwo('pay',1,3)">
+								<label>
+										<input type="radio" name="pay_ment"
+											   checked="checked"
+											   class="checkbox mag mak"
+											   value="wxpay"/>
+										<img src="{$ptype_url}/images/wechat.png" />微信支付
+								</label>
+							</span>
+							<span id="pay2" onmousedown="setTwo('pay',2,3)">
+								<label>
+										<input type="radio" name="pay_ment"
+											   class="checkbox mag mak"
+											   value="alipy"/>
+										<img src="{$ptype_url}/images/alipay.png" />支付宝支付
+								</label>
+							</span>
+						</li>
+						<div class="" id="con_pay_1" ></div>
+						<div class="" id="con_pay_2"></div>
+						<li class="pay_submit"><b>&nbsp;</b><a href="javascript:;" id="pay_submit">确认充值</a></li>
+					</form>
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+ 
+	
+<include file="./application/Web/View/footer_other.html"/>
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+<script>
+
+	$('#pay_submit').click(function () {
+
+		var price = $('#money').val();
+
+		var input_val = $("input[name='pay_ment']:checked").val();
+		if( price.length<=0 ) {
+			layer.alert('充值金额不能为空');
+			return false;
+		}
+
+		if (input_val == 'wxpay') {
+
+			layer.open({
+				type: 2,
+				title: '咪咻宠物微信支付',
+				closeBtn: 0, //不显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				area: ['340px', '380px'],
+				content: 'https://www.mixiupet.com/Web/Asset/UnifiedRecharge/price/'+price,
+			});
+		}
+
+		if (input_val == 'alipy') {
+			$('#form_a').submit();
+		}
+
+	})
+
+	//		function GetOrder() {
+	//			var zorder_sn = $('#order_id').val();
+	//			$.ajax({
+	//				type: "post",
+	//				dataType: "json",
+	//				url: "{:U('Web/Pay/order_status')}",
+	//				data: {order_sn: zorder_sn},
+	//				success: function (data) {
+	//					if (data == 1) {
+	//						location.href = "{:U('Web/Pay/paysuccess')}";
+	//					}
+	//				}
+	//			});
+	//		}
+	//		window.setInterval("GetOrder()", 2000);
+
+</script>
+
+<style>
+	.ddd label{
+		width:100%;
+		float: left;
+	}
+	.ddd span input{
+		width:15px !important;
+		display:none;
+	}
+	.ddd img{
+		float: left;
+		margin: 0px 10px;
+		width: 40px;
+	}
+</style>
+
+
+
+

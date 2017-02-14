@@ -1,0 +1,53 @@
+
+<include file="./application/Web/View/header_munity.html"/>
+
+
+    <div class="user_mian">
+    <div class="center">
+      <div class="pet_muntity_left">
+        <volist name="product_info" id="vo">
+          <li>
+            <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+              <img src="{$vo.image}" />
+            </a>
+            <h1>{$vo.pro_name}</h1>
+            <p>￥{$vo.option_price}</p>
+          </li>
+        </volist>
+      </div>
+
+      <div class="pet_muntity_right">
+      <div class="back_muntity"><h1><a href="{:U('Web/Community/index')}">社区首页</a>><span>宠物问答</span></h1></div>
+        <div class="pet_intertion">
+          <form action="{:U('Web/Community/pet_answer')}" method="post">
+          <li><b>我的问题：</b><input name="keyword" type="text" placeholder="宠物掉毛" /> <input  type="submit" id="submint_say" value="去问问" /></li>
+          </form>
+          <li><b>问题相关答案：</b>
+              <div class="intertion_show">
+                <volist name="lists" id="vo">
+                  <p><a href="{:U('Web/Community/answer_detail', array('kno_id' => $vo['kno_id']))}">{$vo.kno_title}</a></p>
+                </volist>
+                <!--<p><a href="pet_show.html">秋季宠物掉毛的原因？</a></p>
+                <p><a href="pet_show.html">秋季宠物掉毛的原因？</a></p>
+                <p><a href="pet_show.html">秋季宠物掉毛的原因？</a></p>
+                <p><a href="pet_show.html">秋季宠物掉毛的原因？</a></p>-->
+              </div>
+          </li>
+        </div>
+
+
+      </div>
+
+      <div class="back_home">
+        <a href="index.html" title="返回首页"><img src="{$ptype_url}/images/go_back.png"  title="返回首页"/></a>
+      </div>
+  
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>

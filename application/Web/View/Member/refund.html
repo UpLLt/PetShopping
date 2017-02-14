@@ -1,0 +1,111 @@
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/other.css" />
+
+<div class="order_refund_show">
+	<form action="#">
+		<li><b>退货原因：</b>
+			<select class="select_refund">
+			  	<option value ="1">这东西是坏的！</option>
+			  	<option value ="2">不想要啦。</option>
+			  	<option value="3">买错东西了。</option>
+			  	<option value="4">我就不告诉你！</option>
+			</select>
+			
+		</li>
+
+		<li><b>退货原因：</b>
+			<div id="preview">
+			    <img id="imghead" width=10% height=auto border=0 src='{$ptype_url}/images/upland_bg.png'>
+			</div>
+			<a href="javascript:;" class="a-upload">
+			    <input type="file" name="" id="" onchange="previewImage(this)">上传正面照
+			</a>
+		</li>
+		<li><b>退货说明：</b>
+			<div class="refund_req">
+				<p>1、由于质量原因退货请上传商品照片（请拍摄有质量问题的部分）</p>
+				<p>2、质量问题商品平台将补贴每件商品20元快递费用。</p>
+				<p>3.如无质量问题，平台将不补贴任何快递费用。</p>
+				<p>4、平台将在收货后3-5天内退款至用户钱包。</p>
+			</div>
+		</li>
+
+		<li><b>退货地址：</b>
+			<div class="refund_req">
+				<p>成都市高新区环球中心 N5 1203</p>
+				<p>张三 18600256742</p>
+			</div>
+		</li>
+
+		<li class="submit_up mag20"><b></b><input type="submit" value="提交申请"  /></li>
+	</form>
+</div>
+
+
+
+
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+      //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          var MAXWIDTH  = 260; 
+          var MAXHEIGHT = 180;
+          var div = document.getElementById('preview');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead>';
+              var img = document.getElementById('imghead');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = '0px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead>';
+            var img = document.getElementById('imghead');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight )
+            {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                 
+                if( rateWidth > rateHeight )
+                {
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else
+                {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+</script>
+

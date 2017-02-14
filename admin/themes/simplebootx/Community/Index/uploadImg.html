@@ -1,0 +1,49 @@
+<admintpl file="header" />
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+             onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:$('#savedimage{id}').remove();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+<!--<form action="{:U(Index/uploadImg)}" enctype="multipart/form-data" method="post" >
+    <input type="text" name="name" />
+    <input type="file" name="photo1" />
+    <input type="file" name="photo2" />
+    <input type="submit" value="提交" ></form>-->
+<form action="{:U(Index/uploadImg)}" enctype="multipart/form-data" method="post" >
+    <table>
+        <tr>
+            <th>商品图片/相册图集</th>
+            <td>
+                <ul id="photos" class="pic-list unstyled"></ul>
+                <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');"
+                   class="btn btn-small">选择图片</a>
+            </td>
+        </tr>
+    </table>
+    <input type="text" name="name" />
+    <input type="file" name="photo1" />
+    <input type="file" name="photo2" />
+    <input name="word" type=""text>
+    <div class="form-actions">
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="{:U('AdminPost/index')}">返回</a>
+    </div>
+</form>
+
+</body>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+
+</html>

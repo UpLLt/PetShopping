@@ -1,0 +1,62 @@
+{__NOLAYOUT__}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台登录界面</title>
+
+    <link  rel="stylesheet" type="text/css" href="__PUBLIC__/assets/css/login.css" />
+</head>
+
+<body>
+
+<style>
+    .sada{
+        border: none !important;
+        background: none !important;
+        font-size: 14px;
+        text-align: center;
+    }
+    .sada a{
+        color: #333;
+        text-decoration: none;
+    }
+</style>
+
+<div class="admin_bg">
+    <div class="logo">
+        <h1></h1>
+    </div>
+    <div class="admin_login">
+        <form action="{:U('Store/Index/login')}" method="post">
+            <li><b><img src="__PUBLIC__/assets/img/admin_name.png" /></b><input type="text" name="username"   placeholder="用户名" class="user_name"  maxlength="12"/></li>
+            <li><b><img src="__PUBLIC__/assets/img/admin_pwd.png" /></b><input type="password" name="password"  placeholder="密码" class="user_pwd" maxlength="16" /></li>
+            <li class="admin_code"><b><img src="__PUBLIC__/assets/img/admin_code.png" /></b><input type="text"  placeholder="验证码" class="code" name="code" maxlength="4" /> <img class="coder" onclick="this.src = this.src+'&'+Math.random()"  src="{:U('Store/Index/verify_c',array())}" /></li>
+            <li class="sada"><a href="{:U('Store/ResetPass/get_pwd')}">忘记密码？</a></li>
+            <input type="submit" value=""  class="user_submit" />
+
+        </form>
+    </div>
+</div>
+<script src="__PUBLIC__/assets/js/jquery.min.js"></script>
+<script>
+    /*function ajaxs() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var data = new Array(username, password);
+        $.post("{:U('Index/login')}", {data: data}, function (res) {
+//            alert(res);return;
+            var obj = eval('(' + res + ')');//转换为json对象
+//                alert(obj.rst);return;
+            if(obj.rst == '1') {
+                alert(obj.ret);
+                location.assign("{:U('Index/detail')}");
+            } else {
+                alert(obj.ret);
+            }
+        })
+    }*/
+</script>
+
+</body>
+</html>

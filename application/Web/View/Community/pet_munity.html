@@ -1,0 +1,103 @@
+
+
+<include file="./application/Web/View/header_munity.html"/>
+
+  <div class="user_mian">
+    <div class="center">
+      <div class="pet_muntity_left">
+        <volist name="product_info" id="vo">
+          <li>
+            <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+              <img src="{$vo.image}" />
+            </a>
+            <h1>{$vo.pro_name}</h1>
+            <p>￥{$vo.option_price}</p>
+          </li>
+        </volist>
+      </div>
+
+      <div class="pet_muntity_right">
+        <div class="back_muntity"><h1><a href="{:U('Web/Community/index')}">社区首页</a>><span>我的帖子</span></h1></div>
+        <div class="munity_top">
+          <h1><b>我的帖子</b> <span><a href="{:U('Web/Community/card')}">发帖</a></span></h1>
+        </div>
+
+        <div class="pet_muntity_show">
+          <volist name="articles" id="vo">
+            <li class="card_list_1">
+              <div class="card_list">
+                <h1><a href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}">{$vo.art_title} <span>{$vo.art_time}</span></a></h1>
+                <div class="pet_muntity_pic">
+                  <volist name="vo['art_image']" id="k">
+                    <dl><a href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}"><img src="{$k}?imageView2/1/w/100/h/100" /> </a></dl>
+                  </volist>
+                </div>
+                <div class="pet_muntity_praise">
+                  <span><img src="{$ptype_url}/images/icon_comment.png" />{$vo.art_cnum}</span>
+                  <span><img src="{$ptype_url}/images/icon_praise.png" />{$vo.art_gnum}</span>
+                </div>
+              </div>
+              <div class="card_delete">
+                <h2><a href="javascript:;" class="card_delete_1" value="{$vo.art_id}">删除</a></h2>
+              </div>
+            </li>
+          </volist>
+
+
+        </div>
+        <div style="float:right" class="pagination">{$Page}</div>
+  
+
+      <div class="back_home">
+        <a href="{:U('index/index')}" title="返回首页"><img src="{$ptype_url}/images/go_back.png"  title="返回首页"/></a>
+      </div>
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<include file="./application/Web/View/footer_other.html"/>
+
+
+<script type="text/javascript">
+  /*$(".card_delete_1").on('click',function(){
+    layer.confirm('确定要删除此订单吗?', {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+      console.log($(this).attr('class'));return;
+        layer.msg('删除成功！', {icon: 1});
+//        $(".card_list_1").remove();
+        }, function(){
+    });
+  })*/
+
+
+  //删帖
+  $(".card_delete_1").click(function (e) {
+    if(confirm('确定要删除此帖吗?')) {
+      var li = $(this).parent().parent().parent();//li.remove();return;
+      var art_id = $(this).attr('value');
+      console.log(art_id);
+      $.post("{:U('Web/Community/delArticle')}", {art_id: art_id}, function (rst) {
+        var obj = new Function("return" + rst)();
+//        console.log(obj);return;
+        if (obj.ret == 1) {
+          console.log(obj.ret);
+          li.remove();
+          layer.msg(obj.res);
+        } else {
+          layer.msg(obj.res);
+        }
+      })
+    }
+  })
+</script>
+
+
+
+
+
+

@@ -1,0 +1,155 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Rule/index')}" target="_self">城市列表</a></li>
+        <li class="active"><a href="javascript:;">新增区域</a></li>
+    </ul>
+    <form action="{:U('Rule/add_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+
+
+                    <tr>
+                        <th width="100">区域选择</th>
+                        <td>
+                            <select class="select_2" id="province" onchange="prov()" name="bu_province">
+                                {$province}
+                            </select>
+                            <select class="select_2" id="city" onchange="city_c()" name="bu_city">
+                                <option value='1'>市</option>
+                            </select>
+                            <select class="select_2" id="country" name="bu_country">
+                                <option value='1'>省</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">上门取货价格</th>
+                        <td>
+                            <input type="number" style="width:400px;" name="bu_price" required value=""
+                                   placeholder="请输入区域价格"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">送货地址</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="bu_send_addre" required value=""
+                                   placeholder="请输入送货地址"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <th width="100">火化价格</th>
+                        <td>
+                            <dt id="weight">
+                            <dd style="margin-top: 10px">初始价格：<input name="bu_cremation" type="number" style="width: 80px;">&nbspKG内&nbsp<input name="bu_cremation_price" type="number" style="width: 80px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+                            <dd style="margin-top: 10px">超标价格：<input name="bu_overstep_price" type="number" style="width: 80px;"> &nbsp元/KG</dd>
+                            <!--<dd style="margin-top: 10px">重量：<input name="weight[start][]" type="number" style="width: 50px;">~<input name="weight[end][]" type="number" style="width: 50px;">&nbsp;&nbsp;斤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input name="weight[price][]" type="number" style="width: 50px;">&nbsp;&nbsp;元/斤&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"><img onclick="reduce(this)" style="width: 30px;height: 30px;" src="__PUBLIC__/images/reduce.png"></a></dd>
+                            <dd ><a href="javascript:;"  onclick="add()"> <img src="__PUBLIC__/images/add.png"> </a></dd>-->
+
+                            </dt>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">套餐价格</th>
+                        <td>
+                            <dt >
+                                <dd style="margin-top: 10px">普通埋葬：<input name="bu_normal" style="width: 80px;" type="number">&nbsp元</dd>
+                                <dd style="margin-top: 10px">深树埋葬：<input name="bu_tree" style="width: 80px;" type="number">&nbsp元</dd>
+                                <dd style="margin-top: 10px">豪华树葬：<input name="bu_luxury" style="width: 80px;" type="number">&nbsp元</dd>
+                                <dd style="margin-top: 10px">普通西式：<input name="bu_normal_west" style="width: 80px;" type="number">&nbsp元</dd>
+                                <dd style="margin-top: 10px">豪华西式：<input name="bu_luxury_west" style="width: 80px;" type="number">&nbsp元</dd>
+                            </dt>
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<th>服务协议</th>-->
+                        <!--<td>-->
+                            <!--<textarea type="text/plain" id="content" rows="15" style="width:600px;" name="bu_service"-->
+                                      <!--style="width:80%x;height:500px;"></textarea>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <tr>
+                        <th>服务协议</th>
+                        <td>
+                            <script type="text/plain" id="content" name="bu_service"
+                                    style="width:80%x;height:500px;"></script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">提交</button>
+            <a class="btn" href="{:U('Rule/index')}">返回</a>
+        </div>
+    </form>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /////---------------------
+            <!-- 实例化编辑器 -->
+            var ue = UE.getEditor('content', {
+                autoHeight: false,
+                autoHeightEnabled: false, //出现滚动条
+                elementPathEnabled: false  //去掉元素路径
+
+            });
+            //对编辑器的操作最好在编辑器ready之后再做
+            ue.ready(function () {
+                //设置编辑器的内容
+                ue.setContent('');
+                //获取html内容，返回: <p>hello</p>d
+            });
+        });
+
+        function prov(){
+            var province = $('#province').val();
+            $.post("{:U('Rule/getCity')}",{province:province},function(data){
+
+                $('#city').html(data.city);
+                $('#country').html(data.country);
+
+            })
+        }
+
+        function city_c(){
+
+            var city = $('#city').val();
+            $.post("{:U('Rule/getcountry')}",{city:city},function(data){
+                $('#country').html(data);
+
+            })
+        }
+
+        function reduce(o){
+            $(o).parent().parent().remove();
+        }
+
+        function add(){
+            var html = '<dd style="margin-top: 10px">重量：<input name="weight[start][]" type="number" style="width: 50px;">~<input name="weight[end][]" type="number" style="width: 50px;">&nbsp;&nbsp;斤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input name="weight[price][]" type="number" style="width: 50px;">&nbsp;&nbsp;元/斤&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"><img onclick="reduce(this)" style="width: 30px;height: 30px;" src="__PUBLIC__/images/reduce.png"></a></dd>';
+            $("#weight").append(html);
+        }
+
+    </script>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="{$ptype_url}/images/favicon.png" type="image/png" />
+<title>咪咻</title>
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/user.css" />
+
+</head>
+<body>
+	<div class="top">
+		<div class="center">
+			<div class="logo">
+				<a href="{:U('Web/Index/index')}"><img src="{$ptype_url}/images/logo.png"></a><p>· 密码找回</p>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="user_center">
+		<div class="center">
+			<div class="advert">
+				<img src="{$ptype_url}/images/user_advert.png" />
+			</div>
+			<div class="regging">
+				<form id="form_getpass" >
+					<li><b>手机号</b><input type="text" id="phone" name="username" placeholder="请输入手机号" maxlength="11" /></li>
+					<li class="reg_code"><b>验证码</b><input type="text" name="code" placeholder="请输入验证码" maxlength="6" /><a href="javascript:" id="reg_code">获取验证码</a><span>&nbsp;</span></li>
+					<li><b>密码</b><input type="password" name="password" id="password" placeholder="请输入密码" /></li>
+					<li><b>确认密码</b><input type="password" name="repassword" id="repassword" placeholder="请再次输入密码" /></li>
+
+					<input type="button" value="完 成" id="but"  class="submit" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- jquery -->
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+<script type="text/javascript">
+    var wait=60;
+    function time(o) {
+            if (wait == 0) {      
+                  $(".reg_code a").css("display","block");
+                  $(".reg_code span").css("display","none");
+                wait = 60;
+            } else {
+               $(".reg_code a").css("display","none");
+                $(".reg_code span").css("display","block");
+               $(".reg_code span").html("重新发送 (" + wait + ")");
+                wait--;
+                setTimeout(function() {
+                    time(o)
+                },
+                1000);
+            }
+        }
+
+	$('#reg_code').on('click', function(){
+		var z_phone = $('#phone').val();
+		if( z_phone.length != 11 ) {
+			layer.alert('请输入正确的手机号码', {icon: 2});return false;
+		}
+
+		var action  = "{:U('Web/Member/forgetsendsms')}";
+		$.post(action,{phone:z_phone},function(data){
+			var json = eval("("+data+")");
+			if(json.code == 300 ){
+				layer.alert("手机号码不能为空", {icon: 2});
+			}else if(json.code == 200){
+				layer.tips('短信发送成功。', '#reg_code', {
+					tips: [1, '#FFFFFF'],
+					time: 2000
+				});
+				time(this);
+			}else{
+				layer.alert(json.mark, {icon: 2});
+			}
+		})
+	})
+
+	$('#but').click(function(){
+		var password = $('#password').val();
+		var repassword = $('#repassword').val();
+		var action = "{:U('Web/Member/backpasswd')}";
+		if( password != repassword ){
+			layer.alert('两次输入的密码必须一致', {icon: 2});return false;
+		}
+
+		if( password.length <=0 || repassword.length <=0){
+			layer.alert('请输入密码', {icon: 2});return false;
+		}
+
+
+		$.post(action, $('#form_getpass').serialize() ,function(data){
+			var json = eval("("+data+")");
+			if(json.code == 300 ){
+				layer.alert("表单信息不能为空", {icon: 2});
+			}else if(json.code == 200){
+				alert('重置密码成功');window.location.href = "{:U('Web/Member/login')}";
+			}else{
+				layer.alert(json.mark, {icon: 2});
+			}
+
+		})
+	})
+
+
+
+
+</script>

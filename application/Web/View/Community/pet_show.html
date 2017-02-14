@@ -1,0 +1,135 @@
+<include file="./application/Web/View/header_munity.html"/>
+
+  <div class="user_mian">
+    <div class="center">
+      <div class="pet_muntity_left">
+        <volist name="product_info" id="vo">
+          <li>
+            <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+              <img src="{$vo.image}" />
+            </a>
+            <h1>{$vo.pro_name}</h1>
+            <p>￥{$vo.option_price}</p>
+          </li>
+        </volist>
+      </div>
+
+      <div class="pet_muntity_right">
+        <div class="back_muntity"><h1><a href="{:U('Web/Community/index')}">社区首页</a>><span>帖子详情</span></h1></div>
+        <div class="pet_show_show">
+          <div class="title">
+            <h1>{$detail.art_title}</h1>
+            <p>{$detail.art_time|date="Y-m-d",###}</p>
+          </div>
+
+          <div class="pet_content">
+            <p>{$detail.art_content}</p>
+            <P>
+            <volist name="images" id="vo">
+              <img src="{$vo}" />
+            </volist>
+            </P>
+
+          </div>
+
+          <div class="pet_commentary ">
+            <volist name="critics" id="vo">
+              <li>
+                <div class="pet_head_pic">
+                  <img src="{$vo.headimg}" />
+                </div>
+                <div class="pet_show_west">
+                  <h1><red class="{$vo.sco_level}"></red><b>{$vo.nickname}</b> <span>{$vo.cri_time}</span></h1>
+                  <if condition="($vo.isfirst eq 1)">
+                    <p>{$vo.cri_content} <span style="color: #fb821a; margin:0px 5px;"> @{$vo.parent_nickname}:</span> {$vo.parent_content}</p>
+                    <else />
+                    <p>{$vo.cri_content}</p>
+                  </if>
+                  <!--<p>{$vo.cri_content}  @ {$vo.parent_nickname}:{$vo.parent_content}</p>-->
+                  <h2><b><a href="javascript:;" class="commting_1" value="{$vo.cri_id}"><i class="fa fa-commenting-o" aria-hidden="true"></i>回复(<strong>{$vo.count}</strong>)</a></b></h2>
+                </div>
+              </li>
+            </volist>
+
+          </div>
+          <div style="float:right" class="pagination">{$Page}</div>
+          <div class="commting_foot">
+            <form action="#" method="post" id="form_bbb" class="critic">
+
+              <input type="number" id="art_id" name="cri_art_id" value="{$detail.art_id}">
+              <textarea class="commting_text" name="cri_content" placeholder="请输入评论内容" maxlength="30"></textarea>
+              <h1><span class="un"><font id="max_number">30</font>/30</span> <input type="button" onclick="critic()" value="发 布" /></h1>
+            </form>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+
+  <include file="./application/Web/View/footer_other.html"/>
+
+<script type="text/javascript">
+  $('textarea').each(function() {
+    var ta = $(this), p = ta.parent(), ml = parseInt(ta.attr('maxlength')),
+            v = ta.val(), h = ta.attr('placeholder');
+    if (v == h) v = '';
+    if (h && ml) {
+      //var sp = '<span style="bottom: 10px;position: absolute;right: -10px;">'+v.length+'/'+ml+'</span>';
+      // p.css({'position': 'relative'});
+      //ta.before(sp);
+      ta.bind('click keyup', function() {
+        var m = $(this), v1 = m.val();
+        if (v1.length > ml) {
+          m.val(v1.substring(0, ml))
+        }
+        //m.prev().text(m.val().length + '/' + ml);
+        $("#max_number").text(ml-m.val().length);
+      });
+    }
+  });
+  $('#art_id').hide();
+
+    $(".commting_1").on('click', function () {
+      var cri_id = $(this).attr('value');
+//    console.log(cri_id);
+
+      layer.open({
+        type: 2,
+        title: '',
+        shadeClose: true,
+        shade: 0.8,
+        closeBtn: 1,
+        area: ['60%', '260px'],
+//        content: "https://www.mixiupet.com/Web/Community/commting?cri_id=" + cri_id, //iframe的url
+        content: "https://www.mixiupet.com/Web/Community/commting?cri_id=" + cri_id, //iframe的url
+        /*success: function(layero, index){
+          layer.close();
+        }*/
+        end:function () {
+          location.reload();
+        }
+      });
+    });
+
+
+  /**
+   * 评论
+   */
+  function critic() {
+    var formdata = $("#form_bbb").serializeArray();
+    $.post("{:U('Web/Community/commting')}", {data : formdata}, function (rst) {
+        var obj = new Function("return" + rst)();
+      if(obj.code == 200) {
+        layer.msg(obj.alert);
+        location.reload();
+      } else {
+        layer.msg(obj.alert);
+      }
+    })
+  }
+</script>
+

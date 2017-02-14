@@ -1,0 +1,53 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+
+<div class="mian_cent" >
+	<div class="center">
+		<div class="selling_pets_top">
+			<div class="sell_pet_left"><h1>我提交的</h1></div>
+			<div class="sell_pet_cent">
+				<li id="pet1" onmousedown="setTwo('pet',1,6)" class="cation"><a href="javascript:;">待审核</a></li>
+				<li id="pet2" onmousedown="setTwo('pet',2,6)" ><a href="javascript:;">审核通过</a></li>
+				<li id="pet3" onmousedown="setTwo('pet',3,6)" ><a href="javascript:;">审核拒绝</a></li>
+			</div>
+			<div class="sell_pet_right">
+				<a href="{:U('Web/Marriage/macth_news_pet')}">新提交</a>
+			</div>
+		</div>
+
+		<div class="selling_pets_down">
+			<div class="sell_pet_down_menu">
+				<li>宠物类型</li>
+				<li>意向价格</li>
+				<li>审核状态</li>
+			</div>
+
+			<div class="sell_pet_down_li" id="con_pet_1" >
+				{$lists.wait}
+			</div>
+
+			<div class="sell_pet_down_li" id="con_pet_2" style="display:none;" >
+				{$lists.pass}
+			</div>
+
+
+			<div class="sell_pet_down_li" id="con_pet_3" style="display:none;" >
+				{$lists.refuse}
+			</div>
+			
+		</div>
+
+	</div>
+</div>
+
+ 
+
+
+
+<include file="./application/Web/View/footer_other.html"/>
+
+<script>
+	$(document).ready(function(){
+		$('#change_bbb').attr('class','action')
+	});
+</script>

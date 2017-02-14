@@ -1,0 +1,112 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css">
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="my_shop_cart">
+					<h1>我的购物车</h1>
+				</div>
+				<div class="my_shoping_cart_pay">
+					<table id="cartTable">
+						<thead>
+							<tr>
+								<div class="shoping_top">
+									<li><input type="checkbox" class="check-all check checkbox" >全选</li>
+									<li><span>商品信息</span></li>
+									<li><span>价格</span></li>
+									<li><span>数量</span></li>
+									<li><span>小计</span></li>
+									<li><span>操作</span></li>
+								</div>
+							</tr>
+						</thead>
+						<tbody class="shoping_dow">
+
+							<foreach name="product" item="vo">
+
+
+								<tr>
+									<td class=""><input id="{$vo.cartid}" name="check" value="{$vo.cartid}"  class="check-one check checkbox" type="checkbox"/></td>
+									<td class="goods">
+										<img src="{$vo.pic}" />
+											<p>{$vo.name}</p>
+											<span>商品规格：{$vo.option_name}</span>
+									</td>
+									<td class="price">{$vo.price}</td>
+									<td class="count">{$vo.quantity}<input class="count-input" type="hidden" value="{$vo.quantity}"/><input type="hidden" value="{$vo.cartid}" ><input type="hidden" value="{$vo.inventory}" ></td>
+									<td class="subtotal">{$vo.total_price}</td>
+									<td class="operation"><span class="delete">删除</span></td>
+								</tr>
+
+							</foreach>
+
+						</tbody>
+					</table>
+					
+					<div class="shop_cart_pay" id="shop_cart_pay">
+						<div class="shoping_over">
+							<label class="fl select-all"><input type="checkbox" class="check-all check checkbox"/>&nbsp;全选</label>
+							<a class="fl delete" id="deleteAll" href="javascript:;">删除选中的商品</a>
+							<form method="post" action="{:U('Web/Order/cartSettlementBefore')}" id="form_a">
+
+								<input type="hidden" name="cartid"  id="catred">
+								<div id="btn_order" class="fr closing">结 算</div>
+
+							</form>
+							<div class="fr total">合计：<span id="priceTotal">0.00</span></div>
+							<div class="fr selected" id="selected">已选<span id="selectedTotal">0</span>件商品</div>
+							<div class="selected-view" style="display:none;">
+								<div id="selectedViewList" class="clearfix">
+									<div><span>取消选择</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+<!-- 购物车  -->
+<script type="text/javascript" src="{$ptype_url}/js/demo.js"></script>
+
+
+<script>
+	$('#btn_order').click(function () {
+		var cartid = $('#catred').val();
+
+		$('#form_a').submit();
+	})
+
+</script>
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block'; 
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none'; 
+		}
+</script>
+<include file="./application/Web/View/footer_other.html"/>	
+
+

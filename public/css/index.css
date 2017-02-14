@@ -1,0 +1,40 @@
+
+/*¹¤µ¥*/
+body{ font-family:"Microsoft YaHei"; margin:0px; padding:0px; 
+}
+p,h1,h2,h3,h4,h5,h6,ul{
+	margin: 0px;
+	padding: 0px;
+}
+a{ text-decoration:none;
+}
+img{ border:none;
+}
+.main{
+	width: 100%;
+	padding: 1% 2%;
+	box-sizing:border-box;
+}
+.main p{
+	text-align: left;
+	font-size: 12px;
+
+}
+.main img{
+	width: 100%;
+	margin: 5px 0px;
+}
+@media (min-width:320px) {
+	.main p{
+		font-size: 12px;
+		line-height: 25px;
+		margin: 10px 0px 0px 0px;
+	}
+}
+@media (min-width:370px) {
+	.main p{
+		font-size: 14px;
+		line-height: 30px;
+		margin: 10px 0px 0px 0px;
+	}
+}

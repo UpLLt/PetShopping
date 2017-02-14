@@ -1,0 +1,89 @@
+<admintpl file="header" />
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:$('#savedimage{id}').remove();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <!--<li><a href="{:U('Index/detail')}" target="_self">商家详情</a></li>-->
+        <li class="active"><a href="javascript:;">账号设置</a></li>
+
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/edit_pass')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <!--<input class="hidden" type="text" name="id" value="{$info.id}" >-->
+                <div style="margin-left: 200px; margin-bottom: 20px;">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="{$info['img']}" alt="">
+                    </div>
+                    <a href="{:U('Info/imageUp')}" class="tpl-user-panel-action-link "> <span class="am-icon-pencil" style="margin-left: 8px;"></span> 修改头像</a>
+                </div>
+                <div class="control-group">
+                <a class="control-label" href="{:U('Info/resetpass')}" style="margin-left: 110px;">重置密码</a>
+                    </div>
+                <div class="control-group">
+                    <a class="control-label" href="{:U('Info/resetpay')}" style="margin-left: 125px; margin-top: 10px;">重置支付密码</a>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <!--<div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            &lt;!&ndash;<a class="btn" href="{:U('Index/ruleSet')}">{:L('BACK')}</a>&ndash;&gt;
+        </div>-->
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+
+        //setInterval(function(){public_lock_renewal();}, 10000);
+        $(".js-ajax-close-btn").on('click', function(e) {
+            e.preventDefault();
+            Wind.use("artDialog", function() {
+                art.dialog({
+                    id : "question",
+                    icon : "question",
+                    fixed : true,
+                    lock : true,
+                    background : "#CCCCCC",
+                    opacity : 0,
+                    content : "您确定需要关闭当前页面嘛？",
+                    ok : function() {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

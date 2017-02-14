@@ -1,0 +1,116 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">评论管理</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Index/comment')}">
+        <label>用户昵称：</label>
+
+        <input type="text" name="nickname" style="height: 32px !important;" value="{$formget.nickname}" placeholder="请输入名称...">
+        订单状态：
+        <select class="select_2" name="reply_status">
+            <option value='' <if condition="($formget.reply_status eq '')"> selected</if> >全部</option>
+            <option value='1' <if condition="($formget.reply_status eq 1)"> selected</if>>待回复</option>
+            <option value='2' <if condition="($formget.reply_status eq 2)"> selected</if>>已回复</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;word-break:break-all;" class="am-table"
+           id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>用户昵称</th>
+            <th>评论内容</th>
+            <th>回复内容</th>
+            <th>评论时间</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {$lists}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+
+<!--修改备注弹窗-->
+<div class="modal fade" id="myModal" style="z-index:1000" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    回复
+                </h4>
+            </div>
+            <form method="post" class="form-horizontal js-ajax-forms" action="{:U('Order/edit')}">
+                <div class="modal-body">
+                    <input name="id" class="hidden id">
+                    <label class="control-label">回复内容:</label>
+                    <div class="controls">
+                        <input value="" style="height: 32px;" name="ma_extra">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary js-ajax-submit" >
+                        提交
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+
+    <div class="am-modal-dialog">
+        <form action="{:U('Index/reply')}">
+
+        <div class="am-modal-hd">立即回复</div>
+        <div class="am-modal-bd">
+            <input type="text" name="id" class="hidden">
+            <input type="text" class="reply"  class="am-modal-prompt-input">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+        </form>
+    </div>
+
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    $(".hidden").hide();
+    $('.add_ext').click(function () {
+        $(this).parent().parent().children().children().children("input[name='reply']").show();
+        $(this).parent().parent().children().children().children("button").show();
+
+        console.log($(this).parent().parent().children().children("input"));
+    });
+    /*$(function() {
+        $('.doc-prompt-toggle').on('click', function() {
+            $('#my-prompt').modal({
+                relatedTarget: this,
+               /!* onConfirm: function(e) {
+                    alert('你输入的是：' + e.data || '')
+                },
+                onCancel: function(e) {
+                    alert('不想说!');
+                }*!/
+            });
+            $('.hidden').val($(this).attr("name"));
+        });
+    });*/
+</script>
+</body>
+</html>

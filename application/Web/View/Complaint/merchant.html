@@ -1,0 +1,163 @@
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/zyUpload.css" />
+
+<include file="./application/Web/View/header_page.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="merchant_pet">
+					<h1 class="pet_h1">商家入驻</h1>
+					<form action="{:U('Complaint/merchant')}" method="post" enctype="multipart/form-data">
+						<!--<li>
+							<b>入驻类型：</b>
+							<volist name="shoptype" id="vo">
+								<label><input type="radio" class="checkbox mag" name="shop_type" value="{$vo									.st_id}"/>{$vo.st_name}</label>
+							</volist>
+						</li>-->
+
+						<li>
+							<b>商家名称：</b><input name="hos_name" type="text" class="wid wid300" />
+						</li>
+
+						<li>
+							<b>所在区域：</b>
+							<div>
+								<select style="width: 97px; height: 30px;" class="province" id="province" onchange="prov()" name="bu_province">
+									{$province}
+								</select>
+								<select style="width: 97px; height: 30px;" class="city" id="city" onchange="city_c()" name="bu_city">
+									{$city}
+								</select>
+								<select style="width: 97px; height: 30px;" class="country" id="country" name="bu_country">
+									{$area}
+								</select>
+							</div>
+						</li>
+
+						<li>
+							<b>详细地址：</b><input type="text" name="hos_address" class="wid wid300" />
+						</li>
+
+						<li>
+							<b>注册资本：</b><input name="hos_registered_capital" type="text" class="wid wid300" />万元
+
+						</li>
+						<li>
+							<b>经营面积：</b><input name="hos_area" type="text" class="wid wid300" />㎡
+						</li>
+
+						<li>
+							<b>联系人：</b><input name="hos_contacts" type="text" class="wid wid300" />
+						</li>
+
+						<li>
+							<b>联系电话：</b><input placeholder="一个手机号只能绑定一个账户" name="hos_contacts_phone" type="text" class="wid wid300" />
+						</li>
+
+						<li>
+							<b>公司规模：</b>
+							<label><input type="radio" name="hos_commany_size" class="checkbox mag"  value="0-50人"/>0-50人</label>
+							<label><input type="radio" name="hos_commany_size" class="checkbox mag" value="50-100人"/>50-100人</label>
+							<label><input type="radio" name="hos_commany_size" class="checkbox mag" value="100人以上"/>100人以上</label>
+						</li>
+
+						<li>
+							<b>公司简介：</b>
+							<textarea name="hos_describe" class="textarea_card" placeholder="请在此处输入内容"></textarea>
+						</li>
+
+						<li>
+							<b>营业执照：</b>
+							<div class="user_carded">
+								<div class="add_licence_pic">
+									<div id="carded_licence">
+										<img id="carded_licence_img" width=100% height=auto border=0 src='{$ptype_url}/images/user_head_cation.png'>
+									</div>
+									<a href="javascript:;" class="a-upload">
+									    <input type="file" name="hos_business_license"  onchange="previewImagec(this)">上传营业执照
+									</a>
+								</div>
+							</div>
+						</li>
+
+
+						<li class="faren">
+							<b>法人身份证：</b>
+							<div class="user_carded">
+								<div class="add_head_pic">
+									<div id="preview">
+										<img id="imghead" width=100% height=auto border=0 src='{$ptype_url}/images/user_head_cation.png'>
+									</div>
+									<a href="javascript:;" class="a-upload">
+									    <input type="file" name="hos_idcard1"  onchange="previewImage(this)">上传身份证正面照
+									</a>
+								</div>
+
+								<div class="add_head_pic">
+									<div id="carded_side">
+										<img id="carded_side_img" width=100% height=auto border=0 src='{$ptype_url}/images/user_head_cation.png'>
+									</div>
+									<a href="javascript:;" class="a-upload">
+									    <input type="file" name="hos_idcard2"  onchange="previewImages(this)">上传身份证反面照
+									</a>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<b></b>
+							<input type="submit" class="submit_sd pet_up" value="提 交" />
+						</li>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<include file="./application/Web/View/footer.html"/>
+<!-- jquery -->
+
+<script type="text/javascript" src="{$ptype_url}/js/address.js"></script>
+
+
+<!-- 引用核心层插件 -->
+<script src="{$ptype_url}/js/zyFile.js"></script>
+<!-- 引用控制层插件 -->
+<script src="{$ptype_url}/js/zyUpload.js"></script>
+<!-- 引用初始化JS -->
+<script src="{$ptype_url}/js/jq22.js"></script>
+<!-- 区域选择 -->
+
+
+
+
+
+<script type="text/javascript">
+	$(function(){
+	$("#sjld").sjld("#shenfen","#chengshi","#quyu");
+});
+
+	//地区三级联动
+	function prov(){
+		var province = $('#province').val();
+//		console.log(province);return false;
+		$.post("{:U('Web/Complaint/getCity')}",{province:province},function(data){
+
+			$('#city').html(data.city);
+			$('#country').html(data.country);
+		})
+	}
+
+	function city_c(){
+
+		var city = $('#city').val();
+		$.post("{:U('Complaint/getcountry')}",{city:city},function(data){
+			$('#country').html(data);
+
+		})
+	}
+
+</script>
+
+<script src="{$ptype_url}/js/uploadpic.js"></script>
+

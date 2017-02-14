@@ -1,0 +1,43 @@
+<include file="./application/Web/View/header_munity.html"/>
+
+<div class="user_mian">
+    <div class="center">
+        <div class="pet_muntity_left">
+            <volist name="product_info" id="vo">
+                <li>
+                    <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+                        <img src="{$vo.image}" />
+                    </a>
+                    <h1>{$vo.pro_name}</h1>
+                    <p>￥{$vo.option_price}</p>
+                </li>
+            </volist>
+        </div>
+
+        <div class="pet_muntity_right">
+            <div class="back_muntity"><h1><a href="{:U('Web/Community/index')}">社区首页</a>><span>问答详情</span></h1></div>
+            <div class="pet_show_show">
+                <div class="title">
+                    <h1>{$detail.kno_title}</h1>
+                    <!--<p>{$detail.art_time|date="Y-m-d",###}</p>-->
+                </div>
+
+                <div class="pet_content">
+                    <p>{$detail.kno_content}</p>
+                    <!--<P>
+                    <volist name="images" id="vo">
+                      <img src="{$vo}" />
+                    </volist>
+                    </P>-->
+
+                </div>
+
+
+
+        </div>
+
+
+
+        <include file="./application/Web/View/footer_other.html"/>
+
+

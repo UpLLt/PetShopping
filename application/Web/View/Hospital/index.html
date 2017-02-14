@@ -1,0 +1,200 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+<div class="main">
+	<div class="center">
+		<div class="citypicker_pet">
+			<div class="city_address_pet">
+				<h1><a href="javascript:;"> <!--<p>切换城市</p>--></a></h1>
+			</div>
+			<div class="city_picker_add">
+				<h1><b>已开通城市：</b><strong><a href="javascript:;" id="city_picker_more">更多城市</a></strong></h1>
+				<volist name="citys" id="vo">
+					<li><a href="javascript:;" value="{$vo.bu_city}" class="city">{$vo.name}</a></li>
+				</volist>
+				<!--<li><a href="#">锦江区</a></li>
+
+				<li><a href="#">温江区</a></li>
+				<li><a href="#">青白江区</a></li>
+				<li><a href="#">锦江区</a></li>-->
+
+
+
+			</div>
+
+
+		</div>
+
+		<div class="pet_medical">
+			<div class="pet_medical_list">
+				<!--<volist name="lists" id="vo">
+					<li>
+						<div class="pet_med_li"><span class="locat_med_1"></span></div>
+						<div class="pet_med_show">
+							<h1><a href="pet_medical_show.html">{$vo.hos_name}</a></h1>
+							<p>{$vo.address}</p>
+							<h4>评论：<span>4553</span>  <b><a href="{:U('Web/Hospital/pet_medical_show', array('hid' => $vo['id']))}">查看详情>></a></b></h4>
+						</div>
+					</li>
+				</volist>-->
+				{$lists}
+
+			</div>
+
+			<div class="pet_medical_map">
+				<div style="min-height: 506px; width: 100%;" id="map"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+ 
+<include file="./application/Web/View/footer_other.html"/>	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+<script>
+	$(document).ready(function(){
+		$('#change_aaa').attr('class','action')
+	});
+</script>
+
+
+
+<script type="text/javascript">
+	var lilength = $(".city_picker_add li").length;
+	console.log(lilength);
+	if(lilength < 23) {
+		$(".city_picker_add h1 strong a").html('');
+	}
+	$("#city_picker_more").on("click", function () {
+		if ($(".city_picker_add").hasClass("disabled")) {
+			return false;
+		}
+		$("#city_picker_more").removeClass("picker_more_100");
+		var $source = $(".city_picker_add");
+		$source.toggleClass("picker_more_100");
+	});
+</script>
+
+ <script type="text/javascript">
+	 /*var markerArr = [
+		 { title: "名称：成都一环宠物医院", point: "104.06906,30.657582", address: "成都一环宠物医院（专治各种不育不孕）", tel: "18600256742" },
+		 { title: "名称：成都二环宠物医院", point: "104.097375,30.642545", address: "成都二环宠物医院（专业人流30年，从未改变）", tel: "18600256742" },
+		 { title: "名称：成都三环宠物医院", point: "104.048722,30.611407", address: "成都三环宠物医院（第二根半价，欢迎选购）", tel: "18600256742" },
+		 { title: "名称：成都四环宠物医院", point: "104.04477,30.640618", address: "成都四环宠物医院", tel: "18600256742" },
+		 { title: "名称：成都五环宠物医院", point: "104.099746,30.663593", address: "成都五环宠物医院", tel: "18600256742" }
+
+	 ];*/
+	 /*var center_place1 = 104.072222;
+	 var center_place2 = 30.663608;*/
+	 var location_place = '成都市';
+	 var markerArr = '';
+	 $(document).ready(function () {
+		 var code='';
+		 $.post("{:U('Web/Hospital/getPlace')}", {code : code}, function (rst) {
+			 var obj = new Function("return" + rst)();//console.log(obj);//return;
+			 $('.pet_medical_list').html(obj.list);
+			/* center_place1 = obj.longitude;
+			 center_place2 = obj.latitude;*/
+			 location_place = obj.location;
+			 $('.city_address_pet h1 a').html(location_place);
+			 markerArr = obj.places;//console.log(markerArr);
+			 map_load();
+		 });
+	 });
+
+    function map_init() {
+        var map = new BMap.Map("map"); // 创建Map实例
+//        var point = new BMap.Point(center_place1,center_place2); //地图中心点，成都市
+        map.centerAndZoom(location_place, 13); // 初始化地图,设置中心点坐标和地图级别。
+        map.enableScrollWheelZoom(true); //启用滚轮放大缩小
+        //向地图中添加缩放控件
+        var ctrlNav = new window.BMap.NavigationControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            type: BMAP_NAVIGATION_CONTROL_LARGE
+        });
+        map.addControl(ctrlNav);
+
+        //向地图中添加缩略图控件
+        var ctrlOve = new window.BMap.OverviewMapControl({
+            anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+            isOpen: 1
+        });
+        map.addControl(ctrlOve);
+
+        //向地图中添加比例尺控件
+        var ctrlSca = new window.BMap.ScaleControl({
+            anchor: BMAP_ANCHOR_BOTTOM_LEFT
+        });
+        map.addControl(ctrlSca);
+
+        var point = new Array(); //存放标注点经纬信息的数组
+        var marker = new Array(); //存放标注点对象的数组
+        var info = new Array(); //存放提示信息窗口对象的数组
+        for (var i = 0; i < markerArr.length; i++) {
+//        	console.log(markerArr);
+            var p0 = markerArr[i].point.split(",")[0]; //
+            var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来
+            point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点
+            marker[i] = new window.BMap.Marker(point[i]); //按照地图点坐标生成标记
+            map.addOverlay(marker[i]);
+            marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            var label = new window.BMap.Label(markerArr[i].title, { offset: new window.BMap.Size(20, -10) });
+            marker[i].setLabel(label);
+            info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].title + "</br>地址：" + markerArr[i].address + "</br> 电话：" + markerArr[i].tel + "</br></p>"); // 创建信息窗口对象
+		}
+		/*console.log(marker.length);
+        for (var i = 0; i < marker.length; i++) {
+			var infoWindow = new BMap.InfoWindow();
+			marker[i].addEventListener("mouseover", function () {
+				this.openInfoWindow(info[i]);
+			});
+		}*/
+		for (var i = 0; i < markerArr.length; i ++)
+		{
+			addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].title + "</br>地址：" + markerArr[i].address + "</br> 电话：" + markerArr[i].tel + "</br></p>",marker[i]);
+		}
+
+    }
+    //添加点击事件
+	 function addInfo(txt,marker){
+		 var infoWindow = new BMap.InfoWindow(txt);
+		 marker.addEventListener("mouseover", function(){this.openInfoWindow(infoWindow);});
+	 }
+    //异步调用百度js
+    function map_load() {
+        var load = document.createElement("script");
+        load.src = "http://api.map.baidu.com/api?v=1.4&callback=map_init";
+        document.body.appendChild(load);
+    }
+    $(".city").click(function () {
+		$('.city_address_pet h1 a').html($(this).text());
+		var code=$(this).attr('value');
+		$.post("{:U('Web/Hospital/getPlace')}", {code : code},function (rst) {
+			var obj = new Function("return" + rst)();//console.log(obj);//return;
+			$('.pet_medical_list').html(obj.list);
+			location_place = obj.location;
+			markerArr = obj.places;//console.log(markerArr);
+//			map.panTo(new BMap.Point(116.409, 39.918));
+			map_load();
+		})
+	});
+	 /*$('.city').click(function(){
+		 $('.city_address_pet h1 a').html($(this).text());
+		 var code=$(this).attr('value');console.log(code);
+		 $.post("{:U('Web/Hospital/getPlace')}", {code : code}, function (rst) {
+			 var obj = new Function("return" + rst)();console.log(obj);//return;
+			 markerArr = obj.list;//console.log(markerArr);
+			 map_load();
+			 )}
+		 )};*/
+//    window.onload = map_load;
+</script>
+
+
+
+

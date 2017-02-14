@@ -1,0 +1,75 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Rule/index')}" target="_self">婚介规则</a></li>
+        <!--<li class="active"><a href="javascript:;">{$title}</a></li>-->
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Rule/index')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <input class="hidden" type="text" name="id" value="{$info.id}" >
+                <div class="control-group">
+                    <label class="control-label">测排卵价格：</label>
+                    <div class="controls">
+                        <input  name="we_ovulation" value="{$info.we_ovulation}" type="number">
+                        <span class="form-required">&nbsp元</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">验精价格：</label>
+                    <div class="controls">
+                        <input type="number" name="we_sperm" value="{$info.we_sperm}">
+                        <span class="form-required">&nbsp元</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">配种提成比例：</label>
+                    <div class="controls">
+                        <input type="text" name="we-commission" value="{$info.we-commission}">
+                        <span class="form-required">&nbsp%</span>
+                    </div>
+                </div>
+                <!--<div class="control-group">-->
+                    <!--<label class="control-label">服务协议：</label>-->
+                    <!--<div class="controls">-->
+                        <!--<textarea class="form-control"  rows="15" style="width:400px;"  name="we-service" >{$info.we-service}</textarea>-->
+                        <!--<span class="form-required">*</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">保存</button>
+            <!--<a class="btn" href="{:U('Index/ruleSet')}">{:L('BACK')}</a>-->
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(".hidden").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

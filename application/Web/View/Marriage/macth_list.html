@@ -1,0 +1,98 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+	<div class="main">
+		<div class="center">
+			<div class="shoping_show">
+				<div class="preview">
+					<div id="vertical" class="bigImg">
+						<img src="{$lists.pe_picture.0}" width="400" height="363" alt="" id="midimg" />
+					</div><!--bigImg end-->	
+					<div class="smallImg">
+						
+						<div id="imageMenu">
+							<ul>
+								<foreach name="lists.pe_picture"  item="vo">
+									<li><img src="{$vo}" /></li>
+								</foreach>
+
+							</ul>
+						</div>
+						
+					</div><!--smallImg end-->	
+					
+				</div>
+
+				<div class="shoping_news macth_show">
+					<div class="shop_li"><h1>{$lists.pe_name}</h1></div>
+				
+					<div class="shop_sh_li">
+						<form method="post" action="{:U('Web/Marriage/order')}" id="form_a">
+							<div class="shop_moeny"><h1>￥{$lists.pe_breeding}</h1></div>
+							<div class="macth_show_list">
+								<li><b>昵称：</b> <span>{$lists.pe_name}</span></li>
+								<li><b>年龄：</b> <span>{$lists.pe_age}月</span></li>
+								<li><b>城市：</b> <span>{$lists.pe_area}</span></li>
+								<li><b>验精：</b> <label><input name="is_sperm" value="1" type="checkbox" class="checkbox mag" />￥{$lists.we_ovulation}</label></li>
+								<li><b>测排卵：</b> <label><input name="is_ovulation" value="1" type="checkbox" class="checkbox mag" />￥{$lists.we_sperm}</label></li>
+							</div>
+
+							<div class="shop_cart">
+									<input type="hidden" name="pid" value="{$lists.pid}">
+								<li><a href="javascript:;" id="shop_nowing">立即付款</a>
+
+								</li>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="shoping_detail">
+				<div class="detail_show macth_sh">
+					<h1><span>其他同类</span></h1>
+				</div>
+
+				<div class="detail_list macth_sh_list">
+					{$other_pet}
+				</div>
+			</div>
+		
+		<input type="hidden" id="hidden_agree" value="{$service_agree}">
+		</div>
+	</div>
+
+
+<include file="./application/Web/View/footer_other.html"/>
+
+<script src="{$ptype_url}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/shop_show.js"></script>
+<script>
+	$('#shop_nowing').click(function () {
+
+		var service_agree = $('#hidden_agree').val();
+
+
+		layer.confirm(service_agree, {
+			closeBtn: 0,
+			title:"服务协议",
+			area: ['1000px', '50%'], //宽高
+			shadeClose: true,
+			btn: ['同意','拒绝'] //按钮
+		}, function(){
+			$("#shop_nowing").attr("disabled","disabled");
+			$('#form_a').submit();
+		}, function(){
+
+		});
+
+
+	})
+
+
+</script>
+<script>
+	$(document).ready(function(){
+		$('#change_bbb').attr('class','action')
+	});
+</script>

@@ -1,0 +1,67 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('LogisticsTemp/lists')}" target="_self">运输模板</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('LogisticsTemp/edit_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+
+                <div class="control-group">
+                    <label class="control-label">模板名称</label>
+                    <div class="controls">
+                        <input type="text" name="temp_name" value="{$data.temp_name}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">是否包邮</label>
+                    <div class="row controls">
+                        否
+                        <input checked type="radio" value="1" name="temp_switch">
+                        是
+                        <input type="radio" value="2" name="temp_switch">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">邮费价格</label>
+                    <div class="controls">
+                        <input style="width: 50px;" type="number" name="in_number" value="{$data.in_number}"> 件内
+                        <input style="width: 50px;" type="text" name="in_price" value="{$data.in_price}"> 元 ，每增加
+                        <input style="width: 50px;" type="number" name="add_number" value="{$data.add_number}"> 件 , 增加
+                        <input style="width: 50px;" type="text" name="add_price" value="{$data.add_price}"> 元
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">指定条件包邮</label>
+                    <div class="controls">
+                        <div>满 <input style="width: 100px" type="number" name="full_number" value="{$data.full_number}">
+                            件
+                        </div>
+                        <div style="margin-top: 10px;">满 <input style="width: 100px" type="text" name="full_total"
+                                                                value="{$data.full_total}"> 元
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" value="{$data.temp_id}" name="temp_id">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+            <a class="btn" href="{:U('LogisticsTemp/lists')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

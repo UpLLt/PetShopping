@@ -1,0 +1,7 @@
+/.svn/
+/.idea/
+/data/runtime/
+/data/upload/
+/update/
+*.tags
+*.tags_sorted_by_file

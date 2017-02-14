@@ -1,0 +1,80 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+<div class="mian_cent">
+		<div class="center">
+			<div class="match_cent_menu">
+
+				<foreach name="pet_type" item="vo">
+					<li>
+						<h1>{$vo.name}</h1>
+						<foreach name="vo.lists" item="vvvv">
+							<span><a onclick="onca_a(this)" class="{$vvvv.pet_variety_id}" href="javascript:void(0);">{$vvvv.pet_variety}</a></span>
+						</foreach>
+					</li>
+				</foreach>
+
+			</div>
+			<div class="macth_mian">
+				<div class="macth_mian_top">
+					<h1><a href="javascript:;" id="pet_sort_desc"><h id="price_desc">价格由高到低 </h><i class="fa fa-sort-desc" aria-hidden="true"></i></a>  <span><a href="{:U('Web/Marriage/macth_pet')}">我的发布</a></span></h1>
+				</div>
+				<input type="hidden" id="pe_type" >
+				<input type="hidden" id="order_type" value="2" >
+
+				<div class="macth_pet_list" id="macth_pet_list">
+					<foreach name="lists" item="vo">
+						{$vo}
+					</foreach>
+				</div>
+
+				<div class="list_page" id="page">
+					{$Page}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<include file="./application/Web/View/footer_other.html"/>
+<script type="text/javascript">
+
+		function onca_a(o){
+			var id = $(o).attr('class');
+			var type = $('#order_type').val();
+			$.post( "{:U('Web/Marriage/ajaxGetPet')}",{pe_type:id,price:type},function(data){
+				$('#macth_pet_list').html(data.str);
+				$('#page').html(data.Page);
+				$('#pe_type').val(id);
+			});
+
+		}
+
+
+
+
+	$('#pet_sort_desc').click(function(){
+		var type = $('#order_type').val();
+		var pey_type = $('#pe_type').val();
+		$.post("{:U('Web/Marriage/ajaxGetPet')}",{pe_type:pey_type,price:type},function(data){
+			$('#macth_pet_list').html(data.str);
+			$('#page').html(data.Page);
+			$('#order_type').val(data.order_type);
+
+		})
+
+		$(".fa-sort-desc").toggleClass("fa-sort-asc");
+		if( type == 2 ){
+			$('#price_desc').html('价格由低到高');
+		}else{
+			$('#price_desc').html('价格由高到低');
+		}
+
+
+	})
+</script>
+
+<script>
+	$(document).ready(function(){
+		$('#change_bbb').attr('class','action')
+	});
+</script>

@@ -1,0 +1,15 @@
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/other.css" />
+
+<div class="order_returned_show">
+	<form action="{:U('Web/Order/refundLogistics')}" method="post">
+		<input type="hidden" name="order_id" value="{$order_id}">
+		<li><b>快递名称：</b><input type="text" name="logistics_company" placeholder="请输入快递公司名称" /></li>
+
+		<li><b>快递编号：</b><input type="text" name="logistics_number" placeholder="请输入快递编号" /></li>
+
+		<li class="submit_up"><b></b><input type="submit" value="提 交"  /></li>
+	</form>
+</div>
+

@@ -1,0 +1,230 @@
+
+<link href="{$ptype_url}/css/city-picker.css" rel="stylesheet" type="text/css" />
+<link href="{$ptype_url}/css/headupload/bootstrap.css" rel="stylesheet" type="text/css" />
+<include file="./application/Web/View/header_menu.html"/>
+
+
+<div class="mian_cent" >
+	<div class="center">
+		<form id="form_a" method="post" action="{:U('Web/Buried/funeral')}">
+			
+			<div class="pet_carriage">
+				<h1>区域选择</h1>
+				<li>
+					<b>所在城市：</b> 
+					<div id="distpicker">
+						<div class="form-group">
+
+
+							<div class="form-group">
+								<select class="form-control" id="bu_province"  onchange="prov()" name="bu_province">
+									{$area.province}
+								</select>
+								<select class="form-control" id="bu_city" onchange="city_c()" name="bu_city">
+									{$area.city}
+								</select>
+								<select class="form-control" id="bu_country" onchange="country_d()" name="bu_country">
+									{$area.country}
+								</select>
+							</div>
+
+						</div>
+					</div>
+				</li>
+			</div>
+
+			<div class="pet_carriage">
+				<h1>费用计算</h1>
+				<li>
+					<b>是否火化：</b> 
+					<label><input type="radio"  name="bu_buried" value="1" class="checkbox mag" checked/>是</label>
+					<label><input type="radio"  name="bu_buried" value="2" class="checkbox mag" />否</label>
+				</li>
+
+				<li>
+					<b>宠物体重：</b> <input type="text" id="bu_weight" name="bu_weight" class="wid wid100"/> Kg
+					<p>注：5公斤以内500元，超过5公斤按每公斤20元加价。火化送青花瓷骨灰罐，黄绸缎包装</p>
+				</li>
+				<li>
+					<b>埋葬方式：</b> 
+					<div id="burial_mode" class="burial_mode">
+						{$area.send.bu_service.buired}
+					</div>
+				</li>
+
+			</div>
+
+
+			<div class="pet_carriage">
+				<h1>取宠方式及联系人</h1>
+				<li>
+					<b>取货方式：</b> 
+					<label id="pick_up"> <input type="radio" name="bu_method"  value="1" class="checkbox mag" /> 上门取货</label>
+					<label id="delivery"><input type="radio" name="bu_method"  value="2" class="checkbox mag" />送货上门</label>
+				</li>
+
+				<li class="address_pet_car"><b>详细地址：</b> <label class="address_user_pet">{$area.send.bu_service.send_addre}</label></li>
+
+				<input type="hidden" id="add_hide" value="{$area.send.bu_service.send_addre}">
+
+				<li><b>联系人：</b> <input type="text" name="bu_contacts"  id="bu_contacts" class="wid wid300"/> </li>
+
+				<li><b>联系电话：</b> <input type="text" name="bu_contacts_phone" id="bu_contacts_phone" class="wid wid300"/> </li>
+				
+			
+				
+			</div>
+
+			<div class="pet_carriage_pice">
+				<div class="amount_pice_pay">
+					<h2><input type="checkbox" class="checkbox mag" checked="checked"/><a href="javascript:;" id="protocol_pet_pic">我已阅读并同意服务协议</a> </h2>
+					<input type="button" id="button"   onclick="but()" class="order_pay_pet" value="下一步" >
+				</div>
+			</div>
+
+
+		</form>
+	</div>
+</div>
+
+
+
+ 
+
+<include file="./application/Web/View/footer.html"/>
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="{$ptype_url}/css/headupload/bootstrap.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/city-picker.data.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/city-picker.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/main.js"></script>
+
+
+<!-- pick_up   delivery-->
+
+<script type="text/javascript">
+	$("#pick_up").on('click',function(){
+		$(".address_user_pet").remove();
+
+		if($(".address_pet_car").children("input").size()<1){
+			$(".address_pet_car").append("<input id='addresssss' name='bu_address' type='text' class='wid wid300 pick_up'/>");
+		}
+	})
+
+	$("#delivery").on('click',function(){
+		var address = $('#add_hide').val();
+
+		$(".pick_up").remove();
+		if($(".address_pet_car").children("label").size()<1 ){
+			$(".address_pet_car").append("<label  class='address_user_pet'>"+address+"</label>");
+		}
+	})
+</script>
+
+
+<script type="text/javascript">
+
+	function prov(){
+		var province = $('#bu_province').val();
+
+		$.post("{:U('Web/Buried/getBuriedArea')}",{bu_province:province},function(data){
+			$('#bu_city').html(data.city);
+			$('#bu_country').html(data.send.country);
+			$('#burial_mode').html(data.send.bu_service.buired);
+			$('#addresssss').html(data.send.bu_service.send_addre);
+			$('#add_hide').val(data.send.bu_service.send_addre);
+		})
+	}
+
+	function city_c(){
+
+			var city = $('#bu_city').val();
+			$.post("{:U('Web/Buried/getBuiredCountry')}",{bu_city:city},function(data){
+			$('#bu_country').html(data.country);
+			$('#burial_mode').html(data.bu_service.buired);
+			$('#addresssss').html(data.bu_service.send_addre);
+			$('#add_hide').val(data.bu_service.send_addre);
+		})
+
+	}
+
+	function country_d(){
+		var bu_country = $('#bu_country').val();
+		$.post("{:U('Web/Buried/getPrice')}",{country:bu_country},function(data){
+			$('#burial_mode').html(data.buired);
+			$('#addresssss').html(data.send_addre);
+			$('#add_hide').val(data.send_addre);
+		})
+	}
+
+
+	function but(){
+		var bu_weight = $('#bu_weight').val();
+		if( !$.isNumeric( bu_weight )){
+			layer.tips('请填写正确的宠物体重。', '#bu_weight', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		var bu_contacts = $('#bu_contacts').val();
+		if( bu_contacts.length<= 0){
+			layer.tips('请填写联系人。', '#bu_contacts', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		var pick_up = $("input[name='bu_method']:checked").val();
+		var addresssss = $('#addresssss').val();
+
+		if(  pick_up == 1 && addresssss.length<= 0 ){
+
+			layer.tips('请填写详细收货地址。', '#addresssss', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		var bu_contacts_phone = $('#bu_contacts_phone').val();
+		if( bu_contacts_phone.length!= 11){
+			layer.tips('请填写联系人电话号码。', '#bu_contacts_phone', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		$("#button").attr("disabled","disabled");
+		$('#form_a').submit();
+
+	}
+
+	$("#protocol_pet_pic").on('click',function(){
+		var country = $('#bu_country').val();
+		layer.open({
+		  	type: 2,
+		  	title: '宠物殡仪服务协议',
+		  	shadeClose: true,
+		  	shade: 0.5,
+		    skin: 'layui-layer-rim', //加上边框
+		  	area: ['680px', '70%'],
+		  	content: "https://www.mixiupet.com/Web/Buried/protocol_pet_pic/country/"+country  //iframe的url
+		}); 
+	})
+</script>
+
+<style>
+	.layui-layer-rim{
+		top: 10vh !important;
+	}
+</style>
+
+<script>
+	$(document).ready(function(){
+		$('#change_eee').attr('class','action')
+	});
+</script>

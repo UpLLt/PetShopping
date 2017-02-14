@@ -1,0 +1,122 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_top">
+					<h1>我的优惠券</h1>
+				</div>
+				
+				<div class="user_coupon_make">
+					<li id="coupon1" class="cation" onmousedown="setTwo('coupon',1,3)"><a href="javascript:;">未使用</a></span></li>
+					<li id="coupon2" onmousedown="setTwo('coupon',2,3)"><a href="javascript:;">已使用/已过期</a></span></li>
+				</div>
+
+				<div class="user_coupon_show" id="con_coupon_1">
+
+					<foreach name="notoverdue" item="vo">
+
+						<li>
+							<div class="cop_top">
+								<div class="cop_top_left">
+									<span>￥</span><b>{$vo.price}</b>
+								</div>
+								<div class="cop_top_right">
+									<p>优惠券</p>
+									<p>满{$vo.full_use}元使用</p>
+								</div>
+							</div>
+							<div class="cop_down">
+								<p>{$vo.expiration_time}</p>
+							</div>
+						</li>
+
+					</foreach>
+				</div>
+
+				<div class="user_coupon_show" id="con_coupon_2" style="display:none;">
+					<foreach name="overdue" item="vo">
+						<li>
+							<div class="cop_top">
+								<div class="cop_top_left">
+									<span>￥</span><b>{$vo.price}</b>
+								</div>
+								<div class="cop_top_right">
+									<p>优惠券</p>
+									<p>满{$vo.full_use}元使用</p>
+								</div>
+							</div>
+							<div class="cop_down">
+								<p>{$vo.expiration_time}</p>
+							</div>
+						</li>
+						</foreach>
+
+
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="js/cityData.js"></script>
+<script type="text/javascript" src="js/cityPicker.js"></script>
+<script>
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block'; 
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none'; 
+		}
+
+</script>
+
+<script type="text/javascript">
+	function setTwo(name,cursel,n){
+	    for(i=1;i<=n;i++){
+		    var menu=document.getElementById(name+i);
+		    var con=document.getElementById("con_"+name+"_"+i);
+	        menu.className=i==cursel?"cation":"";
+	        con.style.display=i==cursel?"block":"none";
+	    }
+	}
+</script>
+
+
+
+

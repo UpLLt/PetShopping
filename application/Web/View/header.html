@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="{$ptype_url}/images/favicon.png" type="image/png" />
+<title>咪咻</title>
+
+<!-- 首页带 商品分类 -->
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/index.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/main.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/cityPicker.css">
+
+<!-- 字体图标 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/icon.min.css" />
+
+</head>
+<body>
+	<div class="header">
+		<div class="center">
+			<div class="top">
+				<div class="domain">
+					<b>欢迎来到咪咻！</b>
+					<b style="padding-left: 20px"><a href="{:U('Web/Index/index')}">返回首页</a> </b>
+				</div>
+
+				<div class="user_menu user_more_menu">
+
+					{$login}
+				</div>
+			</div>
+
+			<div class="losearch">
+				<div class="logo"><a href="{:U('Index/index')}"><img src="{$ptype_url}/images/logo.png" /></a></div>
+				<div class="search">
+					<form method="post" action="{:U('Web/Search/search')}">
+						<input type="text" placeholder="请输入搜索内容" value="{$formget.keyword}" name="keyword" class="search_text" />
+						<input type="submit" value="" class="search_bnt" />
+						<select class="select_ed" name="type">
+							<option  value="2"   <if condition="($formget.type eq '2')">selected</if> >宠物</option>
+							<option  value="1"   <if condition="($formget.type eq '1')">selected</if>>商品</option>
+						</select>
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="nav">
+		<div class="center nav_isnice">
+			<div class="nav_left">
+				<li id="one1" onmouseover="setTwo('one',1,6)" onmousedown="hold1()" ><a href="{:U('Web/Index/index')}"><img src="{$ptype_url}/images/doge.png" />宠物种类<i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+				<li id="one2" onmouseover="setTwo('one',2,6)" onmousedown="hold2()" ><a href="{:U('Web/Index/index')}"><img src="{$ptype_url}/images/cat.png" />商品分类<i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+			</div>
+			<div class="menu">
+				<li id="change_aaa"><a href="{:U('Web/Hospital/index')}">宠物医疗</a></li>
+				<li id="change_bbb"><a href="{:U('Web/Marriage/index')}">宠物婚介</a></li>
+				<li id="change_ccc"><a href="{:U('Web/Trasport/index')}">宠物运输</a></li>
+				<li id="change_ddd"><a href="{:U('Web/Foster/index')}">  宠物寄养</a></li>
+				<li id="change_eee"><a href="{:U('Web/Buried/index')}">  宠物殡仪</a></li>
+				<li id="change_fff"><a href="{:U('Web/SellPet/index')}"> 我要卖宠</a></li>
+				<li id="change_ggg"><a href="{:U('Web/Insurance/index')}">宠物保险</a></li>
+				<li id="change_hhh"><a href="{:U('Web/Community/index')}">宠物社区</a></li>
+			</div>
+			<div class="nav_left_one" id="con_one_1" style="display:none;" >
+				{$ptype}
+			</div>
+			<div class="nav_left_one" id="con_one_2" style="display:none;" >
+				<!-- 商品菜单 -->
+					<div class='main_menu'>
+						<div class='cent'>
+							<div class='all-sort-list'>
+								<div class='item'>
+									<h3><a href="{:U('Web/Search/index',array('type'=>'1'))}"><span class='icon-nav_menu_1'></span>活体宠物</a></h3>
+									<div class='item-list clearfix'>
+										<div class='subitem'>
+
+										<foreach name="pp_type" item="vo">
+											<dl class='fore1'>
+												<dt><a href='javascript:;'>{$vo.name}<i class='fa fa-angle-right' aria-hidden='true'></i></a></dt>
+
+												<dd>
+													<foreach name="vo.lists" item="vvv">
+														<em><a href="{:U('Search/index',array('type'=>'1','pet_variety_id'=>$vvv['pet_variety_id']))}">{$vvv.pet_variety}</a></em>
+													</foreach>
+
+												</dd>
+
+											</dl>
+										</foreach>
+											
+										</div>
+									</div>
+								</div>
+
+								<foreach name="category" item="vo">
+
+									<div class='item'>
+										<h3><a href="{:U('Web/Search/index',array('type'=>'2','id'=>$vo['id']))}"><span class='icon-nav_menu_{$vo.number}'></span>{$vo.name}</a></h3>
+										<div class='item-list clearfix'>
+											<div class='subitem'>
+
+												<foreach name="category" item="vvv">
+													<dl class='fore1'>
+														<dt><a href="{:U('Web/Search/index',array('type'=>'2','id'=>$vvv['id']))}">{$vvv.name}</a></dt>
+														<dd>
+															<foreach name="vvv.child" item="vv">
+																<em><a href="{:U('Web/Search/index',array('type'=>'2','id'=>$vv['id']))}">{$vv.name}</a></em>
+															</foreach>
+														</dd>
+													</dl>
+												</foreach>
+											</div>
+										</div>
+									</div>
+
+								</foreach>
+
+
+
+
+							</div>
+						</div>
+					</div>
+			</div>
+
+			<div class="isnice">
+				<foreach name="product_hot" item="vo">
+					<li><a href="{:U('Web/Product/index',array('ptype'=>2,'pid'=>$vo['id']))}"><img  src="{$vo.picture}" /></a></li>
+				</foreach>
+			</div>
+		</div>
+	</div>
+
+</div>

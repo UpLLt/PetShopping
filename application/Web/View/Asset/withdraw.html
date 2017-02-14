@@ -1,0 +1,105 @@
+<include file="./application/Web/View/header_user.html"/>
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_draw">
+					<form id="form_a" action="{:U('Web/Asset/Withdrawal')}" method="post">
+						<li><b>提现金额：</b><input name="money" id="money" type="text" placeholder="请输入提现金额" /></li>
+						<li><b>提现银行：</b>
+							<select name="bcode">
+								<foreach name="bank" item="vo">
+							    	<option value="{$vo.bcode}" >{$vo.bname}</option>
+								</foreach>
+							</select>
+						</li>
+						<li><b>银行卡号：</b><input name="bank_card" id="bank_card" type="text" placeholder="请输入银行卡号" /></li>
+						<li><b>开户人：</b><input type="text" name="realname" id="realname" placeholder="请输入开户人姓名" /></li>
+						<li><b>支付密码：</b><input type="password" name="pay_password" id="pay_password" placeholder="请输入提现密码" /></li>
+						
+						<li class="draw"><b>&nbsp;</b><a href="javascript:;" id="draw_submit">提交申请</a></li>
+					</form>
+				</div>
+
+				<div class="user_integral">
+					<h2><span>提现记录</span></h2>
+					<h1>
+						<span>日期</span>
+						<span>提现金额</span>
+						<span>提现状态</span>
+						<span>备注</span>
+					</h1>
+
+					<foreach name="withdrawal" item="vo">
+						<li>
+							<span>{$vo.create_time}</span>
+							<span>￥{$vo.price}</span>
+							<span>{$vo.status_str}</span>
+							<span>{$vo.stat_detail}</span>
+						</li>
+
+					</foreach>
+				
+				</div>
+
+				<div class="list_page">
+					{$Page}
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+<script>
+	$('#draw_submit').click(
+			function () {
+
+				var money = $('#money').val();
+				if( money.length<= 0){
+					layer.tips('提现金额不能为空。', '#money', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+
+				var bank_card = $('#bank_card').val();
+				if( bank_card.length<= 15){
+					layer.tips('银行卡号格式不正确。', '#bank_card', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+				var realname = $('#realname').val();
+				if( realname.length<= 0){
+					layer.tips('开户人姓名不能为空。', '#realname', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+
+				var pay_password = $('#pay_password').val();
+				if( pay_password.length<= 0){
+					layer.tips('提现密码不能为空。', '#pay_password', {
+						tips: [1, '#FFFFFF'],
+						time: 2000
+					});
+					return false;
+				}
+
+				$('#form_a').submit();
+			}
+	)
+</script>
+<include file="./application/Web/View/footer_other.html"/>	
+
+

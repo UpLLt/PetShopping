@@ -1,0 +1,130 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Index/billboard')}" target="_self">横幅广告</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/edit_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">横幅广告名称</label>
+                    <div class="controls">
+                        <input type="text" name="post[name]" value="{$data.name}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">标识</label>
+                    <div class="controls">
+                        <!--<input type="text" name="post[sign_key]" value="{$data.sign_key}">-->
+                        <select name="post[sign_key]" id="" >
+                            <option value="app-home" <if condition="$data.sign_key eq 'app-home'">selected = "selected"</if>>app首页</option>
+                            <option value="pc-home" <if condition="$data.sign_key eq 'pc-home'">selected = "selected"</if>>PC首页</option>
+                            <option value="community" <if condition="$data.sign_key eq 'community'">selected = "selected"</if>>社区首页</option>
+                            <option value="company-fun" <if condition="$data.sign_key eq 'company-fun'">selected = "selected"</if>>殡仪轮播</option>
+                            <option value="company-fun_pc" <if condition="$data.sign_key eq 'company-fun_pc'">selected = "selected"</if>>殡仪轮播PC</option>
+                            <option value="company-fos" <if condition="$data.sign_key eq 'company-fos'">selected = "selected"</if>>寄养轮播</option>
+                            <option value="company-fos_pc" <if condition="$data.sign_key eq 'company-fos_pc'">selected = "selected"</if>>寄养轮播PC</option>
+                            <option value="company-trans" <if condition="$data.sign_key eq 'company-trans'">selected = "selected"</if>>运输轮播</option>
+                            <option value="company-trans_pc" <if condition="$data.sign_key eq 'company-trans_pc'">selected = "selected"</if>>运输轮播PC</option>
+                            <option value="pc-left" <if condition="$data.sign_key eq 'pc-left'">selected = "selected"</if>>PC侧图</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">设备类型</label>
+                    <div class="controls">
+                        <select name="post[type]" >
+                            <if condition="($data.type eq 1)">
+                                <option selected="selected" value="1">App</option>
+                                <option value="2">PC</option>
+                                <else/>
+                                <option value="1">App</option>
+                                <option selected="selected" value="2">PC</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label">状态</label>
+                    <div class="controls">
+                        <select name="post[status]">
+                            <if condition="($data.status eq 1)">
+                                <option selected="selected" value="1">启用</option>
+                                <option value="0">禁用</option>
+                                <else/>
+                                <option value="1">启用</option>
+                                <option selected="selected" value="0">禁用</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+                   id="menus-table">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>链接</th>
+                    <th>图片</th>
+                    <th>排序</th>
+                    <th>类型</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="trlist">
+                {$categorys}
+                </tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a id="add_upload_tr" class="btn btn-info btn-small">新增</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="id" value="{$data.id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+            <a class="btn" href="{:U('Index/billboard')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script>
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value="" ></td>' +
+                    '<td><input name="link[]" value="" placeholder="请填写相关id" style="width:100px;"></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value="" style="width:100px;"></td>' +
+                    '<td><select name="type[]" id=""><option value="1">活体宠物</option><option value="2">宠物商品</option><option value="3">活动页面</option></select></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

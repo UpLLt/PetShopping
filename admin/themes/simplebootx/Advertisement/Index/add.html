@@ -1,0 +1,116 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Index/billboard')}" target="_self">横幅广告</a></li>
+        <li class="active"><a href="javascript:;">新增广告</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/add_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">横幅广告名称</label>
+                    <div class="controls">
+                        <input type="text" name="post[name]" value="">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">标识</label>
+                    <div class="controls">
+                        <!--<input type="text" name="post[sign_key]" value="">-->
+                        <select name="post[sign_key]" id="">
+                            <option value="app-home">app首页</option>
+                            <option value="pc-home">PC首页</option>
+                            <option value="pc-left">PC侧图</option>
+                            <option value="community">社区首页</option>
+                            <option value="company-fun">殡仪轮播</option>
+                            <option value="company-fun_pc">殡仪轮播PC</option>
+                            <option value="company-fos">寄养轮播</option>
+                            <option value="company-fos_pc">寄养轮播PC</option>
+                            <option value="company-trans">运输轮播</option>
+                            <option value="company-trans_pc">运输轮播PC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">横幅广告类型</label>
+                    <div class="controls">
+                        <select name="post[type]">
+                            <option value="1">App</option>
+                            <option value="2">PC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">状态</label>
+                    <div class="controls">
+                        <select name="post[status]">
+                            <option value="1">启用</option>
+                            <option value="0">禁用</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+                   id="menus-table">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>链接</th>
+                    <th>图片</th>
+                    <th>排序</th>
+                    <th>类型</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="trlist">
+                {$categorys}
+                </tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a id="add_upload_tr" class="btn btn-info btn-small">新增</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Index/billboard')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                '<td><input required name="title[]" value="" ></td>' +
+                '<td><input name="link[]" value="" placeholder="请根据类型填写相关id" style="width:200px;"></td>' +
+                '<td><input type="file" name="image[]"></td>' +
+                '<td><input name="sort_order[]" value="" style="width:100px;"></td>' +
+                    '<td><select name="type[]" id=""><option value="1">活体宠物</option><option value="2">宠物商品</option><option value="3">活动页面</option></select></td>' +
+                '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

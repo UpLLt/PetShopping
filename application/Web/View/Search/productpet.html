@@ -1,0 +1,214 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css">
+
+
+<include file="./application/Web/View/header_list.html"/>
+
+
+	<div class="user_mian">
+		<div class="center">
+			<div class="shoping_list_filter">
+				<h1>
+					<a href="javascript:;" id="price_aaa" >价格</a>
+					<span>共计<b>{$count}</b>件商品</span>
+				</h1>
+			</div>
+
+			<input type="hidden" id="pet_variety_id" value="{$pet_variety_id}">
+			<div class="shoping_list_li">
+
+				<div class="shoping_list_li_left">
+					<foreach name="sale_hot" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img src="{$vo.picture}" /></a>
+							<h1>{$vo.pro_name}</h1>
+							<p>￥{$vo.price}</p>
+						</li>
+					</foreach>
+				</div>
+
+				<div class="shoping_list_li_right" id="shoping_list_li_rights">
+
+					<foreach  name="lists" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('ptype'=>1,'pid'=>$vo['id']))}"><img src="{$vo.picture}" /></a>
+							<h1>{$vo.pet_name}</h1>
+							<p><span>￥<b>{$vo.pet_price}</b></span></p>
+
+
+						</li>
+					</foreach>
+
+				</div>
+				<div class="list_page" id="list_page">
+					{$Page}
+				</div>
+			
+				<input type="hidden" id="change_price" value="">
+
+			</div>
+		</div>
+	</div>
+	
+
+
+
+
+ 
+	
+
+
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="{$ptype_url}/js/cityData.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/cityPicker.js"></script>
+
+
+<script>
+	$('#price_aaa').click(function(){
+	  var 	zpet_variety_id = $('#pet_variety_id').val();
+		$.post("{:U('Web/Search/ajaxReturnPet')}",{pet_variety_id:zpet_variety_id,price:1},function(data){
+				$('#list_page').html(data.Page);
+				$('#shoping_list_li_rights').html(data.str);
+				$('#change_price').val('1');
+				$('#list_page').html(data.Page);
+		});
+
+	})
+
+	function page(o){
+		var zpage  = $(o).attr('name');
+		var 	zpet_variety_id = $('#pet_variety_id').val();
+		$.post("{:U('Web/Search/ajaxReturnPet')}",{price:$('#change_price').val(),pet_variety_id:zpet_variety_id,page:zpage},function(data){
+
+			$('#list_page').html(data.Page);
+			$('#shoping_list_li_rights').html(data.str);
+			$('#list_page').html(data.Page);
+		});
+	}
+
+
+</script>
+
+
+<script>
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block'; 
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none'; 
+		}
+</script>
+
+<script>
+    $(document).ready(function(){
+			
+	$("#select1 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectA").remove();
+		} else {
+			var copyThisA = $(this).clone();
+			if ($("#selectA").length > 0) {
+				$("#selectA a").html($(this).text());
+			} else {
+				$(".select-result dl").append(copyThisA.attr("id", "selectA"));
+			}
+		}
+	});
+	
+	$("#select2 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectB").remove();
+		} else {
+			var copyThisB = $(this).clone();
+			if ($("#selectB").length > 0) {
+				$("#selectB a").html($(this).text());
+			} else {
+				$(".select-result dl").append(copyThisB.attr("id", "selectB"));
+			}
+		}
+	});
+	
+	$("#select3 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectC").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectC").length > 0) {
+				$("#selectC a").html($(this).text());
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectC"));
+			}
+		}
+	});
+
+	$("#select4 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectD").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectD").length > 0) {
+				$("#selectD a").html($(this).text());
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectD"));
+			}
+		}
+	});
+	
+	$("#selectA").live("click", function () {
+		$(this).remove();
+		$("#select1 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+	
+	$("#selectB").live("click", function () {
+		$(this).remove();
+		$("#select2 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+	
+	$("#selectC").live("click", function () {
+		$(this).remove();
+		$("#select3 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+	
+	$("#selectD").live("click", function () {
+		$(this).remove();
+		$("#select4 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$(".select dd").live("click", function () {
+		if ($(".select-result dd").length > 1) {
+			$(".select-no").hide();
+		} else {
+			$(".select-no").show();
+		}
+	});
+	
+});
+</script>
+
+

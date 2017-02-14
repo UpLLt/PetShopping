@@ -1,0 +1,68 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Know/index')}" target="_self">问答列表</a></li>
+        <li class="active"><a href="javascript:;">{$title}</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Know/add')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <input class="hidden" type="text" name="post[kno_id]" value="{$rst.kno_id}">
+                <div class="control-group">
+                    <label class="control-label">问答标题</label>
+                    <div class="controls">
+                        <input type="text" name="post[kno_title]" value="{$rst.kno_title}">
+                        <span class="form-required">*30个字以内</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">问答内容</label>
+                    <div class="controls">
+                        <textarea class="form-control" rows="7" name="post[kno_content]" >{$rst.kno_content}</textarea>
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">问答关键字</label>
+                    <div class="controls">
+                        <input type="text" name="post[kno_keyword]" value="{$rst.kno_keyword}">
+                        <span class="form-required">*关键字之间以逗号隔开</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{$button}</button>
+            <a class="btn" href="{:U('Know/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(".hidden").hide();
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

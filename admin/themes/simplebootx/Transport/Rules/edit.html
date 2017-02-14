@@ -1,0 +1,175 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Rules/lists')}" target="_self">城市列表</a></li>
+        <li class="active"><a href="javascript:;">区域修改</a></li>
+    </ul>
+    <form action="{:U('Rules/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+
+
+                    <tr>
+                        <th width="100">区域选择</th>
+                        <td>
+                            <select class="select_2" id="province" onchange="prov()" name="tr_province">
+                                {$province}
+                            </select>
+                            <select class="select_2" id="city" onchange="city_c()" name="tr_city">
+                               {$city}
+                            </select>
+                            <select class="select_2" id="country" name="tr_country">
+                              {$country}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">上门取货价格</th>
+                        <td>
+                            <input type="number" style="width:400px;" value="{$result.tr_price}" name="tr_price" required value=""
+                                   placeholder="请输入区域价格"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">送货地址</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="tr_send_addre" value="{$result.tr_send_addre}" required value=""
+                                   placeholder="请输入送货地址"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">厦航/东航</th>
+                        <td>
+                            <input type="number" style="width:400px;" value="{$result.tr_eastair}" name="tr_eastair" required value=""
+                                   placeholder="请输入送货地址"/>
+                            <span>设置厦航/东航最低消费金额</span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th width="100">南航/其他</th>
+                        <td>
+                            <input type="number" style="width:400px;" value="{$result.tr_otherair}" name="tr_otherair" required value=""
+                                   placeholder="请输入送货地址"/>
+                            <span>设置南航/其他最低消费金额</span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">重量计算</th>
+                        <td>
+                            <dt id="weight">
+                               {$weight}
+                            </dt>
+                            <dt ><a href="javascript:;"  onclick="add()"> <img src="__PUBLIC__/images/add.png"> </a></dt>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">运输笼</th>
+                        <td>
+                            <dt>
+                            <dd style="margin-top: 10px">微型笼：&nbsp;&nbsp;&nbsp;体重：<input value="{$result.tr_cage.mini.start}" name="tr_cage[mini][start]" type="number" style="width: 50px;">~<input value="{$result.tr_cage.mini.end}" name="tr_cage[mini][end]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input value="{$result.tr_cage.mini.price}" name="tr_cage[mini][price]" type="number" style="width: 50px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笼重：<input value="{$result.tr_cage.mini.cage}" name="tr_cage[mini][cage]" type="number" style="width: 50px;">&nbsp;&nbsp;KG</dd>
+                            <dd style="margin-top: 10px">小型笼：&nbsp;&nbsp;&nbsp;体重：<input value="{$result.tr_cage.small.start}" name="tr_cage[small][start]" type="number" style="width: 50px;">~<input value="{$result.tr_cage.small.end}" name="tr_cage[small][end]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input value="{$result.tr_cage.small.price}" name="tr_cage[small][price]" type="number" style="width: 50px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笼重：<input value="{$result.tr_cage.small.cage}" name="tr_cage[small][cage]" type="number" style="width: 50px;">&nbsp;&nbsp;KG</dd>
+                            <dd style="margin-top: 10px">中型笼：&nbsp;&nbsp;&nbsp;体重：<input value="{$result.tr_cage.middle.start}" name="tr_cage[middle][start]" type="number" style="width: 50px;">~<input value="{$result.tr_cage.middle.end}" name="tr_cage[middle][end]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input value="{$result.tr_cage.middle.price}" name="tr_cage[middle][price]" type="number" style="width: 50px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笼重：<input value="{$result.tr_cage.middle.cage}" name="tr_cage[middle][cage]" type="number" style="width: 50px;">&nbsp;&nbsp;KG</dd>
+                            <dd style="margin-top: 10px">中大型笼：体重：<input value="{$result.tr_cage.big.start}" type="number" name="tr_cage[big][start]" style="width: 50px;">~<input value="{$result.tr_cage.big.end}" name="tr_cage[big][end]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input value="{$result.tr_cage.big.price}" name="tr_cage[big][price]" type="number" style="width: 50px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笼重：<input value="{$result.tr_cage.big.cage}" name="tr_cage[big][cage]"type="number" style="width: 50px;">&nbsp;&nbsp;KG</dd>
+                            <dd style="margin-top: 10px">大型笼：&nbsp;&nbsp;&nbsp;体重：<input value="{$result.tr_cage.large.start}"  name="tr_cage[large][start]" type="number" style="width: 50px;">~<input value="{$result.tr_cage.big.end}" name="tr_cage[big][end]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input value="{$result.tr_cage.large.price}" name="tr_cage[large][price]" type="number" style="width: 50px;">&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笼重：<input value="{$result.tr_cage.large.cage}" name="tr_cage[large][cage]" type="number" style="width: 50px;">&nbsp;&nbsp;KG</dd>
+                            </dt>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">检疫证价格</th>
+                        <td>
+                            <input type="number" style="width:400px;" value="{$result.tr_pratique}" name="tr_pratique" required value=""
+                                   placeholder="请输入检疫证价格"/>
+                        </td>
+                    </tr>
+
+                    <input type="hidden" name="id" value="{$result.id}">
+
+                    <tr>
+                        <th>服务协议</th>
+                        <td>
+                            <script type="text/plain" id="content" name="tr_service"
+                                    style="width:80%x;height:500px;">{$result.tr_service}
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">提交</button>
+            <a class="btn" href="{:U('Rules/lists')}">返回</a>
+        </div>
+    </form>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /////---------------------
+            <!-- 实例化编辑器 -->
+            var ue = UE.getEditor('content', {
+                autoHeight: false,
+                autoHeightEnabled: false, //出现滚动条
+                elementPathEnabled: false  //去掉元素路径
+
+            });
+            //对编辑器的操作最好在编辑器ready之后再做
+            ue.ready(function () {
+                //设置编辑器的内容
+               
+                //获取html内容，返回: <p>hello</p>d
+            });
+        });
+
+        function prov(){
+            var province = $('#province').val();
+            $.post("{:U('Rules/getCity')}",{province:province},function(data){
+
+                $('#city').html(data.city);
+                $('#country').html(data.country);
+
+            })
+        }
+
+        function city_c(){
+
+            var city = $('#city').val();
+            $.post("{:U('Rules/getcountry')}",{city:city},function(data){
+                $('#country').html(data);
+
+            })
+        }
+
+        function reduce(o){
+            $(o).parent().parent().remove();
+        }
+
+        function add(){
+            var html = '<dd style="margin-top: 10px">重量：<input name="weight[start][]" type="number" style="width: 50px;">~<input name="weight[end][]" type="number" style="width: 50px;">&nbsp;&nbsp;KG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input name="weight[price][]" type="number" style="width: 50px;">&nbsp;&nbsp;元/KG&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"><img onclick="reduce(this)" style="width: 30px;height: 30px;" src="__PUBLIC__/images/reduce.png"></a></dd>';
+            $("#weight").append(html);
+        }
+
+    </script>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

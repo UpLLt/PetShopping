@@ -1,0 +1,153 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Rule/index')}" target="_self">城市列表</a></li>
+        <li class="active"><a href="javascript:;">区域添加</a></li>
+    </ul>
+    <form action="{:U('Rule/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="100">区域选择</th>
+                        <td>
+                            <select class="select_2" id="province" onchange="prov()" name="fos_province">
+                                {$province}
+                            </select>
+                            <select class="select_2" id="city" onchange="city_c()" name="fos_city">
+                                {$city}
+                            </select>
+                            <select class="select_2" id="country" name="fos_country">
+                                {$country}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">上门取货价格</th>
+                        <td>
+                            <input type="number" style="width:400px;" value="{$result.fos_price}" name="fos_price" required value=""
+                                   placeholder="请输入区域价格"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">送货地址</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="fos_send_addre" value="{$result.fos_send_addre}" required value=""
+                                   placeholder="请输入送货地址"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">宠物大小</th>
+                        <td>
+                            <dt id="size">
+                                {$size}
+                            <dd ><a href="javascript:;"  onclick="add()"> <img src="__PUBLIC__/images/add.png"> </a></dd>
+
+                            </dt>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">日期折扣</th>
+                        <td>
+                            <dt id="discount">
+                                {$discount}
+                            <dd ><a href="javascript:;"  onclick="add_this()"> <img src="__PUBLIC__/images/add.png"> </a></dd>
+
+                            </dt>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">狗粮价格</th>
+                        <td>
+                            <input type="number" style="width:100px;" value="{$result.fos_dog_food}" name="fos_dog_food" required value=""
+                                   placeholder="请输入狗粮价格"/>&nbsp&nbsp元/天
+                        </td>
+                    </tr>
+
+                    <input type="hidden" name="id" value="{$result.id}">
+
+                    <tr>
+                        <th>服务协议</th>
+                        <td>
+                            <textarea type="text/plain" id="content" name="fos_service"  rows="15" style="width:600px;">{$result.fos_service}</textarea>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">提交</button>
+            <a class="btn" href="{:U('Rule/index')}">返回</a>
+        </div>
+    </form>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /////---------------------
+            <!-- 实例化编辑器 -->
+            /*var ue = UE.getEditor('content', {
+                autoHeight: false,
+                autoHeightEnabled: false, //出现滚动条
+                elementPathEnabled: false  //去掉元素路径
+
+            });
+            //对编辑器的操作最好在编辑器ready之后再做
+            ue.ready(function () {
+                //设置编辑器的内容
+
+                //获取html内容，返回: <p>hello</p>d
+            });*/
+        });
+
+        function prov(){
+            var province = $('#province').val();
+            $.post("{:U('Rule/getCity')}",{province:province},function(data){
+
+                $('#city').html(data.city);
+                $('#country').html(data.country);
+
+            })
+        }
+
+        function city_c(){
+
+            var city = $('#city').val();
+            $.post("{:U('Rule/getcountry')}",{city:city},function(data){
+                $('#country').html(data);
+
+            })
+        }
+
+        function reduce(o){
+            $(o).parent().parent().remove();
+        }
+
+        function add(){
+            var html = '<dd style="margin-top: 10px">体重：<input name="size[start][]" type="number" style="width: 80px;">~<input name="size[end][]" type="number" style="width: 80px;">&nbsp;&nbsp;斤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<input name="size[price][]" type="number" style="width: 80px;">&nbsp;&nbsp;元/天&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"><img onclick="reduce(this)" style="width: 30px;height: 30px;" src="__PUBLIC__/images/reduce.png"></a></dd>';
+            $(html).appendTo("#size");
+        }
+        function add_this(){
+            var html = '<dd style="margin-top: 10px"><input name="discount[date][]" type="number" style="width: 80px;">&nbsp;&nbsp;天&nbsp;&nbsp '+
+                    '<input name="discount[num][]" type="number" style="width: 80px;">&nbsp;&nbsp;折&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                    '<a href="javascript:;"><img onclick="reduce(this)" style="width: 30px;height: 30px;" src="__PUBLIC__/images/reduce.png"></a></dd>';
+            $(html).appendTo("#discount");
+        }
+
+    </script>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>

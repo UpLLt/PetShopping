@@ -1,0 +1,77 @@
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_top bottom_dashed">
+					<h1>收货信息 <a class="frt add_address" href="javascript:;" id="add_address">添加收货地址</a></h1>
+				</div>
+
+				<div class="user_add_address">
+					{$address}
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+<include file="./application/Web/View/footer_other.html"/>
+ 
+
+
+
+<script>
+$('#add_address').on('click', function(){
+  	layer.open({
+	    type: 2,
+	    title: '',
+	    closeBtn: 0,
+	    shadeClose: true,
+	    shade: 0.8,
+	    area: ['500px', '470px'],
+	    content: "{:U('Web/Member/add_address')}", //iframe的url
+		end:function () {
+			location.reload();
+		}
+	}); 
+});
+</script>
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block'; 
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none'; 
+		}
+
+	$('.delete_address_1').on('click',function(){
+		var zid = $(this).attr('name');
+
+		layer.confirm('确定要删除此地址吗?', {
+		  	btn: ['确定','取消'] //按钮
+		}, function(){
+			$.post("{:U('Web/Member/addressDelete')}",{id:zid},function(data){
+				if( data == 1){
+					layer.msg('删除成功！', {icon: 1});window.location.reload();
+				}else{
+					layer.msg('删除失败！', {icon: 1});
+				}
+			})
+
+
+		   		$("#add_ress_1").remove();
+		}, function(){
+		 	
+		});
+	})
+
+
+</script>
+
+</body>
+
+</html>
+
+
+

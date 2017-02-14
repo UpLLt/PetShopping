@@ -1,0 +1,141 @@
+
+
+<link rel="stylesheet" href="{$ptype_url}/css/zyUpload.css" type="text/css">
+<include file="./application/Web/View/header_menu.html"/>
+
+
+<div class="mian_cent" >
+	<div class="center">
+
+		<form id="form_1" method="post" action="{:U('Web/Marriage/publish')}" enctype="multipart/form-data">
+
+			<div class="selling_pet_my">
+				<li><b>宠物类型：</b>
+					<select name="pet_variety_id" class="select_refund">
+						<foreach name="PetCategory" item="vo">
+							<option value="{$vo.pet_variety_id}">{$vo.pet_variety}</option>
+						</foreach>
+					</select>
+				</li>
+
+				<li>
+					<b>宠物昵称：</b>
+					<input type="text" id="pe_name" name="pe_name" class="wid wid200" />
+				</li>
+
+				<li>
+					<b>宠物年龄：</b>
+					<input type="number" maxlength="2" id="pe_age" name="pe_age" class="wid wid100" /> 月
+				</li>
+
+				<li>
+					<b>所在城市：</b>
+
+					<select class="form-control" id="tr_province"  onchange="prov()" name="pe_province">
+						{$area.city}
+					</select>
+					<select class="form-control" id="tr_city" onchange="city_c()" name="pe_city">
+						{$area.country}
+					</select>
+
+
+				</li>
+
+				<li><b>宠物照片：</b> <div id="demo" class="demo"></div>
+
+				</li>
+				<li>
+					<b>配种价格：</b>
+					<input type="number" id="pe_breeding" name="pe_breeding"  maxlength="11" /> <p class="bai20">平台将收取部分手续费</p>
+				</li>
+
+				<li>
+					<b>联系电话：</b>
+					<input type="text" id="pe_phone" name="pe_phone"  maxlength="11" />
+				</li>
+
+				<li><b></b> <input type="button" onclick="btn()" id="button" class="submit_sd" value="发 布" /></li>
+
+			</div>
+
+		</form>
+
+
+	</div>
+</div>
+
+
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+
+<script>
+
+	function prov(){
+		var province = $('#tr_province').val();
+
+		$.post("{:U('Web/Marriage/getArea')}",{ma_province:province},function(data){
+			$('#tr_city').html(data);
+
+		})
+	}
+
+	function btn(){
+		var pe_name = $('#pe_name').val();
+
+		if( pe_name.length <= 0 ){
+			layer.tips('请填写宠物昵称。', '#pe_name', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+
+			});
+			return false;
+		}
+
+		var pe_age = $('#pe_age').val();
+		if( pe_age.length <= 0 ){
+			layer.tips('请填写宠物年龄。', '#pe_age', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		var pe_breeding = $('#pe_breeding').val();
+		if( pe_breeding.length <= 0 ){
+			layer.tips('请填写配种价格。', '#pe_breeding', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+
+		var pe_phone = $('#pe_phone').val();
+		if( pe_phone.length != 11 ){
+			layer.tips('请填写正确的联系电话。', '#pe_phone', {
+				tips: [1, '#FFFFFF'],
+				time: 2000
+			});
+			return false;
+		}
+		$("#button").attr("disabled","disabled");
+		$('#form_1').submit();
+
+	}
+
+</script>
+
+
+<include file="./application/Web/View/footer.html"/>
+
+<!-- 引用核心层插件 -->
+<script type="text/javascript" src="{$ptype_url}/js/zyFile.js"></script>
+<!-- 引用控制层插件 -->
+<script type="text/javascript" src="{$ptype_url}/js/zyUpload.js"></script>
+<!-- 引用初始化JS -->
+<script type="text/javascript" src="{$ptype_url}/js/jq22.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#change_bbb').attr('class','action')
+	});
+</script>

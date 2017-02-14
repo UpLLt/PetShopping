@@ -1,0 +1,49 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">商品列表</a></li>
+        <li><a href="{:U('Goods/add')}">新增商品</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Goods/lists')}">
+        商品名称：
+        <input type="text" name="keyword" style="width: 120px;" value="{$formget.keyword}" placeholder="">
+        商品ID：
+        <input type="text" name="id" style="width: 120px;" value="{$formget.id}" placeholder="">
+        类型：
+        <select style="width: 75px" id="pet_type" name="pet_type">
+
+            <option value='' <if condition="($formget.pet_type eq '')">selected</if> >全部</option>
+            <option value='1' <if condition="($formget.pet_type eq '1')">selected</if>>猫</option>
+            <option value= '2' <if condition="($formget.pet_type eq  '2')">selected</if>>狗</option>
+
+        </select>
+        <input type="submit" style="margin-left: 5px;" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+           id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th style="white-space: nowrap">商品ID</th>
+            <th style="white-space: nowrap">宠物类型</th>
+            <th style="white-space: nowrap;width: 200px;">商品名称</th>
+            <th>均价</th>
+            <th>类型</th>
+            <th style="white-space: nowrap">销量</th>
+            <th>状态</th>
+            <th>热门</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$tablebody}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

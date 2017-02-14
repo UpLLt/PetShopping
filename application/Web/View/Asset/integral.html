@@ -1,0 +1,129 @@
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_center_top">
+					<h1>我的积分：<span>200</span></h1>
+					
+				</div>
+
+				<div class="user_integral">
+					<h2><span>积分明细</span></h2>
+					<h1>
+						<span>日期</span>
+						<span>变动数量</span>
+						<span>类型</span>
+						<span>详细描述</span>
+					</h1>
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+
+					<li>
+						<span>2016-11-11</span>
+						<span>+20</span>
+						<span>社区签到</span>
+						<span>每日社区签到，获得积分</span>
+					</li>
+				
+				</div>
+
+				<div class="list_page">
+					<li><a href="javascript:;"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+					<li><a href="javascript:;">1</a></li>
+					<li><span>2</span></li>
+					<li><a href="javascript:;">3</a></li>
+					<li><a href="javascript:;"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><span>共3页</span></li>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="js/cityData.js"></script>
+<script type="text/javascript" src="js/cityPicker.js"></script>
+<script>
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block'; 
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none'; 
+		}
+</script>
+
+
+
+<!-- 不要的  -->
+<script>
+	$(document).ready(function(){
+		$("button").click(function(){
+		    $.ajax({url:"inas.html"});
+		});
+	});
+</script>
+
+

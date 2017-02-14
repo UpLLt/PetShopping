@@ -1,0 +1,88 @@
+<include file="./application/Web/View/header_menu.html"/>
+
+
+	<div class="banner">
+		<div class="slide-main" id="touchMain">
+			<div class="slide-box" id="slideContent">
+				<div class="slide"  style="display:block;">
+					<img src="{$banner_list.0.image}" />
+				</div>
+				<div class="slide" >
+					<img src="{$banner_list.1.image}"  />
+				</div>
+				<div class="slide" >
+					<img src="{$banner_list.2.image}" />
+				</div>
+				<div class="slide" >
+					<img src="{$banner_list.3.image}" />
+				</div>
+				<div class="slide" >
+					<img src="{$banner_list.4.image}" />
+				</div>
+
+			</div>
+
+			<div class="banner_item">
+				<a class="cur" href="#"></a><a href="#"  ></a><a href="#" ></a><a href="#" ></a><a href="#" ></a>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="center">
+
+		<div class="pet_trasport_li">
+			<li id="trash1" onmousedown="setTwo('trash',1,6)" class="cation"><a href="javascript:;">公司简介</a></li>
+			<li id="trash2" onmousedown="setTwo('trash',2,6)" ><a href="javascript:;">用户评论</a></li>
+		</div>
+		<div class="pet_content_main" id="con_trash_1" >
+			{$company}
+
+		</div>
+
+		<div class="pet_content_main" id="con_trash_2" style="display: none" >
+			<div class="pet_medical_show_comt">
+
+				<foreach name="comment" item="vo">
+
+					<li>
+						<div class="show_sour">
+							<div class="head_pic"><img src="{$vo.heading}" /></div>
+							<div class="user_more">
+								<h1><b>{$vo.full_name}</b><red class="red1"></red> <span>{$vo.create_time}</span></h1>
+								<h2><span class="rank" style="width:{$vo.star}" ></span></h2>
+							</div>
+						</div>
+
+						<div class="show_west">
+							<p>{$vo.content}</p>
+							{$vo.replay}
+						</div>
+
+
+					</li>
+
+				</foreach>
+
+
+
+			</div>
+		</div>
+
+		<div class="server_get">
+			<a href="{:U('Web/Trasport/pet_pet')}">立即服务</a>
+		</div>
+
+
+	</div>
+
+
+<include file="./application/Web/View/footer.html"/>
+
+<script src="{$ptype_url}/js/banner.js"></script>
+
+<script>
+	$(document).ready(function(){
+		$('#change_ccc').attr('class','action')
+	});
+</script>

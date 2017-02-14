@@ -1,0 +1,444 @@
+
+
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/style.css">
+
+
+<include file="./application/Web/View/header_list.html"/>
+
+
+	<div class="user_mian">
+		<div class="center">
+			<div class="postion_menu">
+				<h1><a href="{:U('Index/index')}">首页</a>><span>{$cate_name}</span></h1>
+			</div>
+
+			<div class="pet_class_menu_top">
+
+				<div class="screen">
+					<ul class="select">
+						<li class="select-list">
+							<dl id="select1">
+								<dt>分类：</dt>
+								<dd name="0"  id="aaaa" class="select-all selected"><a href="javascript:void(0);">全部</a></dd>
+
+								<foreach name="category" item="vo">
+									<dd name="{$vo.id}" id="{$vo.id}_aaaa" ><a   href="javascript:void(0);">{$vo.name}</a></dd>
+								</foreach>
+								<input type="hidden" id="zzz_category">
+								<input type="hidden" id="category_id" value="{$category_id}" >
+
+							</dl>
+						</li>
+
+						<li class="select-list" id="select-list">
+							<dl id="select2">
+								<dt>体型：</dt>
+								<dd name="0" class="select-all selected"><a href="javascript:void(0);">全部</a></dd>
+									{$select2}
+							</dl>
+
+							<input type="hidden" id="zzz_pet_body_id">
+						</li>
+
+						<li class="select-list">
+							<dl id="select3">
+								<dt>年龄：</dt>
+								<dd name="0" class="select-all selected"><a href="javascript:void(0);">全部</a></dd>
+								{$select3}
+							</dl>
+
+							<input type="hidden" id="zzz_pet_age_id">
+						</li>
+
+						<li class="select-list">
+							<dl id="select4">
+								<dt>价格：</dt>
+								<dd name="0" class="select-all selected"><a href="javascript:void(0);">全部</a></dd>
+								<dd name="1"><a href="javascript:void(0);">0~200</a></dd>
+								<dd name="2"><a href="javascript:void(0);">200~500</a></dd>
+								<dd name="3"><a href="javascript:void(0);">500~1000</a></dd>
+								<dd name="4"><a href="javascript:void(0);">1000以上</a></dd>
+							</dl>
+
+							<input type="hidden" id="zzz_price">
+
+						</li>
+
+						<li class="select-result">
+							<dl>
+								<dt>已选条件：</dt>
+								<dd class="select-no">暂时没有选择过滤条件</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="shoping_list_filter">
+				<h1>
+					<a href="javascript:void(0);" class="hocer" id="sales_number_zzzz">销量</a>
+					<a href="javascript:void(0);" id="price_zzzzzzz">价格</a>
+					<span>共计<b id="count">{$count}</b>件商品</span>
+				</h1>
+			</div>
+
+			<div class="shoping_list_li">
+
+				<div class="shoping_list_li_left">
+					<foreach name="sale_hot" item="vo">
+						<li>
+							<a href="{:U('Product/index',array('pid'=>$vo['id'],'ptype'=>2))}"><img  src="{$vo.picture}" /></a>
+							<h1>{$vo.pro_name}</h1>
+							<p>￥{$vo.price}</p>
+						</li>
+					</foreach>
+
+				</div>
+
+				<div class="shoping_list_li_right" id="shoping_list_li_right">
+
+					<foreach name="lists" item="vo">
+							<li>
+								<a href="{:U('Product/index',array('ptype'=>2,'pid'=>$vo['id']))}"><img   src="{$vo.smeta}" /></a>
+								<h1>{$vo.pro_name}</h1>
+								<p><span>￥<b>{$vo.price}</b></span> <strong>销售：{$vo.sales_volume}</strong></p>
+							</li>
+					</foreach>
+
+				</div>
+				<input type="hidden" id="cate_small_id" name="{$cate_small_id.name}" value="{$cate_small_id.id}">
+				<div class="list_page" id="list_page">
+					{$Page}
+				</div>
+					<input type="hidden" value="{$pet_type}" id="pet_type">
+			</div>
+		</div>
+	</div>
+
+			<input type="hidden" id="change_price" >
+			<input type="hidden" id="change_price_before" >
+			<input type="hidden" id="change_sale_number" >
+			<input type="hidden" id="change_sale_number_before" >
+
+
+<script type="text/javascript" src="{$ptype_url}/js/footer.js"></script>
+
+
+
+<!--[if lte IE 8]>
+
+<script src="{$ptype_url}/js/ieBetter.js"></script>
+
+<![endif]-->
+
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery.min.js"></script>
+
+
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="{$ptype_url}/js/cityData.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/cityPicker.js"></script>
+<script>
+
+	$(document).ready(function(){
+		var pet_type = $('#pet_type').val();
+		if( pet_type == 1 ){
+			$('#select-list').hide();
+		}
+		var cate_small_id = $('#cate_small_id').val();
+		var cate_small_name = $('#cate_small_id').attr('name');
+		if( cate_small_id.length > 0 ){
+			$('#'+cate_small_id+'_aaaa').attr('class','selected');
+			$('#aaaa').attr('class','select-all');
+			$('#zzz_category').val(cate_small_id);
+
+			$(".select-result dl").append( '<dd name="'+cate_small_id+'" class="selected" id="selectA"><a href="javascript:void(0);">'+cate_small_name+'</a></dd>');
+			$('.select-no').hide();
+		}
+
+
+	});
+
+
+	var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+<script type="text/javascript">
+	function show(){
+		document.getElementById('userinfo').style.display='block';
+		}
+	function hold(){
+		document.getElementById('userinfo').style.display='none';
+		}
+</script>
+
+<script>
+    $(document).ready(function(){
+
+	$("#select1 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+			var	id = $(this).attr('name');
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectA").remove();
+			$('#zzz_category').val(id);
+		} else {
+			var copyThisA = $(this).clone();
+			if ($("#selectA").length > 0) {
+				$("#selectA a").html($(this).text());
+				$('#zzz_category').val(id);
+
+			} else {
+				$(".select-result dl").append(copyThisA.attr("id", "selectA"));
+				$('#zzz_category').val(id);
+
+			}
+		}
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id  = $('#zzz_pet_age_id').val();
+		var zzzz_price       = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+				$('#shoping_list_li_right').html(data.str);
+				$('#count').html(data.count);
+				$('#list_page').html(data.Page);
+		})
+
+	});
+
+	$("#select2 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectB").remove();
+			$('#zzz_pet_body_id').val(id);
+		} else {
+			var copyThisB = $(this).clone();
+			if ($("#selectB").length > 0) {
+				$("#selectB a").html($(this).text());
+				$('#zzz_pet_body_id').val(id);
+			} else {
+				$(".select-result dl").append(copyThisB.attr("id", "selectB"));
+				$('#zzz_pet_body_id').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+
+	});
+
+	$("#select3 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectC").remove();
+			$('#zzz_pet_age_id').val(id);
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectC").length > 0) {
+				$("#selectC a").html($(this).text());
+				$('#zzz_pet_age_id').val(id);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectC"));
+				$('#zzz_pet_age_id').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+	});
+
+	$("#select4 dd").click(function () {
+		var	id = $(this).attr('name');
+		$(this).addClass("selected").siblings().removeClass("selected");
+		if ($(this).hasClass("select-all")) {
+			$("#selectD").remove();
+			$('#zzz_price').val(id);
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectD").length > 0) {
+				$("#selectD a").html($(this).text());
+				$('#zzz_price').val(id);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectD"));
+				$('#zzz_price').val(id);
+			}
+		}
+
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+
+	});
+
+//	$("#selectA").live("click", function () {
+//		$(this).remove();
+//		$("#select1 .select-all").addClass("selected").siblings().removeClass("selected");
+//	});
+//
+//	$("#selectB").live("click", function () {
+//		$(this).remove();
+//		$("#select2 .select-all").addClass("selected").siblings().removeClass("selected");
+//	});
+//
+//	$("#selectC").live("click", function () {
+//		$(this).remove();
+//		$("#select3 .select-all").addClass("selected").siblings().removeClass("selected");
+//	});
+//
+//	$("#selectD").live("click", function () {
+//		$(this).remove();
+//		$("#select4 .select-all").addClass("selected").siblings().removeClass("selected");
+//	});
+
+	$(".select dd").live("click", function () {
+		if ($(".select-result dd").length > 1) {
+			$(".select-no").hide();
+		} else {
+			$(".select-no").show();
+		}
+	});
+
+
+});
+
+
+	function page(o){
+		var zpage  = $(o).attr('name');
+		var zzzz_category      = $('#zzz_category').val();
+		var zcategory_id       = $('#category_id').val();
+		var zzzz_pet_body_id   = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id    = $('#zzz_pet_age_id').val();
+		var zzzz_price         = $('#zzz_price').val();
+		var change_sale_number = $('#change_sale_number').val();
+		var change_price = $('#change_price').val();
+
+
+
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{sales_number:change_sale_number,price_zzzzzzz:change_price,page:zpage,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+		})
+	}
+
+	$('#sales_number_zzzz').click(function(){
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		var change_sale_number = $('#change_sale_number').val();
+		var change_sale_number_before = change_sale_number;
+		var now_order = '';
+		if( change_sale_number.length<=0 ){
+			now_order = 1;
+			change_sale_number = 1;
+			change_sale_number_before = 1;
+		}else if( change_sale_number == 1 ){
+			now_order = 2;
+			change_sale_number = 2;
+		}else if( change_sale_number == 2 ){
+			now_order = 1;
+			change_sale_number = 1;
+		}
+
+
+		$('#change_price').val('');
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{sales_number:now_order,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+
+			$('#change_sale_number_before').val(change_sale_number_before);
+			$('#change_sale_number').val(change_sale_number);
+		})
+	})
+
+	$('#price_zzzzzzz').click(function(){
+
+		var zzzz_category    = $('#zzz_category').val();
+		var zcategory_id     = $('#category_id').val();
+		var zzzz_pet_body_id = $('#zzz_pet_body_id').val();
+		var zzzz_pet_age_id = $('#zzz_pet_age_id').val();
+		var zzzz_price = $('#zzz_price').val();
+
+		var change_price = $('#change_price').val();
+		var change_price_before = change_price;
+		var now_order = '';
+		if( change_price.length<=0 ){
+			now_order = 1;
+			change_price = 1;
+			change_price_before = 1;
+		}else if( change_price == 1 ){
+			now_order = 2;
+			change_price = 2;
+		}else if( change_price == 2 ){
+			now_order = 1;
+			change_price = 1;
+		}
+
+		$('#change_sale_number').val('');
+		$.post("{:U('Web/Search/ajaxGetProduct')}",{price_zzzzzzz:now_order,zzz_category:zzzz_category,category_id:zcategory_id,zzz_pet_body_id:zzzz_pet_body_id,zzz_pet_age_id:zzzz_pet_age_id,zzz_price:zzzz_price},function(data){
+			$('#shoping_list_li_right').html(data.str);
+			$('#count').html(data.count);
+			$('#list_page').html(data.Page);
+			$('#change_price').val(change_price);
+			$('#change_price_before').val(change_price_before);
+		})
+	})
+
+
+
+</script>
+
+

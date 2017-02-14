@@ -1,0 +1,152 @@
+<include file="./application/Web/View/header_order.html"/>
+
+
+<div class="user_mian">
+    <div class="center">
+        <div class="userinfo_address padding100">
+            <p>恭喜你，订单提交成功，订单的商品我们将为你保留1个小时。请你尽快完成付款</br>
+                付款成功后我们将在第一时间为你发货</p>
+
+            <h4>应付金额：<span>￥{$order.order_price}</span></h4>
+
+        </div>
+
+        <div class="method_of_payment padding100">
+            <h1>支付方式</h1>
+
+            <div class="order_pay_ment">
+
+                <li id="pay1" class="cation" onmousedown="setTwo('pay',1,3)"><label><input checked="checked" type="radio" name="pay_ment"
+                                                                            class="checkbox mag mak" value="wallet"/>
+                    <img src="{$ptype_url}/images/rest_menoy.png"/>咪咻钱包支付 <b></b></label></li>
+
+
+                <li id="pay2"  onmousedown="setTwo('pay',2,3)">
+
+                        <label>
+
+                            <input type="radio" name="pay_ment"  class="checkbox mag mak" value="alipy"/>
+                            <form method="post" id="form_a" action="{:U('Web/Alipay/doalipay')}">
+                                 <img src="{$ptype_url}/images/alipay.png"/>支付宝支付<b></b>
+                                 <input type="hidden" value="{$order.id}" name="order_id" id="order_id" />
+                            </form>
+                        </label>
+
+                </li>
+
+                <li id="pay3" onmousedown="setTwo('pay',3,3)"><label><input type="radio" name="pay_ment"
+                                                                            class="checkbox mag mak" value="weipay"/>
+                    <img src="{$ptype_url}/images/wechat.png"/>微信支付 <b></b></label></li>
+
+            </div>
+
+            <div class="" id="con_pay_1"></div>
+            <div class="" id="con_pay_2"></div>
+            <div class="" id="con_pay_3"></div>
+            <div class="pay_ment_order">
+                <a href="javascript:;" id="pay_submit">马上支付</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+
+<include file="./application/Web/View/footer.html"/>
+
+<script>
+    $(document).ready(function(){
+        $('.setting_process').attr('class','setting_process order_pay_2')
+    });
+</script>
+<script>
+    function setTwo(name, cursel, n) {
+        for (i = 1; i <= n; i++) {
+            var menu = document.getElementById(name + i);
+            var con = document.getElementById("con_" + name + "_" + i);
+            menu.className = i == cursel ? "cation" : "";
+            con.style.display = i == cursel ? "block" : "none";
+        }
+    }
+    $('#pay_submit').click(function () {
+        var input_val = $("input[name='pay_ment']:checked").val();
+        var z_order_sun = $('#order_id').val();
+
+        if (input_val == 'weipay') {
+            layer.open({
+                type: 2,
+                title: '咪咻宠物微信扫码支付',
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                area: ['340px', '380px'],
+                content: 'https://www.mixiupet.com/Web/Pay/UnifiedOrder/order_id/' + z_order_sun,
+            });
+
+        }
+        if (input_val == 'wallet') {
+            layer.confirm('<div class="pay_pwd">'
+                    + '<h1>应付金额<span>￥{$order.order_price}</span></h1>'
+                    + '<h1>支付密码：<input style="width: 200px;" id="password" type="password" maxlength="6"></h1>'
+                    + '</div>', {
+                        closeBtn: 0, //不显示关闭按钮
+                        scrollbar: false,
+                        skin: 'user_pay_pwd', //样式类名
+                        btn: ['确认', '取消'] //按钮
+                    }
+                    , function () {
+                        var password = $('#password').val();
+
+                        $.post("{:U('Web/Pay/balancePay')}",{order_sn:z_order_sun,paypwd:password},function(data){
+                            var json = eval("("+data+")");
+                            if(json.code == 220 ){
+                                layer.alert("未登录", {icon: 2});window.location.href = "{:U('Web/Member/login')}";
+                            }else if(json.code == 200){
+                                window.location.href = "{:U('Web/Pay/paysuccess')}";
+                            }else if(json.code == 210){
+                                layer.alert(json.mark, {icon: 2});
+                            }
+                        })
+
+                    });
+        }
+        if (input_val == 'alipy') {
+            $('#form_a').submit();
+
+        }
+
+    })
+
+
+    function GetOrder() {
+        var zorder_sn = $('#order_id').val();
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "{:U('Web/Pay/order_status')}",
+            data: {order_sn: zorder_sn},
+            success: function (data) {
+                if (data == 1) {
+                    location.href = "{:U('Web/Pay/paysuccess')}";
+                }
+            }
+        });
+    }
+    window.setInterval("GetOrder()", 2000);
+
+</script>
+
+
+<script type="text/javascript">
+    $('#pay_submit').on('click', function () {
+
+    });
+
+
+</script>
+
+
+
+

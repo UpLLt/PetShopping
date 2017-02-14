@@ -1,0 +1,49 @@
+<include file="./application/Web/View/header_user.html"/>
+
+
+			<div class="user_usercenter box-sizing">
+				<div class="user_petinfo">
+					<h1>宠物信息
+						<p>请准确填写你的宠物信息 ，我们将在你的宠物疫苗时间/驱虫到期时间前15天提现你为你的宠物大疫苗/驱虫</p>
+						<span><a href="add_petinfo.html">添加宠物</a></span>
+					</h1>
+				</div>
+
+				<div class="oetinfo_show">
+
+					<foreach name="mempet" item="vo">
+
+						<li><a href="{:U('Web/Member/petinfo_show',array('pid'=>$vo['pid']))}">
+							<img style="width: 271px;height: 247px;" src="{$vo.headimg}" />
+							<p><b>宠物名称：</b>{$vo.pname}</p>
+							<p><b>宠物年龄：</b>{$vo.pbirthday}月</p>
+							<p><b>性别：    </b>{$vo.psex}</p>
+
+							</a>
+						</li>
+
+					</foreach>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+ 
+	
+
+<!--[if lte IE 8]>
+
+<script src="{$ptype_url}/js/ieBetter.js"></script>
+
+<![endif]-->
+
+
+
+<include file="./application/Web/View/footer_other.html"/>
+
+
+

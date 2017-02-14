@@ -1,0 +1,153 @@
+<include file="./application/Web/View/header_munity.html"/>
+
+  <div class="user_mian">
+    <div class="center">
+      <div class="pet_muntity_left">
+          <volist name="product_info" id="vo">
+              <li>
+                  <a href="{:U('Web/Product/index', array('ptype'=>$vo['pet_type'],'pid' => $vo['id']))}">
+                      <img src="{$vo.image}" />
+                  </a>
+                  <h1>{$vo.pro_name}</h1>
+                  <p>￥{$vo.option_price}</p>
+              </li>
+          </volist>
+
+
+      </div>
+
+      <div class="pet_muntity_right">
+         <div class="banner pad20">
+          <div class="slide-main" id="touchMain">
+            <div class="slide-box" id="slideContent">
+              <!--<div class="slide" style="display:block;">
+                <img src="{$ptype_url}/images/banner111.png" />
+              </div>
+              <div class="slide" >
+                <img src="{$ptype_url}/images/banner4.jpg"  />
+              </div>-->
+              <volist name="banners" id="vo">
+                <div class="slide" >
+                 <a href="{$vo.link}"> <img src="{$vo.image}" /></a>
+                </div>
+              </volist>
+
+            </div>
+
+            <div class="banner_item">
+              <a class="cur" href="#"></a>
+                  <volist name="banner_num" id="vo" >
+                      <a href="#" ></a>
+                  </volist>
+              <!--<a href="#"  ></a><a href="#" ></a><a href="#" ></a><a href="#" ></a>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="pet_muntity_menu">
+          <div class="pet_menu_bg"></div>
+          <div class="pet_menu_li">
+                {$pet_munr}
+          </div>
+        </div>
+
+        <div class="pet_muntity_show">
+          <volist name="articles" id="vo">
+            <li>
+                <div class="pet_muntity_show_head">
+                    <if condition="($vo.headimg eq '')">
+                        <img src="{$ptype_url}/images/user_head_cation.png" />
+                        <else />
+                        <img src="{$vo.headimg}" />
+                    </if>
+                    <h1><b>{$vo.nickname}</b> {$vo.str}</h1>
+                    <p><red class="{$vo.sco_level}"></red> <span>{$vo.art_time}</span></p>
+                </div>
+                <div class="pet_muntity_show_aaaaa">
+                    <h1><a href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}">{$vo.art_title} </a></h1>
+                    <div class="pet_muntity_pic">
+                        <volist name="vo['art_image']" id="k">
+                            <dl><a href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}"><img src="{$k}?imageView2/1/w/100/h/100" /> </a></dl>
+                        </volist>
+                    </div>
+                    <div class="pet_muntity_praise">
+                        <span><a  href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}"><img src="{$ptype_url}/images/icon_comment.png" />{$vo.art_cnum}</a></span>
+                        <span><a href="{:U('Web/Community/pet_show', array('art_id' => $vo['art_id']))}" class="zhan" value="{$vo.art_id}"><img src="{$ptype_url}/images/icon_praise.png" /><b>{$vo.art_gnum}</b></a></span>
+                    </div>
+                </div>
+            </li>
+          </volist>
+            <div class="list_page">{$Page}</div>
+        </div>
+
+      </div>
+
+
+  <div class="back_home">
+    <a href="{:U('index/index')}" title="返回首页"><img src="{$ptype_url}/images/go_back.png"  title="返回首页"/></a>
+  </div>
+
+
+  <div class="user_siign">
+      <p>恭喜获得200积分</p>
+  </div>
+
+<include file="./application/Web/View/footer_other.html"/>
+<script src="{$ptype_url}/js/banner.js"></script>
+
+
+
+
+<!--<script type="text/javascript">
+
+  var intervalid;
+  intervalid = setInterval("count_down()", 3000);
+
+  $(".user_sign").on('click',function(){
+    $(".user_siign").css('display','block');
+   $(".user_sign").text('已签到');
+  })
+  function count_down(){
+   $(".user_siign").css('display','none');
+  }
+
+
+
+</script>-->
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(e) {
+    //点赞
+    $('a.zhan').click(function(){
+      var left = parseInt($(this).offset().left)+10, top =  parseInt($(this).offset().top)-10, obj=$(this);
+          var art_id = $(this).attr('value');//console.log(art_id);
+      var b = $(this);
+      $.post("{:U('Web/Community/clickGood')}",{data : art_id}, function (rst) {
+        var jsonStr = new Function("return" + rst)();
+        if(jsonStr.ret == 200) {
+//          location.reload();
+//          var num = li.children('b').html();
+//          li.children('b').html(++num);
+//          layer.msg(jsonStr.alert);
+          b.append('<div id="zhan"><b>+1<\/b></div>');
+          $('#zhan').css({'position':'absolute','z-index':'1', 'color':'#C30','left':left+'px','top':top+'px'}).animate({top:top-10,left:left+10},'slow',function(){
+            b.children('div').fadeIn('fast').remove();
+            var Num = parseInt(obj.find('b').text());
+            Num++;
+            obj.find('b').text(Num);
+          });
+    //      window.location.reload();
+        } else {
+          layer.msg(jsonStr.alert);
+        }
+  });
+
+
+
+  return false;
+ });
+ });
+
+</script>

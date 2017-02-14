@@ -1,0 +1,44 @@
+
+
+<!-- jquery -->
+<script type="text/javascript" src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/jquery.layer.js"></script>
+
+<!-- 区域选择 -->
+<script type="text/javascript" src="{$ptype_url}/js/cityData.js"></script>
+<script type="text/javascript" src="{$ptype_url}/js/cityPicker.js"></script>
+<script>
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'k-v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_id){
+            // alert(city_id);
+        }
+    });
+
+    cityPicker.init();
+</script>
+
+<script type="text/javascript">
+    function show(){
+        document.getElementById('userinfo').style.display='block'; 
+        }
+    function hold(){
+        document.getElementById('userinfo').style.display='none'; 
+        }
+    
+    function setTwo(name,cursel,n){
+        for(i=1;i<=n;i++){
+            var menu=document.getElementById(name+i);
+            var con=document.getElementById("con_"+name+"_"+i);
+            menu.className=i==cursel?"cation":"";
+            con.style.display=i==cursel?"block":"none";
+        }
+    }
+</script>
+
+</body>
+</html>

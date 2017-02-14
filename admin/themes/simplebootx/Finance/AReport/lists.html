@@ -1,0 +1,55 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">用户资金流水查询</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('AReport/lists')}">
+        用户名：
+        <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入名称...">
+        时间：
+        <input type="text" name="start_time" class="js-date" value="{$formget.start_time|default=''}"
+               style="width: 80px;" autocomplete="off">-
+        <input type="text" class="js-date" name="end_time" value="{$formget.end_time}" style="width: 80px;"
+               autocomplete="off">
+
+        收入/支出：
+        <select class="select_iae" style="width: 100px;" name="select_iae">
+            <option value='0'>全部</option>
+            {$iae_model}
+        </select>
+
+        来源：
+        <select class="select_source" style="width: 100px;" name="select_source">
+            <option value='0'>全部</option>
+            {$source_model}
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+           id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>用户名</th>
+            <th>金额</th>
+            <th>变动前金额</th>
+            <th>变动后金额</th>
+            <th>类型</th>
+            <th>来源</th>
+            <th>创建时间</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {$categorys}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

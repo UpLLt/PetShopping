@@ -1,0 +1,232 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('OrderProduct/lists')}">订单列表</a></li>
+        <li class="active"><a href="javascript:;">详情</a></li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list">
+                <thead>
+                <tr>
+                    <th colspan="2">订单详情</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="80px">订单编号</td>
+                    <td>
+                        {$data_order.order_sn}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80px">状态</td>
+                    <td>
+                        {$data_order.status}
+                    </td>
+                </tr>
+                <notempty name="data_order.pay_time">
+                    <tr>
+                        <td width="80px">支付时间</td>
+                        <td>
+
+                            {$data_order.pay_time|date="Y-m-d h:i:s",###}
+                        </td>
+                    </tr>
+                </notempty>
+                <tr>
+                    <td width="80px">承运公司</td>
+                    <td>
+                        {$data_order.logistics_company}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80px">物流单号</td>
+                    <td>
+                        {$data_order.logistics_number}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80px">备注</td>
+                    <td>
+                        {$data_order.remarks}
+                    </td>
+                </tr>
+
+                <if condition="($data_order.status neq 1 ||  $data_order.status neq 2)">
+                    <tr>
+                        <td colspan="2">
+                            <button id="add_logistics_log" class="btn btn-info text-right btn-small">修改物流</button>
+                        </td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <div class="span4">
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list">
+                <thead>
+                <tr>
+                    <th colspan="2">会员信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="80px">帐号</td>
+                    <td>{$data_member.username}</td>
+                </tr>
+                <tr>
+                    <td width="50px">昵称</td>
+                    <td>{$data_member.nickname}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="span4">
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list">
+                <thead>
+                <tr>
+                    <th colspan="2">收货信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="80px">姓名</td>
+                    <td>{$data_order.address.fullname}</td>
+                </tr>
+                <tr>
+                    <td width="50px">电话</td>
+                    <td>{$data_order.address.phone}</td>
+                </tr>
+                <tr>
+                    <td width="50px">详细地址</td>
+                    <td>{$data_order.address.address}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="wrap js-check-wrap" style="padding:20px 0 0 0">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;" style="color: #000000"><span class="fa fa-info-circle"></span> 订单
+                (#1)</a></li>
+        </ul>
+
+        <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+               id="menus-table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>商品</th>
+                <th>型号</th>
+                <th>单品价格</th>
+                <th>数量</th>
+                <th>单品小计</th>
+            </tr>
+            </thead>
+            <tbody>
+            {$categorys}
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    小计
+                </td>
+                <td>
+                    {$total_price|default=0}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    运费
+                </td>
+                <td>
+                    {$data_order.logistics_cost|default=0}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    优惠券
+                </td>
+                <td>
+                    {$coupon_price|default=0}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    积分抵扣
+                </td>
+                <td>
+                    {$data_order.score|default=0}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    总计
+                </td>
+                <td>
+                    {$data_order.order_price|default=0}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">{$Page}</div>
+    </div>
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">物流信息</h3>
+    </div>
+    <form action="{:U('OrderProduct/set_logistics')}" method="post"
+          class="form-horizontal js-ajax-form">
+        <div class="modal-body">
+            <table>
+                <tbody>
+                <tr>
+                    <td>运单编号：</td>
+                    <input type="hidden" name="order_id" value="{$data_order.id}">
+                    <td><input type="text" name="logistics_number" value=""><span>&nbsp;*</span></td>
+                </tr>
+                <tr>
+                    <td>承运公司：</td>
+                    <td><input type="text" name="logistics_company" value=""><span>&nbsp;*</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    $(function () {
+        $('#send_goods').click(function () {
+
+            $.post('{:U("OrderProduct/add_order_log")}', $('#form_goods').serialize(), function (e) {
+                console.log(e);
+                if (e.info) {
+                    location.reload();
+                } else {
+                    alert(e.msg);
+                }
+            })
+        });
+
+        $('#add_logistics_log').click(function (e) {
+            $('#myModal').modal('show');
+        });
+    })
+
+
+</script>
+
+</body>
+</html>

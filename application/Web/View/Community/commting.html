@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="{$ptype_url}/images/favicon.png" type="image/png" />
+<title>咪咻</title> 
+
+<!-- 公共样式 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/index.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/main.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/other.css" />
+
+
+
+<!-- 字体图标 -->
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="{$ptype_url}/css/icon.min.css" />
+
+
+</head>
+<body>
+<div class="commentary_show">
+
+
+
+
+  <div class="commting_foot">
+    <form action="#">
+      <input type="text" class="hide" value="{$cri_info.cri_art_id}" name="cri_art_id">
+      <input type="text" class="hide" value="{$cri_info.cri_id}" name="cri_parent_id">
+      <input type="text" class="hide" value="{$cri_info.cri_member_id}" name="cri_parent_member_id">
+      <textarea class="commting_text" placeholder="请输入回复内容" maxlength="30" name="cri_content"></textarea>
+      <h1><span class="un"><font id="max_number">30</font>/30</span> <input type="button" onclick="critic()" value="发 布" /></h1>
+    </form>
+  </div>
+</div>
+</body>
+</html>
+<script src="{$ptype_url}/js/jquery-1.9.1.min.js"></script>
+<script src="{$ptype_url}/js/jquery.layer.js"></script>
+<script type="text/javascript">
+  $('.hide').hide();
+  $('textarea').each(function() {  
+  var ta = $(this), p = ta.parent(), ml = parseInt(ta.attr('maxlength')),  
+  v = ta.val(), h = ta.attr('placeholder');  
+  if (v == h) v = '';  
+  if (h && ml) {  
+  //var sp = '<span style="bottom: 10px;position: absolute;right: -10px;">'+v.length+'/'+ml+'</span>';  
+  // p.css({'position': 'relative'});  
+  //ta.before(sp);  
+  ta.bind('click keyup', function() {  
+  var m = $(this), v1 = m.val();  
+  if (v1.length > ml) {  
+  m.val(v1.substring(0, ml))  
+  }  
+  //m.prev().text(m.val().length + '/' + ml);  
+  $("#max_number").text(ml-m.val().length);  
+  });  
+  }  
+  });
+  function critic() {
+    var formdata = $("form").serializeArray();
+    $.post("{:U('Web/Community/commting')}", {data : formdata}, function (rst) {
+      var obj = new Function("return" + rst)();
+      if(obj.code == 200) {
+        layer.msg(obj.alert);
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+      } else {
+        layer.msg(obj.alert);
+      }
+    })
+  }
+</script>
